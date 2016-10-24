@@ -3,8 +3,6 @@ package xKing.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -24,7 +22,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 // Spring MVC 配置
 @EnableWebMvc
 // 启动自动扫描
-@ComponentScan("xKing.web")
+@ComponentScan("xKing.*.web")
 public class WebConfig extends WebMvcConfigurerAdapter{
 
 	// 配置 JSP 视图解析器
