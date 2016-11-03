@@ -1,0 +1,155 @@
+body {
+	margin:0;
+    padding:0;
+	background-image: url(../img/indexBackgroundImage.jpg);
+	background-repeat: repeat;
+	position: relative;
+}
+
+.flag {
+}
+
+.flag-red {
+    height: 170px;
+    width: 145px;
+    position: relative;
+    top: -25px;
+    left: 20px;
+}
+.flag-red-lion {
+	height: 110px;
+    width: 110px;
+    position: relative;
+    top: -30px;
+    left: -111px;  
+}
+.flag-white {
+	height: 190px;
+    width: 120px;
+    position: relative;
+    left: -115px;
+}
+.flag-white-knight {
+	height: 100px;
+    width: 100px;
+    position: relative;
+    top: -30px;
+	left: -226px;
+}
+.welcome-message {
+	margin-top: 10%;
+	position: relative;
+	top: 30px;
+}
+.welcome-message-label {
+	font-size: 60px;
+	font-family: 'Arial Negreta', 'Arial Normal', 'Arial';
+	font-weight: bold;
+	color: #F9BF3B;	
+}
+.welcome-message-normal {
+	font-family: 'Arial Negreta', 'Arial Normal', 'Arial';
+    font-weight: 700;
+    color: #F2F2F2;
+    font-size: 28px;
+}
+hr {
+	width: 25%;
+	position: relative;
+	left: -37%;
+}
+.welcome-message-start {
+	border-style: none;
+    width: 182px;
+    height: 55px;`
+   	background-color: #FFFFFF;
+   	border-radius: 5px;
+	font-family: 'Arial Negreta', 'Arial Normal', 'Arial';
+    font-weight: 700;
+    font-size: 28px;	
+}
+
+.lucency {
+	margin:0;
+    padding:0;
+	width: 70%;
+	height: 100%;
+	background-color: rgba(255,255,255,0.3);
+	position: fixed;
+	left: 35%;
+	z-index: 99;
+}
+
+.lucency-div {
+	color: #000000;
+	margin-top: 15%;
+	padding-left: 5%;
+
+}
+
+.lucency-logo {
+	font-size: 60px;
+	font-family: 'Segoe Script Bold', 'Segoe Script Normal', 'Segoe Script';
+	font-weight: bold;
+}
+
+.lucency-logo img {
+	width: 100px;
+	height: 90px;
+	position: relative;
+	left: -5%;
+	top: -15px;
+
+
+}
+
+input {
+	border-radius: 3px;
+}
+
+input.input {
+	width: 280px;
+	height: 45px;
+	padding: 13px 15px;
+	border: 1px solid #cccccc;
+	font-size: 15px;
+}
+
+input.submit {
+	width: 116px;
+	height: 40px;
+	border: 0px solid #cccccc;
+	background-color: rgba(18,176,255,0.8);
+	color: white;
+    cursor: pointer;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+    padding: 5px 20px !important;
+    font-weight: normal;
+    font-size: 18px;
+    
+}
+div.messge {
+	display:none;
+}
+
+div.messge font {
+	color: #EC644B;
+	font-size: 18px;
+}
+
+#messageIcons {
+	color: #BFBFBF;
+}
+
+p.register {
+	width: 285px;;
+	font-size: 14px;
+	color: #333333;
+}
+a {
+	text-decoration:none;
+	color: #0099ff;
+}
+a.forget {
+	float: right;
+}
