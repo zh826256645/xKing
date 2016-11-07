@@ -19,13 +19,11 @@ public class XKingWebAppInitializer extends AbstractAnnotationConfigDispatcherSe
 
 	// 指定配置类：RootConfig
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] {RootConfig.class};
+		return new Class[] {RootConfig.class, SecurityConfig.class};
 	}
 
 	// 指定配置类：WebConfig
 	protected Class<?>[] getServletConfigClasses() {
 		return new Class[] {WebConfig.class};
 	}
-
-
 }
