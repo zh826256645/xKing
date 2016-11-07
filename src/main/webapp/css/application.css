@@ -1,4 +1,4 @@
-body {
+.index {
 	margin:0;
     padding:0;
 	background-image: url(../img/indexBackgroundImage.jpg);
@@ -99,8 +99,6 @@ hr {
 	position: relative;
 	left: -5%;
 	top: -15px;
-
-
 }
 
 input {
@@ -149,7 +147,428 @@ p.register {
 a {
 	text-decoration:none;
 	color: #0099ff;
+	font-family: 'Arial Negreta', 'Arial Normal', 'Arial';
+	
 }
 a.forget {
 	float: right;
 }
+.heard {
+	margin-bottom: 0px !important;
+}
+.heard-profile-picture {
+	width: 40px;
+	height: 40px;
+	margin-top: 5px;
+}
+.left-sidebar {
+	position: fixed !important;
+	bottom: 0;
+	top: 51px;
+	background-color: #333333;
+	padding-top: 2%;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	border-right-color: #EEEEEE;
+}
+.left-sidebar a {
+	text-align: center;
+	color: white;
+}
+.left-sidebar i {
+	display: none;
+}
+.active a {
+	color: white;
+	background-color: #428bca;
+	
+}
+.active i {
+	display: inline;
+}
+.active a:focus {
+	color: white !important;
+	background-color: #428bca !important;
+}
+
+.center-person {
+	margin-top: 20px;
+}
+.center-person-message-left {
+	padding: 0 !important;
+	margin-left: 15px !important;
+	margin-right: 15px !important;
+	background-color: #f9fafc;
+	
+}
+.center-person-picture {
+	margin-top: 10px;
+	width: 100px;
+	height: 100px;
+}
+.center-person-message-username {
+	text-align: center;
+	color: #428bca !important;
+}
+.center-person-message-username font{
+	color: #95A5A6;
+}
+.center-person-message-center {
+	border-right:1px solid #F2F2F2 ;
+	color: #999;
+}
+.center-person-message-center font{
+	color: #22313F;
+}
+.center-person-message-label {
+	margin-top: 10px;
+	font-size: 20px;
+	color: #080808;
+}
+
+.center-person-message-label font {
+	float: right;
+	font-size: 10px;
+	color: #888888;
+}
+
+.center-person-message-right span {
+	
+}
+.center-person-message-right-task {
+	margin-top: 0px !important;
+	text-align: center;
+}
+.center-person-message-right-task a {
+	margin-top: 0px;
+	font-size: 36px;
+}
+
+
+.branch-picture {
+	float: left;
+	width: 150px;
+	height: 150px;
+	margin-right: 20px;
+}
+.center-branches a {
+	font-size: 30px;
+}
+.center-branches small {
+	display: block;
+	height:95px;
+	color: #999;
+}
+
+.center-branches p {
+	color: #555555;
+}
+
+.center-branches-time {
+	margin-bottom: 5px;
+}
+
+.center-branches-information {
+	margin-bottom: 0px; 
+}
+
+.more {
+	float: right;
+	color: #767676 !important;
+	font-weight: 100;
+	font-size: 16px;
+}
+
+.center-task {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.center-task-li {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.center-task-btn {
+	font-size: 5px !important;
+	padding-bottom: 3px !important;
+	padding-top: 3px !important;
+}
+
+.center-activity-date {
+	font-size: 16px;
+	color: #000000;
+}
+
+.center-activity-information {
+	border-left: 2px solid #eaedf1 !important;
+	margin-left: 5px;
+	padding-left: 10px;
+}
+
+.center-activity-information-li {
+	margin: 10px;
+}
+
+.center-activity-information-li font {
+	margin-right: 15px;
+	color: #ADADAD;
+}
+
+.center {
+	margin-top: 50px;
+}
+
+.right {
+	margin-top: 50px;
+}
+.right-messge {
+	margin-top: 20px;
+	
+}
+
+.right-messge p {
+	margin-top: 50px;
+	margin-left: 25px;
+	margin-bottom: 48px;
+}
+
+.right-messge-friends {
+	border-right: 1px solid #F2F2F2;
+	background-color: #f9fafc;
+
+}
+.right-messge-friends a {
+	margin-left: 15px;
+	font-size: 36px;
+}
+.right-messge-message a {
+	margin-left: 15px;
+	font-size: 36px;
+}
+
+.left-panel {
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+.left-panel-label {
+	background-color: #f9fafc !important;
+	border-bottom: 0px !important;
+}
+.left-panel-label h3 {
+	font-weight: bold;
+}
+.left-panel-history-li {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding: 3px;
+	border-bottom: 1px solid #F2F2F2;
+}
+.left-panel-history-li i {
+	margin-right: 10px;
+}
+
+.history-source {
+	margin-right: 10px;
+}
+.history-event {
+	margin-right: 10px;
+}
+.history-object {
+	margin-right: 10px;
+}
+
+.center-myBranches {
+	margin-top: 70px;
+
+}
+.center-myBranches label{
+	padding-left: 10px;
+	font-size: 16px;
+	border-left: 2px solid #88B7E0;
+}
+
+.center-myBranches-up {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #F2F2F2;
+	margin-bottom: 10px;
+}
+
+.center-branches-li {
+	margin-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.center-branches-li img{
+	
+}
+.center-branches-li-message a{
+	font-size: 25px;
+	
+}
+.center-branches-li-message small{
+	margin-top: 10px;
+	display: block;
+	font-size: 5px;
+	color: #999;
+	height: 115px;
+}
+.center-branches-li-message span{
+	padding: 6px;
+}
+
+.center-branches-li-message p {
+	font-size: 14px;
+	font-weight: bolder;
+
+}
+.center-branches-li-message font {
+	font-size: 14px;
+	font-weight: 100;
+	color: #888888;
+}
+.center-branches-li button {
+	font-size: 20px;
+	margin-top: 80px;
+}
+
+.hide-p {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.p-label {
+	padding-left: 10px;
+	margin-top: 15px;
+	border-left: 3px solid #269ABC;
+	font-size: 17px !important;
+}
+
+.center-myTasks-up {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #F2F2F2;
+	margin-bottom: 10px;
+}
+
+.center-tasks-li {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.center-tasks-li a {
+	font-size: 17px;
+}
+
+.center-tasks-li p {
+	padding-left: 10px;
+	color: #888888;
+	font-size: 13px;
+}
+
+.center-tasks-li button {
+	margin-top: 5px;
+} 
+
+.center-tasks-li-message {
+	margin-left: 10px;
+	border-left: 3px solid #888888;
+	display: none;
+}
+.center-tasks-li-message font {
+	font-size: 15px;
+	color: #000000;
+	font-weight: bolder;
+	margin-right: 5px;
+	margin-left: 10px;
+}
+.center-tasks-li-message a {
+	font-size: 13px;
+}
+
+.center-tasks-li-message p {
+	padding-left: 0px;
+}
+
+.center-friends-li {
+	padding-bottom: 5px;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.center-friends-li img {
+	width: 70px;
+	height: 70px;
+}
+
+.center-friends-li a {
+	
+	font-size: 17px;
+}
+
+.center-friends-li button {
+	margin-top: 20px;
+	margin-right: 10px;
+}
+
+.friend-message {
+	background-color: red !important;	
+}
+
+.center-friends-li-name {
+	padding-top: 10px;
+}
+.center-friends-li-name p {
+	margin-top: 7px;
+	color: #888888;
+}
+.center-friends-li-name i {
+	margin-right: 5px;
+	color: #31B0D5;
+}
+.center-profile-setting img {
+	width: 100px;
+	height: 100px;
+}
+.center-profile-setting {
+	margin-top: 5px;
+}
+
+.center-profile-setting button {
+	margin-top: 10px;
+}
+
+.center-profile-setting-left {
+	padding-left: 25px !important;
+	margin-bottom: 15px;
+}
+
+.center-profile-setting p {
+	margin-top: 10px;
+	font-size: 15px;
+	font-weight: bold;
+	color: #666;
+}
+
+.center-profile-setting font {
+	color: #888888;
+}
+
+.center-profile-setting-li {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.center-profile-setting-li label {
+	margin-top: 10px;
+	border-left: 2px solid #888888;
+	font-size: 15px;
+}
+
+.center-profile-setting-left font {
+	font-weight: 100;
+	color: #888888;
+}	

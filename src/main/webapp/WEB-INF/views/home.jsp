@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/application.css"/>"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/>" />
 	</head>
-	<body>
+	<body class="index">
 		<div class="row">
 			<div class="col-md-6">
 				<div class="flag">

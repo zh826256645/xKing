@@ -12,8 +12,7 @@
 		<script type="text/javascript" src="<c:url value="/js/jquery-3.1.1.min.js"/>" ></script>
 		<script type="text/javascript" src="<c:url value="/js/checkout.js"/>" ></script>
 	</head>
-	<body>
-
+	<body class="index">
 		<div class="lucency">
 			<div class="row lucency-div">
 				<div class="col-md-5">
