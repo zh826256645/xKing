@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"  %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 		<nav class="navbar navbar-default navbar-fixed-top heard" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
@@ -37,10 +39,12 @@
 				                <li class="divider"></li>
 				                <li class="dropdown-header">System</li>
 				                <li><a href="#">Help</a></li>
-				                <li><a href="#">Logout</a></li>
+				                <li><a id="logout" style="cursor: pointer;">Logout</a></li>
               				</ul>
         				</li>
         			</ul>
                 </div>
+               <sf:form id="logoutForm" style="display: none;" servletRelativeAction="/logout" method="post">
+               </sf:form>
 			</div>
 		</nav>

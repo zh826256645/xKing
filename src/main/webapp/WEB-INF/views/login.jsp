@@ -17,8 +17,14 @@
 			<div class="row lucency-div">
 				<div class="col-md-5">
 					<P class="lucency-logo">xKing <img src="img/crown.png" class="crown"></P>
+					<c:if test="${param.error != null }">
+					<div class="row">
+						<div class="col-sm-8 alert alert-danger error-message">login failed,try again!</div>
+					</div>
+					</c:if>
 					<div class="messge"><i id="messageIcons" class="fa fa-commenting-o fa-2x" aria-hidden="true"></i>&nbsp;<font></font></div><br />
 					<sf:form method="post" action="${loginUrl}" onsubmit="return checkedAll()" id="login">
+						<sf:errors></sf:errors>
 						<input type="text" class="input" id="username" name="username" placeholder="用户名"/><br /><br />
 						<input type="password" class="input" id="password" name="password" placeholder="密码"/><br /><br />
 						<input type="submit" class="submit" value="登录" id="login"/><br /><br /><br />

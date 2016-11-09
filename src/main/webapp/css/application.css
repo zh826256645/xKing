@@ -571,4 +571,9 @@ a.forget {
 .center-profile-setting-left font {
 	font-weight: 100;
 	color: #888888;
-}	
+}
+.error-message {
+	font-size: 18px;
+	margin-left: 10px;
+}
+	

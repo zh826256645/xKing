@@ -33,7 +33,7 @@
 						<p class="welcome-message-normal">else Strat your journey！</p>
 					</p>
 					<hr/>
-			<a href="<c:url value="/user"/>"><button type="button" style="width: 165px; height: 50px; font-size: 25px;" class="btn btn-primary btn-lg">Start</button></a>	
+			<a href="<c:url value="/user/me"/>"><button type="button" style="width: 165px; height: 50px; font-size: 25px;" class="btn btn-primary btn-lg">Start</button></a>	
 				</div>
 			</div>
 		</div>

@@ -25,12 +25,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.authorizeRequests()
 				.antMatchers("/**/**.**").permitAll()
 				.antMatchers("/").permitAll()
-				.antMatchers("/user").permitAll()
-				.antMatchers("/user/new").permitAll()
+				.antMatchers("/user").anonymous()
+				.antMatchers("/user/new").anonymous()
 				.anyRequest().authenticated()
 			.and()
 			.formLogin()
-				.loginPage("/user");
+				.loginPage("/user")
+				.defaultSuccessUrl("/user/me")
+			.and()
+			.logout()
+				.logoutSuccessUrl("/");
 	}
 	
 	// 在内存中注册用户

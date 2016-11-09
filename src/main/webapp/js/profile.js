@@ -28,6 +28,9 @@ $(document).ready(function() {
 			}
 		});
 	});
+	$("#logout").click(function() {
+		$("#logoutForm").submit();
+	});
 });
 
 function localDate(date) {
