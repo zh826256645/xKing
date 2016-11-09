@@ -20,12 +20,19 @@ public class UserDaoTestImpl implements UserDao {
 
 	// 用户认证
 	@Override
-	public User getUserByUsername(String username) {
+	public User getUserByUsername(final String username) {
 		for (User user : userList) {
 			if(user.getUsername().equals(username)) {
 				return user;
 			}
 		}
 		return null;
+	}
+
+	// 添加用户
+	@Override
+	public User addUser(User user) {
+		userList.add(user);
+		return user;
 	}
 }

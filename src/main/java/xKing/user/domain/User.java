@@ -1,5 +1,9 @@
 package xKing.user.domain;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * User 领域模型
  * 
@@ -9,8 +13,14 @@ package xKing.user.domain;
  */
 public class User {
 	private Integer id;
+	@NotNull
+	@Size(min=6, max=16, message="{username.size}")
 	private String username;
+	@NotNull
+	@Size(min=6, max=16, message="{password.size}")
 	private String password;
+	@NotNull
+	@Pattern(regexp="^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$", message="{email.pattern}")
 	private String email;
 	private String blog;
 	private String sex;

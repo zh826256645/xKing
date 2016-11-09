@@ -1,13 +1,17 @@
 package xKing.user.web;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import xKing.user.domain.User;
+import xKing.user.exception.SameUsernameException;
 import xKing.user.service.UserService;
 
 // User 模块的控制器
@@ -18,7 +22,7 @@ public class UserController {
 
 	// 注入 UserService
 	@Autowired
-	public UserService userService;
+	private UserService userService;
 	
 	// 登录页面
 	@RequestMapping(method=RequestMethod.GET)
@@ -28,14 +32,28 @@ public class UserController {
 	
 	// 注册页面
 	@RequestMapping(value="/new",method=RequestMethod.GET)
-	public String registerPage() {
+	public String registerPage(Model model) {
+		model.addAttribute(new User());
 		return "register";
 	}
 	
-	// 用户认证
-	@RequestMapping(method=RequestMethod.POST)
-	public String login(User user) {
-		return "redirect:/user/me";
+	// 用户注册
+	@RequestMapping(value="/new", method=RequestMethod.POST)
+	public String register(
+			@Valid User user, 
+			Errors errors,
+			Model model) {
+		if(errors.hasErrors()) {
+			model.addAttribute("errors", true);
+			return "register";
+		}
+		try {
+			userService.register(user);
+			return "redirect:/user/me";
+		} catch (SameUsernameException e) {
+			
+			return "register";
+		}
 	}
 	
 	// 获取本人信息

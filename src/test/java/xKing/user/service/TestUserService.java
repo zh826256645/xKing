@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import xKing.config.MailConfig;
 import xKing.config.RootConfig;
 import xKing.user.domain.User;
 
@@ -17,7 +18,7 @@ import xKing.user.domain.User;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={RootConfig.class})
+@ContextConfiguration(classes={RootConfig.class, MailConfig.class})
 public class TestUserService {
 
 	@Autowired
@@ -29,5 +30,14 @@ public class TestUserService {
 		User user = new User(1, "Zhonghao", "123456");
 		User _user = userSerivce.Login(user);
 		Assert.assertNotNull(_user);
+	}
+	
+	// 测试 register()
+	@Test
+	public void testRegister() {
+		User user = new User(2, "Zhonghao", "123456");
+		user.setEmail("826256645@qq.com");
+		User newUser = userSerivce.register(user);
+		Assert.assertNotNull(newUser);
 	}
 }

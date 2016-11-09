@@ -4,5 +4,7 @@ import xKing.user.domain.User;
 
 public interface UserDao {
 	// 通过 username 获取 User
-	User getUserByUsername(String username);
+	User getUserByUsername(final String username);
+	
+	User addUser(final User user);
 }
