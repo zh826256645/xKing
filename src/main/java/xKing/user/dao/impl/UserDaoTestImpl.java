@@ -14,8 +14,12 @@ public class UserDaoTestImpl implements UserDao {
 	private static List<User> userList = new ArrayList<User>();
 	
 	static {
-		User user1 = new User(1, "Zhonghao", "4QrcOUm6Wau+VuBX8g+IPg==");
+		User user1 = new User(1, "ZhongHao", "4QrcOUm6Wau+VuBX8g+IPg==");
+		user1.setState(1);
+		User user2 = new User(1, "HuangLiNa", "4QrcOUm6Wau+VuBX8g+IPg==");
+		user2.setState(0);
 		userList.add(user1);
+		userList.add(user2);
 	}
 
 	// 用户认证

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
 
+
 @Configuration
 @ComponentScans(value={
 		@ComponentScan("xKing.*.dao"),

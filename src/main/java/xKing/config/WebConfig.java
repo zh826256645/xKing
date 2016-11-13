@@ -1,13 +1,18 @@
 package xKing.config;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import xKing.user.domain.User;
+import xKing.user.web.UserMustActivateFilter;
 
 /**
  * WebConfig
@@ -43,5 +48,12 @@ public class WebConfig extends WebMvcConfigurerAdapter{
 		// 不使用 DispatcherServlet 处理
 		// 交给 Servlet 容器中默认的 Servlet 处理
 		configurer.enable();
+	}
+	
+	@Bean
+	public MessageSource messageSource() {
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		messageSource.setBasename("messages");
+		return messageSource;
 	}
 }

@@ -576,4 +576,21 @@ a.forget {
 	font-size: 18px;
 	margin-left: 10px;
 }
+.messge-tip {
+	font-size: 13px;
+	padding: 12px;
+	width: 280px;
+}
+
+.messge-tip-error {
+	background-color: #fcdede;
+	color: #f55d54;
+	border: 1px solid #F1A9A0;
+}
+.messge-tip-info {
+	background-color: #E4F1FE;
+	color: #4183D7;
+	border: 1px solid #89C4F4;
+}
+
 	

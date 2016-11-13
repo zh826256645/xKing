@@ -19,10 +19,8 @@
 				<div class="col-md-5">
 					<P class="lucency-logo">xKing <img src="<c:url value="/img/crown.png"/>" class="crown"></P>
 					<sf:form method="post" id="register" commandName="user" onsubmit="return checkedAll()">
-					<c:if test="${errors == true}">
-						<div class="row">
-							<div class="col-sm-8 alert alert-danger error-message"> <sf:errors path="*"/> </div>
-						</div>
+					<c:if test="${errors == true || error != null}">
+					<div class="messge-tip messge-tip-error"><i class="fa fa-info-circle" aria-hidden="true"></i> ${error}</div>
 					</c:if>
 					<div class="messge"><i id="messageIcons" class="fa fa-commenting-o fa-2x" aria-hidden="true"></i>&nbsp;<font></font></div><br />
 

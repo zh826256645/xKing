@@ -5,6 +5,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import xKing.user.web.UserMustActivateFilter;
+import xKing.user.web.UserSucceedLoginHander;
 
 /**
  * Spring Security 配置文件
@@ -17,7 +21,7 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 // 启用 Spring MVC 安全性
 @EnableWebMvcSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
-
+	
 	// 设置 URL 的访问权限
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -32,9 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.formLogin()
 				.loginPage("/user")
 				.defaultSuccessUrl("/user/me")
+				.successHandler(new UserSucceedLoginHander())
 			.and()
 			.logout()
-				.logoutSuccessUrl("/");
+				.logoutSuccessUrl("/")
+			.and()
+			.addFilterBefore(new UserMustActivateFilter("/login","/user"), UsernamePasswordAuthenticationFilter.class);
 	}
 	
 	// 在内存中注册用户
@@ -43,6 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 			.inMemoryAuthentication()
-				.withUser("ZhongHao").password("123456").roles("USER");
+				.withUser("ZhongHao").password("123456").roles("USER").and()
+				.withUser("HuangLiNa").password("123456").roles("USER");
+
 	}
+	
 }

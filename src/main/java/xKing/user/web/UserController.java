@@ -9,6 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import xKing.user.domain.User;
 import xKing.user.exception.SameUsernameException;
@@ -42,16 +43,18 @@ public class UserController {
 	public String register(
 			@Valid User user, 
 			Errors errors,
-			Model model) {
+			Model model,
+			RedirectAttributes reModel) {
 		if(errors.hasErrors()) {
 			model.addAttribute("errors", true);
 			return "register";
 		}
 		try {
+			reModel.addFlashAttribute("message", "注册成功！请进行登录");
 			userService.register(user);
-			return "redirect:/user/me";
+			return "redirect:/user";
 		} catch (SameUsernameException e) {
-			
+			model.addAttribute("error", e.getMessage());
 			return "register";
 		}
 	}
