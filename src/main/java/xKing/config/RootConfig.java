@@ -8,8 +8,8 @@ import org.springframework.test.context.ActiveProfiles;
 
 @Configuration
 @ComponentScans(value={
-		@ComponentScan("xKing.*.dao"),
-		@ComponentScan("xKing.*.service")})
+		@ComponentScan("xKing.*.service"), 
+		@ComponentScan("xKing.*.dao")})
 @ActiveProfiles("Test")
 public class RootConfig {
 

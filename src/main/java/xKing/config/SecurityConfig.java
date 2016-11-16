@@ -1,10 +1,14 @@
 package xKing.config;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import xKing.user.web.UserMustActivateFilter;
@@ -22,6 +26,9 @@ import xKing.user.web.UserSucceedLoginHander;
 @EnableWebMvcSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
+	@Autowired
+	private DataSource dataSource;
+	
 	// 设置 URL 的访问权限
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -31,11 +38,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.antMatchers("/").permitAll()
 				.antMatchers("/user").anonymous()
 				.antMatchers("/user/new").anonymous()
+				.antMatchers("/user/state").anonymous()
 				.anyRequest().authenticated()
 			.and()
 			.formLogin()
 				.loginPage("/user")
 				.defaultSuccessUrl("/user/me")
+				.usernameParameter("username").passwordParameter("password")
 				.successHandler(new UserSucceedLoginHander())
 			.and()
 			.logout()
@@ -49,10 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
-			.inMemoryAuthentication()
-				.withUser("ZhongHao").password("123456").roles("USER").and()
-				.withUser("HuangLiNa").password("123456").roles("USER");
-
+			.jdbcAuthentication().dataSource(dataSource)
+				.usersByUsernameQuery("select username, `password`, enabled from user where username=?")
+				.authoritiesByUsernameQuery("select username, 'ROLE_USER' FROM user where username=?");
 	}
 	
 }

@@ -7,4 +7,8 @@ public interface UserDao {
 	User getUserByUsername(final String username);
 	
 	User addUser(final User user);
+	
+	User upDateStateByUsername(final String username);
+	
+	User updateUserProfile(final User user);
 }

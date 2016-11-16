@@ -20,7 +20,10 @@
 					<c:if test="${param.error != null}">
 					<div class="messge-tip messge-tip-error"><i class="fa fa-info-circle" aria-hidden="true"></i> login failed,try again!</div>
 					</c:if>
-					<c:if test="${userNotActivateError != null}">
+					<c:if test="${error != null}">
+					<div class="messge-tip messge-tip-error"><i class="fa fa-info-circle" aria-hidden="true"></i> ${error}</div>
+					</c:if>
+					<c:if test="${userNotActivateError != null && error != null}">
 					<div class="messge-tip messge-tip-error"><i class="fa fa-info-circle" aria-hidden="true"></i> ${userNotActivateError}</div>
 					</c:if>
 					<c:if test="${message != null}">

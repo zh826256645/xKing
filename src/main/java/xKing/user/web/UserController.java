@@ -59,6 +59,31 @@ public class UserController {
 		}
 	}
 	
+	// 用户激活
+	@RequestMapping(value="/state", method=RequestMethod.GET)
+	public String activate(
+			@RequestParam(name="username", required=false) String username,
+			@RequestParam(name="key", required=false) String key,
+			RedirectAttributes reModel) {
+		if(key != null && username != null) {
+			try {
+				if(userService.activateUser(username, key)) {
+					reModel.addFlashAttribute("message", "用户激活！请进行登录");
+					return "redirect:/user";
+				} else {
+					reModel.addFlashAttribute("error", "该用户已激活不能重新激活!");
+					return "redirect:/user";
+				}
+			} catch (Exception e) {
+				reModel.addFlashAttribute("error", e.getMessage());
+				return "redirect:/user";
+			}
+		} else {
+			reModel.addAttribute("error", "激活码或用户名不能为空！");
+			return "redirect:/user";
+		}
+	}
+	
 	// 获取本人信息
 	@RequestMapping(value="/me", method=RequestMethod.GET)
 	public String profile(
@@ -81,7 +106,6 @@ public class UserController {
 		return "profile";
 	}
 	
-
 	// 获取用户信息,非本人
 	@RequestMapping(value="/{userId}")
 	public String userMessage() {

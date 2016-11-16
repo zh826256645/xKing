@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<meta charset="UTF-8">
 		<title>Profile-setting</title>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/application.css"/>"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/>"/>
@@ -24,10 +25,11 @@
 				<hr />
 				<label>Public information</label><br />
 				<div class="row  center-profile-setting">
-					<form action="#" method="post">
+					<sf:form action="setting/profile" method="post">
 					<div class="col-sm-5 center-profile-setting-left">
 						<p>Name</p>
-						<input class="form-control" value="ZhongHao" />
+						<input class="form-control" value="${currentUser.name}" name="name"/>
+						<input type="hidden" value="${username}" name="username"/>
 						<p>Country</p>
 						<div class="row">
 							<div class="col-sm-7">
@@ -42,15 +44,15 @@
 						<div class="row">
 							<div class="col-sm-7">
 								<select class="form-control">
-									<option>826256645@qq.com</option>
+									<option>${currentUser.email}</option>
 									<option>Don't show my email!</option>
 								</select>
 							</div>
 						</div>
 						<p>Blog</p>
-						<input class="form-control" value="www.x-king.com" />
+						<input class="form-control" name="blog" value="${currentUser.blog}" />
 						<p>introduction</p>
-    					<textarea class="form-control" rows="3">I'm very happy today!</textarea><br />
+    					<textarea class="form-control" rows="3" name="introduction">${currentUser.introduction}</textarea><br />
 						<input type="submit" class="btn btn-success" value="Update profile"/>
 					</div>
 					<div class="col-sm-4 col-sm-offset-1">
@@ -70,7 +72,7 @@
 							<button class="btn btn-info">Change your password</button>
 						</div>
 					</div>
-					</form>
+					</sf:form>
 				</div>
 				<label>Private information</label><br />
 				<div class="col-sm-8 center-profile-setting">

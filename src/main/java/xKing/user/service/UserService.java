@@ -9,4 +9,8 @@ public interface UserService {
 	User register(final User user);
 	
 	User getUserByUsername(final String username);
+	
+	boolean activateUser(final String username, final String key);
+	
+	User updateProfile(final User user);
 }

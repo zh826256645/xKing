@@ -104,3 +104,25 @@ function checkedAll(i) {
 		}	
 	}
 }
+
+function ajaxUsername() {
+	$.ajax({
+		url:'http://localhost:8888/xKing/user/ajax/username?username=' + $("#username").val(),
+		type:'GET',
+		async:true,
+		dataType: 'html',
+		success : function(data)  {
+			if(data == "yes") {
+				verifyChange(1,"username");
+				$("div.messge").fadeOut();
+			} else {
+				$(name).css("border","1px solid #EF4836");
+				$(name).css("background-color","#E4F1FE");
+				$("div.messge font").html("该用户名不可用!");
+				$("div.messge").fadeIn();
+				return false;
+			}
+		}
+	})
+}
+

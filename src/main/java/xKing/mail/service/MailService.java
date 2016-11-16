@@ -4,5 +4,7 @@ import xKing.mail.domain.Mail;
 
 public interface MailService {
 
-	void sendActivationEmailToUser(String to,Mail mail);
+	void sendActivationEmailToUser(final String to, final Mail mail);
+	
+	void sendActivationEmailToUserByVelocity(final String to, final Mail mail);
 }
