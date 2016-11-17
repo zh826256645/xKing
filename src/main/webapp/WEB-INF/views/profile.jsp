@@ -23,13 +23,13 @@
 					<div class="row">
 						<div class="col-lg-3 center-person-message-left">
 							<img class="img-circle center-person-picture center-block " src="<c:url value="/img/profile.jpg"/>">
-							<p class="h4 center-person-message-username"><font>Hi</font> <a href="<c:url value="/setting"/>" class="center-person-message-username">ZhongHao</a></p>
+							<p class="h4 center-person-message-username"><font>Hi</font> <a href="<c:url value="/setting"/>" class="center-person-message-username">${currentUser.name}</a></p>
 						</div>
 						<div class="col-sm-4 center-person-message-center">
 							<p class="center-person-message-label">Public information:</p>
-							<p><i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;&nbsp;<font>826256645@qq.com</font></p>
-							<p><i class="fa fa-rss" aria-hidden="true"></i> &nbsp;&nbsp;<a href="#">http:www.x-King.com</a></p>
-							<p><i class="fa fa-comment" aria-hidden="true"></i> &nbsp;&nbsp;<font>I'm very happy toda</font>&nbsp;<i style="color: #398439;" class="fa fa-pencil" aria-hidden="true"></i></p>
+							<p><i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;&nbsp;<font>${currentUser.email}</font></p>
+							<p><i class="fa fa-rss" aria-hidden="true"></i> &nbsp;&nbsp;<a href="#">${currentUser.blog}</a></p>
+							<p><i class="fa fa-comment" aria-hidden="true"></i> &nbsp;&nbsp;<font>${currentUser.introduction}</font>&nbsp;<i style="color: #398439;" class="fa fa-pencil" aria-hidden="true"></i></p>
 						</div>
 						<div class="col-sm-4 center-person-message-right">
 							<p class="center-person-message-label">Tasks:<font><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp<font id="dateNow"></font></font></p>

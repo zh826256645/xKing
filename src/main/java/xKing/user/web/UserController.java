@@ -1,5 +1,7 @@
 package xKing.user.web;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,22 +90,30 @@ public class UserController {
 	@RequestMapping(value="/me", method=RequestMethod.GET)
 	public String profile(
 			@RequestParam(name="tab", defaultValue="profile") final String tab, 
-			Model model) {
+			Model model,
+			Principal principal) {
 		
-		if(tab.equals("profile")) {
+		User currentUser = userService.getUserByUsername(principal.getName());
+		model.addAttribute("currentUser", currentUser);
+		
+		switch(tab) 
+		{
+		case "profile" :
 			model.addAttribute("tab", "profile");
 			return "profile";
-		} else if(tab.equals("branches")) {
+		case "branches" :
 			model.addAttribute("tab", "branches");
 			return "myBranches";
-		} else if(tab.equals("tasks")) {
+		case "tasks" :
 			model.addAttribute("tab", "tasks");
 			return "myTasks";
-		} else if(tab.equals("friends")) {
+		case "friends" :
 			model.addAttribute("tab", "friends");
 			return "myFriends";
+		default :
+			model.addAttribute("tab", "profile");
+			return "profile";
 		}
-		return "profile";
 	}
 	
 	// 获取用户信息,非本人

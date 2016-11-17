@@ -2,7 +2,6 @@ package xKing.user.domain;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +29,7 @@ public class User {
 	@Size(min=6, max=16, message="{username.size}")
 	private String username;
 	@NotNull
-	@Size(min=6, max=16, message="{password.size}")
+	@Size(min=6, max=32, message="{password.size}")
 	private String password;
 	@NotNull
 	@Pattern(regexp="^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$", message="{email.pattern}")
@@ -43,7 +42,7 @@ public class User {
 	private Date keyDate;
 	private String introduction;
 	private int showEmail;
-	private int enabled;
+	private int enabled = 1;
 	private String role_user;
 	public long getId() {
 		return id;

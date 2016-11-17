@@ -12,5 +12,5 @@ public interface UserService {
 	
 	boolean activateUser(final String username, final String key);
 	
-	User updateProfile(final User user);
+	User updateProfile(final User userUpdateMessage);
 }

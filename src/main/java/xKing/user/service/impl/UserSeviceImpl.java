@@ -4,10 +4,12 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import xKing.mail.domain.Mail;
 import xKing.mail.service.MailService;
-import xKing.user.dao.UserDao;
+
+import xKing.user.dao.UserRepository;
 import xKing.user.domain.User;
 import xKing.user.exception.SameUsernameException;
 import xKing.user.exception.UserActivateErrorException;
@@ -18,19 +20,20 @@ import xKing.utils.Utils;
 
 // Service 组件
 @Service
+@Transactional
 public class UserSeviceImpl implements UserService {
 
 	@Autowired
-	private UserDao userDao;
+	private MailService mailSerivce;
 	
 	@Autowired
-	private MailService mailSerivce;
+	UserRepository userRepository;
 	
 	// 用户认证
 	@Override
 	public User Login(User user) {
 		String passwordMd5 = MD5.EncoderByMd5(user.getPassword());
-		User userData = userDao.getUserByUsername(user.getUsername());
+		User userData = userRepository.findByUsername(user.getUsername());
 		if(userData.getPassword().equals(passwordMd5)) {
 			return userData;
 		}
@@ -40,11 +43,11 @@ public class UserSeviceImpl implements UserService {
 	// 用户注册
 	@Override
 	public User register(User user) {
-		User getUser = userDao.getUserByUsername(user.getUsername());
+		User getUser = userRepository.findByUsername(user.getUsername());
 		if(getUser != null) {
 			throw new SameUsernameException("用户名重复");
 		}
-		User newUser = userDao.addUser(initNewUser(user));
+		User newUser = userRepository.save(initNewUser(user));
 		Mail mail = this.activationMail(newUser);
 		mailSerivce.sendActivationEmailToUserByVelocity(user.getEmail(), mail);
 		return newUser;
@@ -53,7 +56,7 @@ public class UserSeviceImpl implements UserService {
 	// 根据用户名获取用户
 	@Override
 	public User getUserByUsername(String username) {
-		User user = userDao.getUserByUsername(username);
+		User user = userRepository.findByUsername(username);
 		if(user != null) {
 			return user;
 		} else {
@@ -69,7 +72,8 @@ public class UserSeviceImpl implements UserService {
 			if(user.getKeyCode().equals(key)) {
 				long keyDate = user.getKeyDate().getTime();
 				if(keyDate - (new Date()).getTime() < 1800000) {
-					userDao.upDateStateByUsername(username);
+					user.setState(1);
+					userRepository.save(user);
 					return true;
 				} else {
 					User userAddNewKey = this.addNewKey(user);
@@ -87,8 +91,14 @@ public class UserSeviceImpl implements UserService {
 	
 	// 更新用户信息
 	@Override
-	public User updateProfile(User user) {
-		User currentUser = userDao.updateUserProfile(user);
+	public User updateProfile(User userUpdateMessage) {
+		User user = this.getUserByUsername(userUpdateMessage.getUsername());
+		
+		user.setBlog(userUpdateMessage.getBlog());
+		user.setIntroduction(userUpdateMessage.getIntroduction());
+		user.setName(userUpdateMessage.getName());
+		
+		User currentUser = userRepository.save(user);
 		return currentUser;
 	}
 	

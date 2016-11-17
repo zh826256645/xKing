@@ -1,8 +1,9 @@
 package xKing.user.dao;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import xKing.user.domain.User;
+import xKing.utils.CrudRepository;
 
 /**
  * UserRepository
@@ -12,8 +13,10 @@ import xKing.user.domain.User;
  * @date 2016年11月16日
  *
  */
+@Repository
 public interface UserRepository extends CrudRepository<User, Long> {
-	User findByUsername(String username);
+	User findByUsername(final String username);
 
 	User saveAndFlush(User user);
+	
 }

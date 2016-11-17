@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import xKing.config.DataConfig;
 import xKing.config.MailConfig;
 import xKing.config.RootConfig;
 import xKing.user.domain.User;
@@ -18,7 +19,7 @@ import xKing.user.domain.User;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={RootConfig.class, MailConfig.class})
+@ContextConfiguration(classes={RootConfig.class, DataConfig.class, MailConfig.class})
 public class TestUserService {
 
 	@Autowired

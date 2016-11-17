@@ -29,7 +29,6 @@
 					<div class="col-sm-5 center-profile-setting-left">
 						<p>Name</p>
 						<input class="form-control" value="${currentUser.name}" name="name"/>
-						<input type="hidden" value="${username}" name="username"/>
 						<p>Country</p>
 						<div class="row">
 							<div class="col-sm-7">

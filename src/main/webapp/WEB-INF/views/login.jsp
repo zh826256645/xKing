@@ -23,7 +23,7 @@
 					<c:if test="${error != null}">
 					<div class="messge-tip messge-tip-error"><i class="fa fa-info-circle" aria-hidden="true"></i> ${error}</div>
 					</c:if>
-					<c:if test="${userNotActivateError != null && error != null}">
+					<c:if test="${userNotActivateError != null && message == null && error == null}">
 					<div class="messge-tip messge-tip-error"><i class="fa fa-info-circle" aria-hidden="true"></i> ${userNotActivateError}</div>
 					</c:if>
 					<c:if test="${message != null}">

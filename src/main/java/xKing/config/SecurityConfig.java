@@ -4,14 +4,12 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import xKing.user.web.UserMustActivateFilter;
 import xKing.user.web.UserSucceedLoginHander;
 
 /**
@@ -48,9 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.successHandler(new UserSucceedLoginHander())
 			.and()
 			.logout()
-				.logoutSuccessUrl("/")
-			.and()
-			.addFilterBefore(new UserMustActivateFilter("/login","/user"), UsernamePasswordAuthenticationFilter.class);
+				.logoutSuccessUrl("/");
 	}
 	
 	// 在内存中注册用户
@@ -60,7 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		auth
 			.jdbcAuthentication().dataSource(dataSource)
 				.usersByUsernameQuery("select username, `password`, enabled from user where username=?")
-				.authoritiesByUsernameQuery("select username, 'ROLE_USER' FROM user where username=?");
+				.authoritiesByUsernameQuery("select username, 'ROLE_USER' FROM user where username=?")
+				.passwordEncoder(new Md5PasswordEncoder());
 	}
 	
 }

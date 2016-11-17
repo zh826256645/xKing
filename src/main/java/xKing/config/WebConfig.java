@@ -5,14 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import xKing.user.domain.User;
-import xKing.user.web.UserMustActivateFilter;
 
 /**
  * WebConfig
@@ -26,6 +25,7 @@ import xKing.user.web.UserMustActivateFilter;
 @Configuration
 // Spring MVC 配置
 @EnableWebMvc
+@EnableSpringDataWebSupport
 // 启动自动扫描
 @ComponentScan("xKing.*.web")
 public class WebConfig extends WebMvcConfigurerAdapter{
