@@ -13,6 +13,7 @@
 		<script type="text/javascript" src="<c:url value="/js/jquery-3.1.1.min.js"/>" ></script>
 		<script type="text/javascript" src="<c:url value="/js/bootstrap.min.js"/>" ></script>
 		<script type="text/javascript" src="<c:url value="/js/profile.js"/>" ></script>
+		<script type="text/javascript" src="<c:url value="/js/utils.js"/>" ></script>
 	</head>
 	<body>
 		<%@ include file="header.jsp" %>
@@ -21,6 +22,15 @@
 			<%@ include file="userleft.jsp" %>
 			<!-- center -->
 			<div class="col-sm-7 col-sm-offset-2 center-myBranches">
+				<c:if test="${message != null || error != null}">
+				<p class="
+				<c:if test="${message != null }">bg-info </c:if>
+				<c:if test="${error != null }">bg-danger </c:if>
+				change-message">
+					<i class="fa fa-comment" aria-hidden="true"></i> ${message}${error}
+					<i class="fa fa-times" id="changeMessage" style="float: right;" aria-hidden="true" onclick="javascript:removeFather('changeMessage');"></i>
+				</p>
+				</c:if>
 				<label>Setting</label>
 				<hr />
 				<label>Public information</label><br />
@@ -54,6 +64,7 @@
     					<textarea class="form-control" rows="3" name="introduction">${currentUser.introduction}</textarea><br />
 						<input type="submit" class="btn btn-success" value="Update profile"/>
 					</div>
+					</sf:form>
 					<div class="col-sm-4 col-sm-offset-1">
 						<img class="img-circle" src="<c:url value="/img/profile.jpg"/>"/>
 						<button class="btn btn-info">Update new picture</button><br />
@@ -68,10 +79,18 @@
 									 aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
 								</div>
 							</div>
-							<button class="btn btn-info">Change your password</button>
+							<label class="btn btn-info" id="changePassword" onclick="changePassword();">Change your password</label>
+							<div class="row">
+							<div id="password" style="display: none;" class="col-sm-9">
+								<sf:form action="setting/password" method="post">
+								<input class='form-control' type="password" placeholder='old password' name="oldPassword"/><br />
+								<input class='form-control' type="password" placeholder='new password' name="newPassword"/><br />
+								<input type='submit' class='btn btn-success' value='Change'/>
+								</sf:form>
+							</div>
+							</div>
 						</div>
 					</div>
-					</sf:form>
 				</div>
 				<label>Private information</label><br />
 				<div class="col-sm-8 center-profile-setting">

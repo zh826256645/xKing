@@ -12,6 +12,11 @@
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>4.3.4.RELEASE</version>
@@ -26,10 +31,17 @@
 			<artifactId>spring-test</artifactId>
 			<version>4.3.4.RELEASE</version>
 		</dependency>
+		
 		<dependency>
    			<groupId>javax.servlet</groupId>
     		<artifactId>jstl</artifactId>
     		<version>1.2</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-core</artifactId>
+		    <version>3.2.9.RELEASE</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
@@ -46,6 +58,7 @@
 		    <artifactId>spring-security-taglibs</artifactId>
 		    <version>3.2.9.RELEASE</version>
 		</dependency>
+		
 		<dependency>
 		    <groupId>org.springframework.integration</groupId>
 		    <artifactId>spring-integration-mail</artifactId>
@@ -77,15 +90,12 @@
 		    <artifactId>spring-data-jpa</artifactId>
 		    <version>1.10.4.RELEASE</version>
 		</dependency>
+		
 		<dependency>
 		    <groupId>c3p0</groupId>
 		    <artifactId>c3p0</artifactId>
 		    <version>0.9.1.2</version>
 		</dependency>
-		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>5.1.13</version>
-		</dependency>
+		
 	</dependencies>
 </project>

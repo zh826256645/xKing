@@ -131,47 +131,14 @@ public class User {
 	public User() {
 		
 	}
-	public User(long id, String username, String password) {
-		this(id, username, password, null, null, null, 0, null, null);
+	public User(String username, String password) {
+		this(username, password, null);
 	}
-	
-	public User(long id, String username, String password, String email, String blog, String sex, int state,
-			String key, String introduction) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.blog = blog;
-		this.sex = sex;
-		this.state = state;
-		this.keyCode = key;
-		this.introduction = introduction;
-	}
-	
-	public User(long id, String username, String password, String email, String name, String blog, String sex,
-			int state, String key, Date keyDate, String introduction, int showEmail, int enabled, String role_user) {
+	public User(String username, String password, String email) {
 		super();
-		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.name = name;
-		this.blog = blog;
-		this.sex = sex;
-		this.state = state;
-		this.keyCode = key;
-		this.keyDate = keyDate;
-		this.introduction = introduction;
-		this.showEmail = showEmail;
-		this.enabled = enabled;
-		this.role_user = role_user;
-	}
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", name="
-				+ name + ", blog=" + blog + ", sex=" + sex + ", state=" + state + ", key=" + keyCode + ", keyDate="
-				+ keyDate + ", introduction=" + introduction + ", showEmail=" + showEmail + ", enabled=" + enabled
-				+ ", role_user=" + role_user + "]";
 	}
 	
 }

@@ -1,5 +1,6 @@
 package xKing.user.service;
 
+import xKing.user.domain.ChangePassword;
 import xKing.user.domain.User;
 
 public interface UserService {
@@ -13,4 +14,6 @@ public interface UserService {
 	boolean activateUser(final String username, final String key);
 	
 	User updateProfile(final User userUpdateMessage);
+
+	boolean changePassword(String username, ChangePassword changePassword);
 }

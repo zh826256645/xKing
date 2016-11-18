@@ -11,24 +11,30 @@
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
 		<script type="text/javascript" src="<c:url value="/js/jquery-3.1.1.min.js"/>" ></script>
 		<script type="text/javascript" src="<c:url value="/js/checkout.js"/>" ></script>
+		<script type="text/javascript" src="<c:url value="/js/utils.js"/>" ></script>
 	</head>
 	<body class="index">
 		<div class="lucency">
 			<div class="row lucency-div">
 				<div class="col-md-5">
 					<P class="lucency-logo">xKing <img src="img/crown.png" class="crown"></P>
-					<c:if test="${param.error != null}">
-					<div class="messge-tip messge-tip-error"><i class="fa fa-info-circle" aria-hidden="true"></i> login failed,try again!</div>
-					</c:if>
-					<c:if test="${error != null}">
-					<div class="messge-tip messge-tip-error"><i class="fa fa-info-circle" aria-hidden="true"></i> ${error}</div>
-					</c:if>
+					
 					<c:if test="${userNotActivateError != null && message == null && error == null}">
-					<div class="messge-tip messge-tip-error"><i class="fa fa-info-circle" aria-hidden="true"></i> ${userNotActivateError}</div>
+						<div class="messge-tip messge-tip-error"><i class="fa fa-info-circle" aria-hidden="true"></i> ${userNotActivateError}
+							<i class="fa fa-times" id="changeMessage" style="float: right;" aria-hidden="true" onclick="javascript:removeFather('changeMessage');"></i>
+						</div>
 					</c:if>
-					<c:if test="${message != null}">
-					<div class="messge-tip messge-tip-info"><i class="fa fa-info-circle" aria-hidden="true"></i> ${message}</div>
+					
+					<c:if test="${message != null || error != null || param.error != null}">
+						<div class="messge-tip 
+						<c:if test="${message != null}">messge-tip-info</c:if>
+						<c:if test="${error != null || param.error != null}">messge-tip-error</c:if>
+						">
+							<i class="fa fa-info-circle" aria-hidden="true"></i> ${message} ${error} <c:if test="${param.error != null}">登录失败，请重新登录！</c:if>
+							<i class="fa fa-times" id="changeMessage" style="float: right;" aria-hidden="true" onclick="javascript:removeFather('changeMessage');"></i>
+						</div>
 					</c:if>
+					
 					<div class="messge"><i id="messageIcons" class="fa fa-commenting-o fa-2x" aria-hidden="true"></i>&nbsp;<font></font></div><br />
 					<sf:form method="post" action="${loginUrl}" onsubmit="return checkedAll()" id="login">
 						<sf:errors></sf:errors>

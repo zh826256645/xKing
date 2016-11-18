@@ -40,3 +40,9 @@ function localDate(date) {
 	return local;
 }
 
+function changePassword() {
+	$("#changePassword").remove();
+	$("#password").css("display", "block");
+}
+
+

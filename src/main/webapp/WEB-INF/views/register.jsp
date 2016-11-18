@@ -20,7 +20,10 @@
 					<P class="lucency-logo">xKing <img src="<c:url value="/img/crown.png"/>" class="crown"></P>
 					<sf:form method="post" id="register" commandName="user" onsubmit="return checkedAll()">
 					<c:if test="${errors == true || error != null}">
-					<div class="messge-tip messge-tip-error"><i class="fa fa-info-circle" aria-hidden="true"></i> ${error}</div>
+					<div class="messge-tip messge-tip-error">
+						<i class="fa fa-info-circle" aria-hidden="true"></i> ${error}
+						<i class="fa fa-times" id="changeMessage" style="float: right;" aria-hidden="true" onclick="javascript:removeFather('changeMessage');"></i>
+					</div>
 					</c:if>
 					<div class="messge"><i id="messageIcons" class="fa fa-commenting-o fa-2x" aria-hidden="true"></i>&nbsp;<font></font></div><br />
 

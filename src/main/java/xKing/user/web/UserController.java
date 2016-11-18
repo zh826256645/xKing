@@ -2,12 +2,11 @@ package xKing.user.web;
 
 import java.security.Principal;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,8 +42,7 @@ public class UserController {
 	// 用户注册
 	@RequestMapping(value="/new", method=RequestMethod.POST)
 	public String register(
-			@Valid User user, 
-			Errors errors,
+			@Validated User user, Errors errors,
 			Model model,
 			RedirectAttributes reModel) {
 		if(errors.hasErrors()) {

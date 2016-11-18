@@ -28,7 +28,7 @@ public class TestUserService {
 	// 测试 login()
 	@Test
 	public void testLogin() {
-		User user = new User(1, "Zhonghao", "123456");
+		User user = new User("Zhonghao", "123456");
 		User _user = userSerivce.Login(user);
 		Assert.assertNotNull(_user);
 	}
@@ -36,8 +36,7 @@ public class TestUserService {
 	// 测试 register()
 	@Test
 	public void testRegister() {
-		User user = new User(2, "Zhonghao", "123456");
-		user.setEmail("826256645@qq.com");
+		User user = new User("Zhonghao", "123456", "826256645@qq.com");
 		User newUser = userSerivce.register(user);
 		Assert.assertNotNull(newUser);
 	}

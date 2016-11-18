@@ -10,6 +10,7 @@ import xKing.mail.domain.Mail;
 import xKing.mail.service.MailService;
 
 import xKing.user.dao.UserRepository;
+import xKing.user.domain.ChangePassword;
 import xKing.user.domain.User;
 import xKing.user.exception.SameUsernameException;
 import xKing.user.exception.UserActivateErrorException;
@@ -102,6 +103,21 @@ public class UserSeviceImpl implements UserService {
 		return currentUser;
 	}
 	
+	// 更改密码
+	@Override
+	public boolean changePassword(String username, ChangePassword changePassword) {
+		User currentUser = this.getUserByUsername(username);
+		String oldPassword = MD5.EncoderByMd5(changePassword.getOldPassword());
+		if(currentUser.getPassword().equals(oldPassword)) {
+			currentUser.setPassword(MD5.EncoderByMd5(changePassword.getNewPassword()));
+			userRepository.save(currentUser);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	
 	// 初始化新用
 	protected User initNewUser(User user) {
 		// 设置激活码
@@ -131,6 +147,7 @@ public class UserSeviceImpl implements UserService {
 		mail.setTime(Utils.getCurrentDate());
 		return mail;
 	}
+
 
 
 	
