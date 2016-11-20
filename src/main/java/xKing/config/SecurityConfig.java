@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,8 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.authorizeRequests()
 				.antMatchers("/**/**.**").permitAll()
 				.antMatchers("/").permitAll()
-				.antMatchers("/user").anonymous()
-				.antMatchers("/user/new").anonymous()
+				.antMatchers(HttpMethod.GET, "/user").permitAll()
+				.antMatchers(HttpMethod.GET, "/user/new").permitAll()
+				.antMatchers(HttpMethod.POST, "/user").anonymous()
+				.antMatchers(HttpMethod.POST, "/user/new").anonymous()
 				.antMatchers("/user/state").anonymous()
 				.anyRequest().authenticated()
 			.and()

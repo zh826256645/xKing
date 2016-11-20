@@ -117,6 +117,15 @@ public class UserSeviceImpl implements UserService {
 		}
 	}
 
+	// 更新 introduction
+	@Override
+	public String updateIntroduction(String username, String newIntroduction) {
+			User currentUser = userRepository.findByUsername(username);
+			currentUser.setIntroduction(newIntroduction);
+			userRepository.save(currentUser);
+			return newIntroduction;
+	}
+
 	
 	// 初始化新用
 	protected User initNewUser(User user) {
@@ -147,8 +156,4 @@ public class UserSeviceImpl implements UserService {
 		mail.setTime(Utils.getCurrentDate());
 		return mail;
 	}
-
-
-
-	
 }

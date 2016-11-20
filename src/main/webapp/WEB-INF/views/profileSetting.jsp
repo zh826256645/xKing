@@ -3,10 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>Profile-setting</title>
+		<title><s:message code="profileSetting.Profile-setting"/> </title>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/application.css"/>"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/>"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/font-awesome.min.css"/>"/>
@@ -31,15 +32,15 @@
 					<i class="fa fa-times" id="changeMessage" style="float: right;" aria-hidden="true" onclick="javascript:removeFather('changeMessage');"></i>
 				</p>
 				</c:if>
-				<label>Setting</label>
+				<label><s:message code="profileSetting.setting"/></label>
 				<hr />
-				<label>Public information</label><br />
+				<label><s:message code="profileSetting.PublicInformation"/></label><br />
 				<div class="row  center-profile-setting">
 					<sf:form action="setting/profile" method="post">
 					<div class="col-sm-5 center-profile-setting-left">
-						<p>Name</p>
+						<p><s:message code="profileSetting.name"/></p>
 						<input class="form-control" value="${currentUser.name}" name="name"/>
-						<p>Country</p>
+						<p><s:message code="profileSetting.country"/></p>
 						<div class="row">
 							<div class="col-sm-7">
 								<select class="form-control">
@@ -49,7 +50,7 @@
 								</select>
 							</div>
 						</div>
-						<p>Email</p>
+						<p><s:message code="profileSetting.email"/></p>
 						<div class="row">
 							<div class="col-sm-7">
 								<select class="form-control">
@@ -58,28 +59,28 @@
 								</select>
 							</div>
 						</div>
-						<p>Blog</p>
+						<p><s:message code="profileSetting.blog"/></p>
 						<input class="form-control" name="blog" value="${currentUser.blog}" />
-						<p>introduction</p>
+						<p><s:message code="profileSetting.introduction"/></p>
     					<textarea class="form-control" rows="3" name="introduction">${currentUser.introduction}</textarea><br />
 						<input type="submit" class="btn btn-success" value="Update profile"/>
 					</div>
 					</sf:form>
 					<div class="col-sm-4 col-sm-offset-1">
 						<img class="img-circle" src="<c:url value="/img/profile.jpg"/>"/>
-						<button class="btn btn-info">Update new picture</button><br />
+						<button class="btn btn-info"><s:message code="profileSetting.updatePicture"/></button><br />
 						<hr />
-						<label>Security</label>
+						<label><s:message code="profileSetting.security"/></label>
 						<div class="row center-profile-setting-left">
-							<p>Account state:<font> Normal</font></p>
-							<p>The last login IP:<font>192.168.114.1 MeiZhou</font></p>
-							<p>Password security levels</p>
+							<p><s:message code="profileSetting.AccountState"/>:<font> Normal</font></p>
+							<p><s:message code="profileSetting.ip"/>:<font>192.168.114.1 MeiZhou</font></p>
+							<p><s:message code="profileSetting.level"/></p>
 							<div class="progress">
 								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									 aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
 								</div>
 							</div>
-							<label class="btn btn-info" id="changePassword" onclick="changePassword();">Change your password</label>
+							<label class="btn btn-info" id="changePassword" onclick="changePassword();"><s:message code="profileSetting.changePassword"/></label>
 							<div class="row">
 							<div id="password" style="display: none;" class="col-sm-9">
 								<sf:form action="setting/password" method="post">
@@ -92,10 +93,10 @@
 						</div>
 					</div>
 				</div>
-				<label>Private information</label><br />
+				<label><s:message code="profileSetting.privateInformation"/></label><br />
 				<div class="col-sm-8 center-profile-setting">
 					<div class="center-profile-setting-li">
-						<label>Message</label>
+						<label><s:message code="profileSetting.message"/></label>
 						<form>
 							<p><input type="checkbox" value=""/>  Don't accept the message of strangers</p>
 							<font>If you don't want the stranger sent message to you, you can check this setting!</font><br /><br />
@@ -103,7 +104,7 @@
 						</form>
 					</div>
 					<div class="center-profile-setting-li">
-						<label>Friends</label>
+						<label><s:message code="profileSetting.friends"/></label>
 						<form>
 							<p><input type="checkbox" value=""/>  Don't accept  friend request</p>
 							<font>If you don't want to agree the friend request from stranger, you can check this setting!</font><br /><br />

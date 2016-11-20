@@ -28,13 +28,19 @@ public class UserController {
 	
 	// 登录页面
 	@RequestMapping(method=RequestMethod.GET)
-	public String loginPage() {
+	public String loginPage(Principal principal) {
+		if(principal != null) {
+			return "redirect:/user/me";
+		}
 		return "login";
 	}
 	
 	// 注册页面
 	@RequestMapping(value="/new",method=RequestMethod.GET)
-	public String registerPage(Model model) {
+	public String registerPage(Principal principal, Model model) {
+		if(principal != null) {
+			return "redirect:/user/me";
+		}
 		model.addAttribute(new User());
 		return "register";
 	}

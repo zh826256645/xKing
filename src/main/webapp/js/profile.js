@@ -28,8 +28,39 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
 	$("#logout").click(function() {
 		$("#logoutForm").submit();
+	});
+	
+	$("#changeIntroduction").click(function() {
+	 	$("#changeIntroduction").css("display", "none");
+	 	$("#input-introduction").css("display", "inline");
+	 	$("#introduction-submit").css("display", "inline");
+	});
+	
+	$("#introduction-submit").click(function() {
+		var introduction = $("#input-introduction").val();
+		var header = $("meta[name='_csrf_header']").attr("content");  
+		var token = $("meta[name='_csrf']").attr("content");  
+		$.ajax({
+			type:"post",
+			url:"http://localhost:8888/xKing/setting/introduction",
+			data:introduction,
+			contentType:"text/html;charset=UTF-8",
+			async:true,
+		    beforeSend: function(xhr){  
+		        xhr.setRequestHeader(header, token);  
+		    },
+			success:function(data) {
+				if(data != null) {
+				 	$("#changeIntroduction").css("display", "inline");
+				 	$("#input-introduction").css("display", "none");
+				 	$("#introduction-submit").css("display", "none");
+				 	$("#changeIntroduction").html(data);
+				}
+			}
+		});
 	});
 });
 

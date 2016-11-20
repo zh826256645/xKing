@@ -16,4 +16,6 @@ public interface UserService {
 	User updateProfile(final User userUpdateMessage);
 
 	boolean changePassword(String username, ChangePassword changePassword);
+
+	String updateIntroduction(String username, String newIntroduction);
 }

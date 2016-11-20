@@ -598,5 +598,12 @@ a.forget {
 	font-size: 16px;
 	color: #34495E;
 }
+.input-introduction {
+	display: none;
+	margin-right: 10px;
+	position: relative;
+	width: 240px !important;
+	height: 6px !important;
+}
 
 	

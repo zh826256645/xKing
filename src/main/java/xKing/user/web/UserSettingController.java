@@ -1,14 +1,19 @@
 package xKing.user.web;
 
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import xKing.user.domain.ChangePassword;
@@ -39,6 +44,7 @@ public class UserSettingController {
 		return "profileSetting";
 	}
 	
+	// 更改用户基本信息
 	@RequestMapping(value="/profile", method=RequestMethod.POST)
 	public String profileSetting(User user, Principal principal, RedirectAttributes reMoldel) {
 		user.setUsername(principal.getName());
@@ -47,6 +53,7 @@ public class UserSettingController {
 		return "redirect:/setting";
 	}
 	
+	// 更改用户密码
 	@RequestMapping(value="/password", method=RequestMethod.POST)
 	public String passwordChange(
 			@Validated ChangePassword changePassword, Errors errors,
@@ -63,5 +70,15 @@ public class UserSettingController {
 			reModel.addFlashAttribute("error", "密码错误，更改失败！");
 			return "redirect:/setting";
 		}
+	}
+	
+	// 更改 introduction
+	@PostMapping(path="/introduction",produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String ajaxUpdateIntroduction(@RequestBody String newIntroduction, Principal principal) throws UnsupportedEncodingException {
+		if(userService.updateIntroduction(principal.getName(), newIntroduction) != null) {
+			return newIntroduction;
+		}
+		return null;
 	}
 }

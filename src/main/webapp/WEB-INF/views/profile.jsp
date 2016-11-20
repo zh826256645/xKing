@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<meta charset="UTF-8">
+		<meta name="_csrf" content="${_csrf.token}"/><meta name="_csrf_header" content="${_csrf.headerName}">
 		<title>Profile</title>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/application.css"/>"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/>"/>
@@ -29,7 +29,11 @@
 							<p class="center-person-message-label">Public information:</p>
 							<p><i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;&nbsp;<font>${currentUser.email}</font></p>
 							<p><i class="fa fa-rss" aria-hidden="true"></i> &nbsp;&nbsp;<a href="#">${currentUser.blog}</a></p>
-							<p><i class="fa fa-comment" aria-hidden="true"></i> &nbsp;&nbsp;<font>${currentUser.introduction}</font>&nbsp;<i style="color: #398439;" class="fa fa-pencil" aria-hidden="true"></i></p>
+							<p class="hide-p"><i class="fa fa-comment" aria-hidden="true"></i> &nbsp;
+								<a id="changeIntroduction" style="color: #000000;cursor: pointer;" title="修改">${currentUser.introduction}</a>
+										<input id="input-introduction" class="input input-introduction"/>
+								 <i style="color: #398439;cursor: pointer;display: none;" id="introduction-submit" title="提交" class="fa fa-pencil" aria-hidden="true"></i>		
+							</p>
 						</div>
 						<div class="col-sm-4 center-person-message-right">
 							<p class="center-person-message-label">Tasks:<font><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp<font id="dateNow"></font></font></p>
