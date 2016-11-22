@@ -18,4 +18,6 @@ public interface UserService {
 	boolean changePassword(String username, ChangePassword changePassword);
 
 	String updateIntroduction(String username, String newIntroduction);
+
+	String saveUploda(final String originalFilename, final String username);
 }

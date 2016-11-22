@@ -41,6 +41,7 @@ public class UserSucceedLoginHander extends SavedRequestAwareAuthenticationSucce
 			request.getSession().setAttribute("userNotActivateError", "账号未激活，请到点击注册邮箱中的激活链接！");
 			authentication.setAuthenticated(false);
 		} else {
+			request.getSession().setAttribute("userPicture", user.getPicture());
 			request.getSession().removeAttribute("userNotActivateError");
 		}
 		super.onAuthenticationSuccess(request, response, authentication);

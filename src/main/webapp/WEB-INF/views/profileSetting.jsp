@@ -7,6 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
+		 <security:csrfMetaTags/>
 		<title><s:message code="profileSetting.Profile-setting"/> </title>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/application.css"/>"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/>"/>
@@ -67,8 +68,34 @@
 					</div>
 					</sf:form>
 					<div class="col-sm-4 col-sm-offset-1">
-						<img class="img-circle" src="<c:url value="/img/profile.jpg"/>"/>
-						<button class="btn btn-info"><s:message code="profileSetting.updatePicture"/></button><br />
+						<img class="img-circle" src="<c:url value='/user/${username}/p'/>?pId=${userPicture}"/>
+						<button class="btn btn-info" data-toggle="modal" data-target="#myModal"><s:message code="profileSetting.updatePicture"/></button><br />
+						<!-- 模态框（Modal） -->
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+											&times;
+										</button>
+										<h4 class="modal-title" id="myModalLabel">
+											上传头像
+										</h4>
+									</div>
+									<div class="modal-body">
+									<sf:form action="setting/picture?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">			
+										<input type="file" name="profilePicture" accept="image/jpeg,image/png,image/gif"/><br/>
+										<input type="submit" class="btn btn-primary" value="提交"/>	
+									</sf:form>	
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+										</button>		
+									</div>
+									
+								</div><!-- /.modal-content -->
+							</div><!-- /.modal -->
+						</div>
 						<hr />
 						<label><s:message code="profileSetting.security"/></label>
 						<div class="row center-profile-setting-left">

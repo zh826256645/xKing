@@ -22,7 +22,7 @@
 				<div class="panel panel-default center-person">
 					<div class="row">
 						<div class="col-lg-3 center-person-message-left">
-							<img class="img-circle center-person-picture center-block " src="<c:url value="/img/profile.jpg"/>">
+							<img class="img-circle center-person-picture center-block " src="<c:url value='/user/${username}/p'/>?pId=${userPicture}">
 							<p class="h4 center-person-message-username"><font>Hi</font> <a href="<c:url value="/setting"/>" class="center-person-message-username">${currentUser.name}</a></p>
 						</div>
 						<div class="col-sm-4 center-person-message-center">
@@ -30,9 +30,10 @@
 							<p><i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;&nbsp;<font>${currentUser.email}</font></p>
 							<p><i class="fa fa-rss" aria-hidden="true"></i> &nbsp;&nbsp;<a href="#">${currentUser.blog}</a></p>
 							<p class="hide-p"><i class="fa fa-comment" aria-hidden="true"></i> &nbsp;
-								<a id="changeIntroduction" style="color: #000000;cursor: pointer;" title="修改">${currentUser.introduction}</a>
+								<a id="changeIntroduction" style="color: #22313F;cursor: pointer;" title="修改">${currentUser.introduction}</a>
 										<input id="input-introduction" class="input input-introduction"/>
-								 <i style="color: #398439;cursor: pointer;display: none;" id="introduction-submit" title="提交" class="fa fa-pencil" aria-hidden="true"></i>		
+								 <i style="color: #398439;cursor: pointer;display: none;" id="introduction-submit" title="提交" class="fa fa-pencil" aria-hidden="true"></i> &nbsp;
+								 <i style="display: none" class="fa fa-times" id="getBack" aria-hidden="true"></i>		
 							</p>
 						</div>
 						<div class="col-sm-4 center-person-message-right">

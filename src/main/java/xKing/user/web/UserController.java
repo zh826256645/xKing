@@ -1,12 +1,20 @@
 package xKing.user.web;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.Principal;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import xKing.user.domain.User;
 import xKing.user.exception.SameUsernameException;
 import xKing.user.service.UserService;
+import xKing.utils.FontImageUtils;
 
 // User 模块的控制器
 @Controller
@@ -117,6 +126,36 @@ public class UserController {
 		default :
 			model.addAttribute("tab", "profile");
 			return "profile";
+		}
+	}
+	
+	
+	// 获取用户头像
+	@GetMapping(path="/{userId}/p")
+	public void userPicture( 
+			@PathVariable(name="userId") String username,
+			@RequestParam(name="pId", defaultValue="-10101010") String userPicture,
+			HttpServletResponse response) throws IOException
+	{
+		// 新用户，生成图片
+		if(userPicture.substring(0, 1).equals("-")){
+			response.setContentType("image/png"); 
+			FontImageUtils utils = new FontImageUtils();
+			int rgb = Integer.valueOf(userPicture);
+			FontImageUtils.outPut(utils.getImage(100, 100, rgb, username), response.getOutputStream());;
+		} else {
+			int i = userPicture.lastIndexOf(".");
+			String filenameExtension = userPicture.substring(i+1);
+			response.setContentType("image/" + filenameExtension); 
+			InputStream in = new FileInputStream("c://xKing//" + userPicture);
+			OutputStream out = response.getOutputStream();
+			byte[] b = new byte[1024]; 
+			while(in.read(b) != -1) {
+				out.write(b);
+			}
+			in.close();
+			out.flush();
+			out.close();
 		}
 	}
 	

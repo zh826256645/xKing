@@ -37,6 +37,7 @@ $(document).ready(function() {
 	 	$("#changeIntroduction").css("display", "none");
 	 	$("#input-introduction").css("display", "inline");
 	 	$("#introduction-submit").css("display", "inline");
+	 	$("#getBack").css("display", "inline");
 	});
 	
 	$("#introduction-submit").click(function() {
@@ -57,10 +58,17 @@ $(document).ready(function() {
 				 	$("#changeIntroduction").css("display", "inline");
 				 	$("#input-introduction").css("display", "none");
 				 	$("#introduction-submit").css("display", "none");
+					$("#getBack").css("display", "none");
 				 	$("#changeIntroduction").html(data);
 				}
 			}
 		});
+	});
+	$("#getBack").click(function() {
+	 	$("#changeIntroduction").css("display", "inline");
+	 	$("#input-introduction").css("display", "none");
+	 	$("#introduction-submit").css("display", "none");
+		$("#getBack").css("display", "none");
 	});
 });
 

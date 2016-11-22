@@ -16,6 +16,7 @@ import xKing.user.exception.SameUsernameException;
 import xKing.user.exception.UserActivateErrorException;
 import xKing.user.exception.UserNotExistException;
 import xKing.user.service.UserService;
+import xKing.utils.FontImageUtils;
 import xKing.utils.MD5;
 import xKing.utils.Utils;
 
@@ -126,6 +127,21 @@ public class UserSeviceImpl implements UserService {
 			return newIntroduction;
 	}
 
+	// 保存用户上传文件
+	@Override
+	public String saveUploda(String originalFilename, String username) {
+		String extensionName = getExtensionName(originalFilename);
+		User currentUser = this.getUserByUsername(username);
+		if(extensionName != null) {
+			long pid = currentUser.getId();
+			String picuture = pid + extensionName;
+			currentUser.setPicture(picuture);
+			userRepository.save(currentUser);
+			return picuture;
+		}
+		return null;
+	}
+	
 	
 	// 初始化新用
 	protected User initNewUser(User user) {
@@ -135,6 +151,8 @@ public class UserSeviceImpl implements UserService {
 		String password = user.getPassword();
 		String MD5Password = MD5.EncoderByMd5(password);
 		newUser.setPassword(MD5Password);	
+		FontImageUtils utils = new FontImageUtils();
+		newUser.setPicture(utils.randomColor().getRGB() + "");
 		return newUser;
 	}
 	
@@ -156,4 +174,14 @@ public class UserSeviceImpl implements UserService {
 		mail.setTime(Utils.getCurrentDate());
 		return mail;
 	}
+	
+	// 截取文件名后缀
+	protected String getExtensionName(String fileName) {
+		int i = fileName.lastIndexOf(".");
+		if((i > -1) && i < (fileName.length() - 1)) {
+			return fileName.substring(i); 
+		}
+		return null;
+	}
+	
 }

@@ -186,7 +186,7 @@ a.forget {
 .active i {
 	display: inline;
 }
-.active a:focus {
+.active a:hover {
 	color: white !important;
 	background-color: #428bca !important;
 }

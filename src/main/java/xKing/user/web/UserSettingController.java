@@ -1,8 +1,11 @@
 package xKing.user.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import xKing.user.domain.ChangePassword;
@@ -80,5 +85,21 @@ public class UserSettingController {
 			return newIntroduction;
 		}
 		return null;
+	}
+	
+	
+	// 更新头像
+	@PostMapping(path="/picture")
+	public String updateProfilePicture(
+			@RequestPart("profilePicture") MultipartFile userPicture,
+			Principal principal,
+			HttpServletRequest request,
+			RedirectAttributes reModel) throws IOException 
+	{
+		String pid = userService.saveUploda(userPicture.getOriginalFilename(),principal.getName());
+		userPicture.transferTo(new File("c://Xking//" + pid));
+		request.getSession().setAttribute("userPicture", pid);
+		reModel.addFlashAttribute("message", "更改头像成功！");
+		return "redirect:/setting";
 	}
 }

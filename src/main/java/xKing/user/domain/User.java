@@ -36,6 +36,7 @@ public class User {
 	private String email;
 	private String name;
 	private String blog;
+	private String picture;
 	private String sex;
 	private int state;
 	private String keyCode;
@@ -127,6 +128,12 @@ public class User {
 	}
 	public void setRole_user(String role_user) {
 		this.role_user = role_user;
+	}
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 	public User() {
 		
