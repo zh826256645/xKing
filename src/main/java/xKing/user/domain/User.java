@@ -147,5 +147,11 @@ public class User {
 		this.password = password;
 		this.email = email;
 	}
-	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", name="
+				+ name + ", blog=" + blog + ", picture=" + picture + ", sex=" + sex + ", state=" + state + ", keyCode="
+				+ keyCode + ", keyDate=" + keyDate + ", introduction=" + introduction + ", showEmail=" + showEmail
+				+ ", enabled=" + enabled + ", role_user=" + role_user + "]";
+	}
 }

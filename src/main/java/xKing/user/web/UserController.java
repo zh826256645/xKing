@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import xKing.branch.service.BranchMemberSerivce;
+import xKing.branch.service.BranchService;
 import xKing.user.domain.User;
 import xKing.user.exception.SameUsernameException;
 import xKing.user.service.UserService;
@@ -34,6 +36,9 @@ public class UserController {
 	// 注入 UserService
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private BranchMemberSerivce branchMemberSerivce;
 	
 	// 登录页面
 	@RequestMapping(method=RequestMethod.GET)
@@ -115,6 +120,8 @@ public class UserController {
 			model.addAttribute("tab", "profile");
 			return "profile";
 		case "branches" :
+			model.addAttribute("branchMembers", 
+					branchMemberSerivce.findByUserId(currentUser));
 			model.addAttribute("tab", "branches");
 			return "myBranches";
 		case "tasks" :

@@ -23,16 +23,8 @@
 			<!-- left -->
 			<%@ include file="userleft.jsp" %>
 			<!-- center -->
-			<div class="col-sm-7 col-sm-offset-2 center-myBranches">
-				<c:if test="${message != null || error != null}">
-				<p class="
-				<c:if test="${message != null }">bg-info </c:if>
-				<c:if test="${error != null }">bg-danger </c:if>
-				change-message">
-					<i class="fa fa-comment" aria-hidden="true"></i> ${message}${error}
-					<i class="fa fa-times" id="changeMessage" style="float: right;" aria-hidden="true" onclick="javascript:removeFather('changeMessage');"></i>
-				</p>
-				</c:if>
+			<div class="col-lg-7 col-md-10 col-sm-10 col-sm-offset-2 center-myBranches">
+				<%@ include file="message.jsp" %>
 				<label><s:message code="profileSetting.setting"/></label>
 				<hr />
 				<label><s:message code="profileSetting.PublicInformation"/></label><br />

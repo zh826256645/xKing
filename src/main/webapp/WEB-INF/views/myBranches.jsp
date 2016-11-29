@@ -20,7 +20,7 @@
 		</div>
 		<!-- Center -->
 		<div class="row">
-			<div class="col-sm-7 col-sm-offset-2">
+			<div class="col-lg-7 col-md-10 col-sm-10 col-sm-offset-2">
 				<div class="center-myBranches">
 					<label>Branches</label>
 					<hr />
@@ -44,86 +44,39 @@
 								<input type="submit" class="btn btn-default" value="Search"/>
 							</div>
 						</form>
+						<div class="col-sm-2">
+							<a href="<c:url value="/branch/new"/>"><button class="btn btn-success">Create New Branche</button></a>
+						</div>
 					</div>
 					<label>All Branches</label>
+					<c:forEach items="${branchMembers}" var="branchMember" >
 					<div class="row center-branches-li">
 						<div class="col-sm-2">
 							<img src="<c:url value="/img/branche.jpeg"/>"  class="img-thumbnail"/><br />
 
 						</div>
 						<div class="col-sm-8 center-branches-li-message">
-							<a href="#">LongMaoShe</a><br />
+							<div style="margin-bottom: 10px"><a href="#">${branchMember.branch.branchName}</a><br/></div>
 							<span class="label label-info">Association</span>
 							<p class="p-label">Information</p>
 							<div class="row center-branches-li-message-body">
 								<div class="col-sm-5" style="background-color: #f9fafc;">
 									<p>Users:<font>100</font> &nbsp;&nbsp;&nbsp;Active:<font>79</font></p>
-									<p>Public Email:<font>826256645@qq.com</font></p>
-									<p class="hide-p">Affiche Info:<font>Please contact my email!</font></p>
+									<p>Public Email:<font>${branchMember.branch.email}</font></p>
+									<p class="hide-p">Affiche Info:<font>${branchMember.branch.intro}</font></p>
 								</div>
 								<div class="col-sm-5" style="background-color: #f9fafc;">
-									<p>Your name:<font>ZhongHao</font></p>
-									<p>Role:<font>minister</font>&nbsp;&nbsp;&nbsp;Your Task:<font>4</font></p>
-									<p>Your Email:<font>826256645@qq.com</font></p>
+									<p>Your name:<font>${branchMember.memberName}</font></p>
+									<p>Role:<font>${branchMember.branchRole.roleName}</font>&nbsp;&nbsp;&nbsp;Your Task:<font>4</font></p>
+									<p>Your Email:<font>${branchMember.email}</font></p>
 								</div>
 							</div>
 						</div>
 						<div class="col-sm-1">
-							<button class="btn">enter Into</button>
+							<a href=""><button class="btn btn-info">enter Into</button></a>
 						</div>
 					</div>
-					<div class="row center-branches-li">
-						<div class="col-sm-2">
-							<img src="<c:url value="/img/branche.jpeg"/>"  class="img-thumbnail"/><br />
-
-						</div>
-						<div class="col-sm-8 center-branches-li-message">
-							<a href="#">LongMaoShe</a><br />
-							<span class="label label-info">Association</span>
-							<p class="p-label">Information</p>
-							<div class="row center-branches-li-message-body">
-								<div class="col-sm-5" style="background-color: #f9fafc;">
-									<p>Users:<font>100</font> &nbsp;&nbsp;&nbsp;Active:<font>79</font></p>
-									<p>Public Email:<font>826256645@qq.com</font></p>
-									<p class="hide-p">Affiche Info:<font>Please contact my email!</font></p>
-								</div>
-								<div class="col-sm-5" style="background-color: #f9fafc;">
-									<p>Your name:<font>ZhongHao</font></p>
-									<p>Role:<font>minister</font>&nbsp;&nbsp;&nbsp;Your Task:<font>4</font></p>
-									<p>Your Email:<font>826256645@qq.com</font></p>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-1">
-							<button class="btn">enter Into</button>
-						</div>
-					</div>
-					<div class="row center-branches-li">
-						<div class="col-sm-2">
-							<img src="<c:url value="/img/branche.jpeg"/>"  class="img-thumbnail"/><br />
-
-						</div>
-						<div class="col-sm-8 center-branches-li-message">
-							<a href="#">LongMaoShe</a><br />
-							<span class="label label-info">Association</span>
-							<p class="p-label">Information</p>
-							<div class="row center-branches-li-message-body">
-								<div class="col-sm-5" style="background-color: #f9fafc;">
-									<p>Users:<font>100</font> &nbsp;&nbsp;&nbsp;Active:<font>79</font></p>
-									<p>Public Email:<font>826256645@qq.com</font></p>
-									<p class="hide-p">Affiche Info:<font>Please contact my email!</font></p>
-								</div>
-								<div class="col-sm-5" style="background-color: #f9fafc;">
-									<p>Your name:<font>ZhongHao</font></p>
-									<p>Role:<font>minister</font>&nbsp;&nbsp;&nbsp;Your Task:<font>4</font></p>
-									<p>Your Email:<font>826256645@qq.com</font></p>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-1">
-							<button class="btn">enter Into</button>
-						</div>
-					</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>

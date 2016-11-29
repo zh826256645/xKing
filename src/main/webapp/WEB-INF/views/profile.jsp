@@ -18,14 +18,14 @@
 		<div class="row">
 			<%@ include file="userleft.jsp" %>
 			<!-- center -->
-			<div class="col-sm-7 col-sm-offset-2 center">
+			<div class="col-lg-7 col-md-10 col-sm-10 col-sm-offset-2 center">
 				<div class="panel panel-default center-person">
 					<div class="row">
-						<div class="col-lg-3 center-person-message-left">
+						<div class="col-md-3 center-person-message-left">
 							<img class="img-circle center-person-picture center-block " src="<c:url value='/user/${username}/p'/>?pId=${userPicture}">
 							<p class="h4 center-person-message-username"><font>Hi</font> <a href="<c:url value="/setting"/>" class="center-person-message-username">${currentUser.name}</a></p>
 						</div>
-						<div class="col-sm-4 center-person-message-center">
+						<div class="col-md-4 center-person-message-center">
 							<p class="center-person-message-label">Public information:</p>
 							<p><i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;&nbsp;<font>${currentUser.email}</font></p>
 							<p><i class="fa fa-rss" aria-hidden="true"></i> &nbsp;&nbsp;<a href="#">${currentUser.blog}</a></p>
@@ -36,7 +36,7 @@
 								 <i style="display: none" class="fa fa-times" id="getBack" aria-hidden="true"></i>		
 							</p>
 						</div>
-						<div class="col-sm-4 center-person-message-right">
+						<div class="col-md-4 center-person-message-right">
 							<p class="center-person-message-label">Tasks:<font><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp<font id="dateNow"></font></font></p>
 							<p class="center-person-message-right-task"><a href="#">5</a><font>(TO DO)</font></p>
 						</div>
@@ -44,7 +44,7 @@
 				</div>
 			</div>
 			<!-- Right -->
-			<div class="col-sm-3 right">
+			<div class="col-sm-3 right visible-lg">
 				<div class="row">
 					<div class="panel panel-default col-sm-10 right-messge">
 						<div class="row">
@@ -61,7 +61,7 @@
 		</div>
 		<!-- Center -->
 		<div class="row">
-			<div class="col-sm-7 col-sm-offset-2">
+			<div class="col-lg-7 col-md-10 col-sm-10 col-sm-offset-2">
 				<!-- Branches -->
 				<div class="row">
 					<div class="col-sm-12">
@@ -236,7 +236,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-3">
+			<div class="col-sm-3 visible-lg">
 				<div class="row">
 					<div class="panel panel-default col-sm-10 left-panel">
 						<div class="panel-heading left-panel-label">

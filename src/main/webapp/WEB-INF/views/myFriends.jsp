@@ -19,7 +19,7 @@
 		</div>
 		<!-- Center -->
 		<div class="row">
-			<div class="col-sm-7 col-sm-offset-2">
+			<div class="col-lg-7 col-md-10 col-sm-10 col-sm-offset-2">
 				<div class="center-myBranches center-myTasks">
 					<label>Friends</label>
 					<hr />
