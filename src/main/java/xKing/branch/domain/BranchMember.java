@@ -26,10 +26,10 @@ public class BranchMember {
 	@ManyToOne
 	@JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
 	private User user;
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="branch_id", referencedColumnName="id", nullable=false)
 	private Branch branch;
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="branch_role_id", referencedColumnName="id", nullable=false)
 	private BranchRole branchRole;
 	public long getId() {

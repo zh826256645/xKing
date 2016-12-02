@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +14,6 @@ import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
 import xKing.branch.domain.BranchRole;
 import xKing.branch.service.BranchMemberSerivce;
-import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.user.domain.User;
 
@@ -36,7 +37,7 @@ public class BranchMemberServiceImpl implements BranchMemberSerivce{
 	public BranchMember findByBranchidAndUserId(Branch branch, User user) {
 		BranchMember branchMember = branchMemberRepository.findByBranch_idAndUser_id(branch.getId(), user.getId());
 		if(branchMember == null) {
-			throw new AbsentException("BranchMember 不存在！");
+			return null;
 		}
 		return branchMember;
 	}
@@ -59,4 +60,17 @@ public class BranchMemberServiceImpl implements BranchMemberSerivce{
 		return branchMembers;
 	}
 
+	// 通过用户 Id 查找 BranchMember 分页
+	@Override
+	public Page<BranchMember> findByUserId(User user, Pageable pageable) {
+		Page<BranchMember> page = branchMemberRepository.findByUser_id(user.getId(), pageable);
+		return page;
+	}
+
+	// 排序查找
+	@Override
+	public Page<BranchMember> findByUserIdOrderByJoinTimeDesc(User user, Pageable pageable) {
+		return branchMemberRepository.findByUser_idOrderByJoinTimeDesc(user.getId(), pageable);
+	}
+	
 }

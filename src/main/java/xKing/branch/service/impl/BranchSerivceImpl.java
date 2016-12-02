@@ -1,9 +1,14 @@
 package xKing.branch.service.impl;
 
+import java.io.InputStream;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +21,10 @@ import xKing.branch.service.BranchRoleSerivce;
 import xKing.branch.service.BranchService;
 import xKing.exception.AbsentException;
 import xKing.exception.SameNameException;
+import xKing.picture.service.PictureService;
 import xKing.user.domain.User;
 import xKing.user.service.UserService;
+import xKing.utils.Utils;
 
 /**
  * Branch Service
@@ -38,6 +45,9 @@ public class BranchSerivceImpl implements BranchService {
 	
 	@Autowired
 	private BranchMemberSerivce branchMemberService;
+	
+	@Autowired
+	private PictureService pictureService;
 	
 	@Autowired
 	private UserService userService;
@@ -71,7 +81,7 @@ public class BranchSerivceImpl implements BranchService {
 		}
 		User currentUser = userService.getUserByUsername(username);
 		branch.setUser(currentUser);
-		branch.setCreateTime(new Date());
+		branch.setCreateTime(new Timestamp(new Date().getTime()));
 		Branch currentBranch = branchRepository.save(branch);
 		// 创建 branch admin 身份,level 为 1
 		BranchRole adminBranchRole = branchRoleSerivce.addBranchRole(currentBranch, yourRoleName, 1);
@@ -83,14 +93,31 @@ public class BranchSerivceImpl implements BranchService {
 				currentBranch, adminBranchRole, currentUser);
 		return this.findBranchByBranchName(branch.getBranchName());
 	}
-
-	// 获取用户的 Branch
+	
+	// 创建 Branch 有图片
 	@Override
-	public List<Branch> getBranchByUsername(String username) {
-		User currentUser = userService.getUserByUsername(username);
-		List<BranchMember> branchMembers = branchMemberService.findByUserId(currentUser);
-		
-		return null;
+	public Branch createBranch(InputStream in, Branch branch, String yourRoleName, String newComerRoleName,
+			String username) {
+		branch.setPicture(branch.getBranchName() + Utils.getExtensionName(branch.getPicture()));
+		pictureService.savePicuture(in, branch.getPicture());
+		return createBranch(branch, yourRoleName, newComerRoleName, username);
 	}
 
+	// 获取 Branch 图片
+	@Override
+	public InputStream getBranchPicture(String picutre) {	
+		return pictureService.getPicture(picutre);
+	}
+
+	// 获取首页的 Branch
+	@Override
+	public List<Branch> getBranchByUserId(String username, Pageable pageable) {
+		Page<BranchMember> page = branchMemberService.findByUserIdOrderByJoinTimeDesc(userService.getUserByUsername(username), pageable);
+		List<Branch> branches = new ArrayList<Branch>();
+		List<BranchMember> BranchMembers = page.getContent();
+		for (BranchMember branchMember : BranchMembers) {
+			branches.add(branchMember.getBranch());
+		} 
+		return branches;
+	}
 }

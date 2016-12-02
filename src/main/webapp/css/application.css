@@ -611,7 +611,7 @@ a.forget {
 }
 .branch-img-small {
 	width: 160px;
-	height: 200px;
+	height: 200px !important;
 }
 .left-branch-message p {
 	color: white;

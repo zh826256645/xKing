@@ -31,7 +31,7 @@
         			</form>
         			<ul class="nav navbar-nav navbar-right">
         				<li> 
-							<img src="<c:url value='/user/${username}/p'/>?pId=${userPicture}" class="img-circle heard-profile-picture">
+							<img src="<c:url value='/picture/user/${username}'/>?pid=${userPicture}" class="img-circle heard-profile-picture">
         				</li>
         				<li class="dropdown">
         					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

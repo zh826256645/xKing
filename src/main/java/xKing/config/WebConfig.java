@@ -59,7 +59,9 @@ public class WebConfig extends WebMvcConfigurerAdapter{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new UploadInterceptor()).addPathPatterns("/setting/picture");
+		registry.addInterceptor(new UploadInterceptor()).
+			addPathPatterns("/setting/picture").
+				addPathPatterns("/branch/new");
 	}
 	
 	

@@ -1,9 +1,12 @@
 package xKing.branch.service;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,5 +52,11 @@ public class TestBranchService {
 		Assert.assertNotNull(currentBranch);
 		System.out.println(currentBranch);
 		
+	}
+	
+	@Test
+	@Transactional
+	public void testGetBranchByUserId() {
+		List<Branch> branches = branchService.getBranchByUserId("ZhongHao", new PageRequest(0,2));
 	}
 }

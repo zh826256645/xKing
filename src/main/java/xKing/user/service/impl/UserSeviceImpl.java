@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import xKing.mail.domain.Mail;
 import xKing.mail.service.MailService;
-
 import xKing.user.dao.UserRepository;
 import xKing.user.domain.ChangePassword;
 import xKing.user.domain.User;
@@ -29,7 +28,8 @@ public class UserSeviceImpl implements UserService {
 	private MailService mailSerivce;
 	
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
+
 	
 	// 用户认证
 	@Override

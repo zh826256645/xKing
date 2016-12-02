@@ -14,7 +14,7 @@
 		<script type="text/javascript" src="<c:url value="/js/profile.js"/>" ></script>
 	</head>
 	<body>
-		<%@ include file="header.jsp" %>
+		<%@ include file="../header.jsp" %>
 		<div class="row">
 			<%@ include file="userleft.jsp" %>
 			<!-- center -->
@@ -22,7 +22,7 @@
 				<div class="panel panel-default center-person">
 					<div class="row">
 						<div class="col-md-3 center-person-message-left">
-							<img class="img-circle center-person-picture center-block " src="<c:url value='/user/${username}/p'/>?pId=${userPicture}">
+							<img class="img-circle center-person-picture center-block " src="<c:url value='/picture/user/${username}'/>?pid=${userPicture}">
 							<p class="h4 center-person-message-username"><font>Hi</font> <a href="<c:url value="/setting"/>" class="center-person-message-username">${currentUser.name}</a></p>
 						</div>
 						<div class="col-md-4 center-person-message-center">
@@ -68,34 +68,26 @@
 						<div class="panel panel-default">
 							<div class="panel-heading" style="border-bottom: 0px; background-color: #f9fafc;">
 								<h3 class="panel-title" style="font-weight: bold;color: black;">
-								<a href="#">Your Branches</a> <a href="myBranches.html" class="more">more branches</a>
+								<a href="<c:url value="/user/me?tab=branches&page=0&size=3" />">Your Branches</a> <a href="<c:url value="/user/me?tab=branches&page=0&size=3" />" class="more">more branches</a>
 								</h3>
 							</div>
 							<div class="panel-body">
+							<c:if test="${branches.size() > 0}">
+								<c:forEach begin="0" end="${branches.size()}" items="${branches}" var="branch">
 								<div class="center-branches col-sm-6">
 									<div>
-										<img class="img-thumbnail branch-picture" src="<c:url value="/img/branche.jpeg"/>" />
-										<a href="#">LongMaoShe</a><br />
-										<small>This a Branche and have some peopel who like LongMao.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</small>
-										<p class="center-branches-time"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;Founded in 2016-10-31</p>
+										<img class="img-thumbnail branch-picture branch-img-small" src="<c:url value="/picture/branch/${branch.branchName}?pid=${branch.picture}"/>" />
+										<a href="<c:url value="/branch/${branch.branchName}"/>">${branch.branchName}</a><br />
+										<small>${branch.intro}</small>
+										<p class="center-branches-time"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;Founded in ${branch.createTime}</p>
 										<p class="center-branches-information">
 											<i class="fa fa-user" aria-hidden="true"></i>&nbsp;100&nbsp;&nbsp;&nbsp;&nbsp;
 											<i class="fa fa-level-up" aria-hidden="true"></i>&nbsp;13
 										</p>
 									</div>
 								</div>
-								<div class="center-branches col-sm-6">
-									<div>
-										<img class="img-thumbnail branch-picture" src="<c:url value="/img/branche.jpeg"/>" />
-										<a href="#">LongMaoShe</a><br />
-										<small>This a Branche and have some peopel who like LongMao.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</small>
-										<p class="center-branches-time"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;Founded in 2016-10-31</p>
-										<p class="center-branches-information">
-											<i class="fa fa-user" aria-hidden="true"></i>&nbsp;100&nbsp;&nbsp;&nbsp;&nbsp;
-											<i class="fa fa-level-up" aria-hidden="true"></i>&nbsp;13
-										</p>
-									</div>
-								</div>
+								</c:forEach>
+							</c:if>
 							</div>
 						</div>
 					</div>

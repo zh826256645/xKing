@@ -14,7 +14,7 @@
 		<script type="text/javascript" src="<c:url value="/js/profile.js"/>" ></script>
 	</head>
 	<body>
-		<%@ include file="header.jsp" %>
+		<%@ include file="../header.jsp" %>
 		<div class="row">
 			<%@ include file="userleft.jsp" %>
 		</div>
@@ -22,6 +22,7 @@
 		<div class="row">
 			<div class="col-lg-7 col-md-10 col-sm-10 col-sm-offset-2">
 				<div class="center-myBranches">
+				<%@ include file="../message.jsp" %>1
 					<label>Branches</label>
 					<hr />
 					<div class="row center-myBranches-up">
@@ -49,14 +50,13 @@
 						</div>
 					</div>
 					<label>All Branches</label>
-					<c:forEach items="${branchMembers}" var="branchMember" >
+					<c:forEach items="${page.content}" var="branchMember" >
 					<div class="row center-branches-li">
 						<div class="col-sm-2">
-							<img src="<c:url value="/img/branche.jpeg"/>"  class="img-thumbnail"/><br />
-
+							<img src="<c:url value="/picture/branch/${branchMember.branch.branchName}?pid=${branchMember.branch.picture}"/>"  class="branch-img-small"/><br />
 						</div>
 						<div class="col-sm-8 center-branches-li-message">
-							<div style="margin-bottom: 10px"><a href="#">${branchMember.branch.branchName}</a><br/></div>
+							<div style="margin-bottom: 10px"><a href="<c:url value="/branch/${branchMember.branch.branchName}"/>">${branchMember.branch.branchName}</a><br/></div>
 							<span class="label label-info">Association</span>
 							<p class="p-label">Information</p>
 							<div class="row center-branches-li-message-body">
@@ -73,12 +73,54 @@
 							</div>
 						</div>
 						<div class="col-sm-1">
-							<a href=""><button class="btn btn-info">enter Into</button></a>
+							<a href="<c:url value="/branch/${branchMember.branch.branchName}"/>"><button class="btn btn-info">enter Into</button></a>
 						</div>
 					</div>
 					</c:forEach>
 				</div>
 			</div>
 		</div>
+		<c:if test="${page.totalPages >= 1}">
+		<div class="row">
+			<div class="col-lg-7 col-md-10 col-sm-10 col-sm-offset-2">
+				<div style="float: right;">
+					<ul class="pagination" >
+						<li><a href="<c:url value="/user/me?tab=branches&page=0&size=3"/>">&laquo;</a></li>
+						<c:if test="${page.totalPages <= 5}">
+							<c:forEach begin="1" end="${page.totalPages}" var="p">
+								<li 
+								<c:if test="${page.number == p-1}">class="active"</c:if>
+								><a href="<c:url value="/user/me?tab=branches&page=${p-1}&size=3"/>">${p}</a></li>
+							</c:forEach>
+						</c:if>
+						<c:if test="${page.totalPages > 5}">
+							<c:if test="${page.number - 2 <= 0}">
+								<c:forEach begin="1" end="5" var="p">
+								<li 
+								<c:if test="${page.number == p-1}">class="active"</c:if>
+								><a href="<c:url value="/user/me?tab=branches&page=${p-1}&size=3"/>">${p}</a></li>
+								</c:forEach>
+							</c:if>
+							<c:if test="${page.number -2 > 0 && page.totalPages - page.number > 3}">
+								<c:forEach begin="${page.number - 1}" end="${page.number + 3}" var="p">
+								<li 
+								<c:if test="${page.number == p-1}">class="active"</c:if>
+								><a href="<c:url value="/user/me?tab=branches&page=${p-1}&size=3"/>">${p}</a></li>
+								</c:forEach>
+							</c:if>
+							<c:if test="${page.totalPages - page.number <= 3}">
+								<c:forEach begin="${page.number - 3}" end="${page.totalPages}" var="p">
+								<li 
+								<c:if test="${page.number == p-1}">class="active"</c:if>
+								><a href="<c:url value="/user/me?tab=branches&page=${p-1}&size=3"/>">${p}</a></li>
+								</c:forEach>
+							</c:if>
+						</c:if>
+						<li><a href="<c:url value="/user/me?tab=branches&page=${page.totalPages-1}&size=3"/>">&raquo;</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		</c:if>
 	</body>
 </html>

@@ -13,7 +13,7 @@
 		<script type="text/javascript" src="<c:url value="/js/profile.js"/>" ></script>
 	</head>
 	<body>
-		<%@ include file="header.jsp" %>
+		<%@ include file="../header.jsp" %>
 		<div class="row">
 			<%@ include file="userleft.jsp" %>
 		</div>

@@ -34,20 +34,13 @@ public class UploadInterceptor implements HandlerInterceptor {
 			 while(iterator.hasNext()) {
 				 String formkey = iterator.next();
 				 MultipartFile multipartFile = multipartRequest.getFile(formkey);
-				 if(!multipartFile.getOriginalFilename().trim().isEmpty()) {
-					 String type = multipartFile.getContentType();
-					 if(type.equalsIgnoreCase("image/jpeg") || type.equalsIgnoreCase("image/gif") || type.equalsIgnoreCase("image/png")) {
-						 request.getSession().removeAttribute("error");
-						 return true;
-					 } else {
-						 String retUrl = request.getHeader("Referer");
-						 request.getSession().setAttribute("error", "上传文件格式不正确！");
-						 response.sendRedirect(retUrl);
-						 return false;
-					 }
+				 String type = multipartFile.getContentType();
+				 if(type.equalsIgnoreCase("image/jpeg") || type.equalsIgnoreCase("image/gif") || type.equalsIgnoreCase("image/png")) {
+					 request.getSession().removeAttribute("error");
+					 return true;
 				 } else {
 					 String retUrl = request.getHeader("Referer");
-					 request.getSession().setAttribute("error", "上传文件为空！");
+					 request.getSession().setAttribute("error", "上传文件格式不正确！");
 					 response.sendRedirect(retUrl);
 					 return false;
 				 }

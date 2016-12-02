@@ -6,6 +6,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,5 +50,26 @@ public class TestBranchMemberRepository {
 		BranchMember branchMember = list.get(0);
 		Assert.assertNotNull(branchMember);
 		System.out.println(branchMember);
+	}
+	
+	@Test
+	@Transactional
+	public void testPageFindByUser_id() {
+		Pageable pageable = new PageRequest(0, 2);
+		Page<BranchMember> page = branchMemberRepository.findByUser_id(1L, pageable);
+		System.out.println(page.getSize());
+		System.out.println(page.getTotalPages());
+		System.out.println(page.getNumber());
+		System.out.println(page.getContent().size());
+		System.out.println(page.getTotalElements());
+	}
+	
+	@Test
+	@Transactional
+	public void testFindByUser_idOrderByJointime() {
+		Pageable pageable = new PageRequest(0, 2);
+		Page<BranchMember> page = branchMemberRepository.findByUser_idOrderByJoinTimeDesc(1L, pageable);
+		System.out.println(page.getContent().get(0).getBranch().getBranchName());
+		System.out.println(page.getContent().get(1).getBranch().getBranchName());
 	}
 }

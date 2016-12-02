@@ -9,6 +9,8 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -39,6 +41,9 @@ public class UserController {
 	
 	@Autowired
 	private BranchMemberSerivce branchMemberSerivce;
+	
+	@Autowired
+	private BranchService branchService;
 	
 	// 登录页面
 	@RequestMapping(method=RequestMethod.GET)
@@ -107,7 +112,8 @@ public class UserController {
 	// 获取本人信息
 	@RequestMapping(value="/me", method=RequestMethod.GET)
 	public String profile(
-			@RequestParam(name="tab", defaultValue="profile") final String tab, 
+			@RequestParam(name="tab", defaultValue="profile") final String tab,
+			Pageable pageable,
 			Model model,
 			Principal principal) {
 		
@@ -117,54 +123,27 @@ public class UserController {
 		switch(tab) 
 		{
 		case "profile" :
+			model.addAttribute("branches", branchService.getBranchByUserId(
+					principal.getName(), new PageRequest(0, 2)));
 			model.addAttribute("tab", "profile");
-			return "profile";
+			return "/user/profile";
 		case "branches" :
-			model.addAttribute("branchMembers", 
-					branchMemberSerivce.findByUserId(currentUser));
+			model.addAttribute("page", 
+					branchMemberSerivce.findByUserId(currentUser, pageable));
 			model.addAttribute("tab", "branches");
-			return "myBranches";
+			return "/user/myBranches";
 		case "tasks" :
 			model.addAttribute("tab", "tasks");
-			return "myTasks";
+			return "/user/myTasks";
 		case "friends" :
 			model.addAttribute("tab", "friends");
-			return "myFriends";
+			return "/user/myFriends";
 		default :
 			model.addAttribute("tab", "profile");
-			return "profile";
+			return "/user/profile";
 		}
 	}
 	
-	
-	// 获取用户头像
-	@GetMapping(path="/{userId}/p")
-	public void userPicture( 
-			@PathVariable(name="userId") String username,
-			@RequestParam(name="pId", defaultValue="-10101010") String userPicture,
-			HttpServletResponse response) throws IOException
-	{
-		// 新用户，生成图片
-		if(userPicture.substring(0, 1).equals("-")){
-			response.setContentType("image/png"); 
-			FontImageUtils utils = new FontImageUtils();
-			int rgb = Integer.valueOf(userPicture);
-			FontImageUtils.outPut(utils.getImage(100, 100, rgb, username), response.getOutputStream());;
-		} else {
-			int i = userPicture.lastIndexOf(".");
-			String filenameExtension = userPicture.substring(i+1);
-			response.setContentType("image/" + filenameExtension); 
-			InputStream in = new FileInputStream("c://xKing//" + userPicture);
-			OutputStream out = response.getOutputStream();
-			byte[] b = new byte[1024]; 
-			while(in.read(b) != -1) {
-				out.write(b);
-			}
-			in.close();
-			out.flush();
-			out.close();
-		}
-	}
 	
 	// 获取用户信息,非本人
 	@RequestMapping(value="/{userId}")

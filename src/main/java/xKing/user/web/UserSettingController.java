@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import xKing.picture.service.PictureService;
 import xKing.user.domain.ChangePassword;
 import xKing.user.domain.User;
 import xKing.user.service.UserService;
@@ -40,13 +41,16 @@ public class UserSettingController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private PictureService pictureService;
+	
 	// 获取用户设置页面
 	@RequestMapping(method=RequestMethod.GET)
 	public String upDatePage(Model model, Principal principal) {
 		final String currentUsername = principal.getName();
 		User currentUser = userService.getUserByUsername(currentUsername);
 		model.addAttribute("currentUser", currentUser);
-		return "profileSetting";
+		return "/user/profileSetting";
 	}
 	
 	// 更改用户基本信息
@@ -97,7 +101,7 @@ public class UserSettingController {
 			RedirectAttributes reModel) throws IOException 
 	{
 		String pid = userService.saveUploda(userPicture.getOriginalFilename(),principal.getName());
-		userPicture.transferTo(new File("c://Xking//" + pid));
+		pictureService.savePicuture(userPicture.getInputStream(), pid);
 		request.getSession().setAttribute("userPicture", pid);
 		reModel.addFlashAttribute("message", "更改头像成功！");
 		return "redirect:/setting";

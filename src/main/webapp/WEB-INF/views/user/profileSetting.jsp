@@ -18,13 +18,13 @@
 		<script type="text/javascript" src="<c:url value="/js/utils.js"/>" ></script>
 	</head>
 	<body>
-		<%@ include file="header.jsp" %>
+		<%@ include file="../header.jsp" %>
 		<div class="row">
 			<!-- left -->
 			<%@ include file="userleft.jsp" %>
 			<!-- center -->
 			<div class="col-lg-7 col-md-10 col-sm-10 col-sm-offset-2 center-myBranches">
-				<%@ include file="message.jsp" %>
+				<%@ include file="../message.jsp" %>
 				<label><s:message code="profileSetting.setting"/></label>
 				<hr />
 				<label><s:message code="profileSetting.PublicInformation"/></label><br />
@@ -60,7 +60,7 @@
 					</div>
 					</sf:form>
 					<div class="col-sm-4 col-sm-offset-1">
-						<img class="img-circle" src="<c:url value='/user/${username}/p'/>?pId=${userPicture}"/>
+						<img class="img-circle" src="<c:url value='/picture/user/${username}'/>?pid=${userPicture}"/>
 						<button class="btn btn-info" data-toggle="modal" data-target="#myModal"><s:message code="profileSetting.updatePicture"/></button><br />
 						<!-- 模态框（Modal） -->
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

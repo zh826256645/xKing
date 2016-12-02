@@ -16,16 +16,16 @@
 		<script type="text/javascript" src="<c:url value="/js/utils.js"/>" ></script>
 	</head>
 	<body>
-		<%@ include file="header.jsp" %>
+		<%@ include file="../header.jsp" %>
 		<div class="row">
 			<%@ include file="userleft.jsp" %>
 			<!-- center -->
 			<div class="col-sm-7 col-sm-offset-2 center-myBranches">
-				<%@ include file="message.jsp" %>
+				<%@ include file="../message.jsp" %>
 				<label>Create Branch</label>
 				<hr />
 				<div class="row  center-profile-setting">
-					<sf:form  method="post" commandName="branch">
+					<sf:form  method="post" commandName="branch" enctype="multipart/form-data">
 					<div class="col-sm-6 center-profile-setting-left">
 						<label>Basic information</label><br />
 						<p>Branch's Name</p>
@@ -75,7 +75,7 @@
 						<img id="preview" style="width: 200px;height: 250px;"/>
    						<br /> <br />
    						<label class="btn btn-info" id="addPicture">Add picture</label>
-    					<input style="display: none;" type="file" id="file"  onchange="imgPreview(this)" />
+    					<input style="display: none;" type="file" id="file" name="branchPicture"  onchange="imgPreview(this)" />
     					<br />
 					</div>
 					</sf:form>

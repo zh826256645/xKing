@@ -9,7 +9,7 @@
 				<a id="overview" href="<c:url value="/user/me"/>"><i class="fa fa-cloud fa-3x" aria-hidden="true"></i><br/><s:message code="left.menu.overview"/></a>
 			</li>
 			<li id="branches" <c:if test="${tab == 'branches'}"> class="active" </c:if>>
-				<a id="branches" href="<c:url value="/user/me?tab=branches"/>"><i class="fa fa-university fa-3x" aria-hidden="true"></i><br/><s:message code="left.menu.branches"/></a>
+				<a id="branches" href="<c:url value="/user/me?tab=branches&page=0&size=3"/>"><i class="fa fa-university fa-3x" aria-hidden="true"></i><br/><s:message code="left.menu.branches"/></a>
 			</li>
 			<li id="tasks" <c:if test="${tab == 'tasks'}"> class="active" </c:if>>
 				<a id="tasks" href="<c:url value="/user/me?tab=tasks"/>"><i class="fa fa-tasks fa-3x" aria-hidden="true"></i><br/><s:message code="left.menu.tasks"/></a>

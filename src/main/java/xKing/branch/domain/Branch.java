@@ -1,11 +1,12 @@
 package xKing.branch.domain;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,8 +37,8 @@ public class Branch {
 	private String email;
 	private String intro;
 	private String picture;
-	private Date createTime;
-	@ManyToOne(targetEntity=User.class)
+	private Timestamp createTime;
+	@ManyToOne(targetEntity=User.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
 	private User user;
 	@OneToMany(targetEntity=BranchRole.class, mappedBy="branch", cascade={CascadeType.ALL})
@@ -84,11 +85,12 @@ public class Branch {
 		this.picture = picture;
 	}
 	
-	public Date getCreateTime() {
+
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
