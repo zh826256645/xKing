@@ -20,7 +20,7 @@
 		</div>
 		<!-- Center -->
 		<div class="row">
-			<div class="col-lg-7 col-md-10 col-sm-10 col-sm-offset-2">
+			<div class="col-md-10 col-sm-10 col-sm-offset-2">
 				<div class="center-myBranches">
 				<%@ include file="../message.jsp" %>1
 					<label>Branches</label>
@@ -82,7 +82,7 @@
 		</div>
 		<c:if test="${page.totalPages >= 1}">
 		<div class="row">
-			<div class="col-lg-7 col-md-10 col-sm-10 col-sm-offset-2">
+			<div class="col-md-10 col-sm-10 col-sm-offset-2">
 				<div style="float: right;">
 					<ul class="pagination" >
 						<li><a href="<c:url value="/user/me?tab=branches&page=0&size=3"/>">&laquo;</a></li>

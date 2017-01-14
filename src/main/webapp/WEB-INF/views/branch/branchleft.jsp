@@ -10,11 +10,19 @@
 			<i class="fa fa-level-up" aria-hidden="true"></i>&nbsp;13</p>
 	</div>
 	<ul class="nav nav-sidebar left-branch-ul">
-		<li id="overview" class="active">
+		<li id="overview" 
+			<c:if test="${tab == 'index'}">
+			class="active"
+			</c:if>
+		>
 			<a id="overview" href="<c:url value="/branch/${currentBranch.branchName}" />">Index</a>
 		</li>
-		<li id="branches" >
-			<a id="branches" href="BranchMessage.html">Message</a>
+		<li id="branches"
+			<c:if test="${tab == 'message'}">
+			class="active"
+			</c:if>
+		 >
+			<a id="branches" href="<c:url value="/branch/${currentBranch.branchName}/message" />">Message</a>
 		</li>
 		<li id="tasks" >
 			<a id="tasks" href="BranchMember.html">Members</a>

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import xKing.branch.domain.Branch;
+import xKing.user.domain.User;
 
 public interface BranchService {
 
@@ -19,5 +20,5 @@ public interface BranchService {
 	
 	InputStream getBranchPicture(String branchName);
 	
-	List<Branch> getBranchByUserId(String username, Pageable pageable);
+	List<Branch> getBranchByUserId(User user, Pageable pageable);
 }

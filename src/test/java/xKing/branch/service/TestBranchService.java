@@ -16,6 +16,7 @@ import xKing.branch.service.BranchService;
 import xKing.config.DataConfig;
 import xKing.config.MailConfig;
 import xKing.config.RootConfig;
+import xKing.user.service.UserService;
 
 /**
  * 测试 BranchService
@@ -30,6 +31,9 @@ public class TestBranchService {
 
 	@Autowired
 	private BranchService branchService;
+	
+	@Autowired
+	private UserService userService;
 	
 	
 	// 测试 findBranchByBranchId(long branchId)
@@ -57,6 +61,6 @@ public class TestBranchService {
 	@Test
 	@Transactional
 	public void testGetBranchByUserId() {
-		List<Branch> branches = branchService.getBranchByUserId("ZhongHao", new PageRequest(0,2));
+		List<Branch> branches = branchService.getBranchByUserId(userService.getUserByUsername("ZhongHao"), new PageRequest(0,2));
 	}
 }

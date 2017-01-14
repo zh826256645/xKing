@@ -109,10 +109,9 @@ public class BranchSerivceImpl implements BranchService {
 		return pictureService.getPicture(picutre);
 	}
 
-	// 获取首页的 Branch
 	@Override
-	public List<Branch> getBranchByUserId(String username, Pageable pageable) {
-		Page<BranchMember> page = branchMemberService.findByUserIdOrderByJoinTimeDesc(userService.getUserByUsername(username), pageable);
+	public List<Branch> getBranchByUserId(User user, Pageable pageable) {
+		Page<BranchMember> page = branchMemberService.findByUserIdOrderByJoinTimeDesc(user, pageable);
 		List<Branch> branches = new ArrayList<Branch>();
 		List<BranchMember> BranchMembers = page.getContent();
 		for (BranchMember branchMember : BranchMembers) {

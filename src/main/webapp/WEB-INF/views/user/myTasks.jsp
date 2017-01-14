@@ -20,7 +20,7 @@
 		</div>
 		<!-- Center -->
 		<div class="row">
-			<div class="col-lg-7 col-md-10 col-sm-10 col-sm-offset-2">
+			<div class="col-md-10 col-sm-10 col-sm-offset-2">
 				<div class="center-myBranches center-myTasks">
 					<label>Tasks</label>
 					<hr />
@@ -107,7 +107,6 @@
 						<div class="col-sm-2 col-sm-offset-2">
 							<button class="btn btn-success">Finish</button>
 							<button class="btn more-message">More</button>
-									<button onclick="add();">+++</button>
 						</div>
 					</div>
 				</div>

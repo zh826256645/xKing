@@ -124,7 +124,7 @@ public class UserController {
 		{
 		case "profile" :
 			model.addAttribute("branches", branchService.getBranchByUserId(
-					principal.getName(), new PageRequest(0, 2)));
+					currentUser, new PageRequest(0, 2)));
 			model.addAttribute("tab", "profile");
 			return "/user/profile";
 		case "branches" :

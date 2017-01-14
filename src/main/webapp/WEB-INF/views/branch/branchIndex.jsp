@@ -12,7 +12,7 @@
 		<script type="text/javascript" src="<c:url value="/js/jquery-3.1.1.min.js"/>" ></script>
 		<script type="text/javascript" src="<c:url value="/js/bootstrap.min.js"/>" ></script>
 		<script type="text/javascript" src="<c:url value="/js/profile.js"/>" ></script>
-	</head>
+</head>
 	<body>
 		<%@ include file="../header.jsp" %>
 		<div class="row">

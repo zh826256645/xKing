@@ -63,6 +63,7 @@ public class BranchController {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/user/me";
 		}
+		model.addAttribute("tab", "index");
 		return "/branch/branchIndex";
 	}
 	
@@ -108,4 +109,13 @@ public class BranchController {
 		}
 	}
 	
+	// Branch Message 页面
+	@GetMapping(path="/{branchName}/message")
+	public String getBranchMessage(@PathVariable("branchName") String branchName, 
+			Model model) {
+		
+		model.addAttribute("currentBranch", branchService.findBranchByBranchName(branchName));
+		model.addAttribute("tab", "message");
+		return "/branch/branchMessage";
+	}
 }

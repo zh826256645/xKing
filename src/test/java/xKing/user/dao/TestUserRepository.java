@@ -1,6 +1,14 @@
 package xKing.user.dao;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,10 +32,8 @@ import xKing.user.domain.User;
 @ContextConfiguration(classes={DataConfig.class, MailConfig.class})
 public class TestUserRepository {
 
-
 	@Autowired
 	private UserRepository userRepository;
-
 
 	@Test
 	@Transactional
@@ -49,5 +55,18 @@ public class TestUserRepository {
 		User newUser = userRepository.save(user);
 		Assert.assertNotNull(newUser);
 		System.out.println(newUser);
+	}
+	
+	
+	@Test
+	public void test() {
+		Map<String, String> map = new HashMap<>();
+		map.put("1", "value");
+		map.put("2", "value");
+		map.put("3", "value");
+		map.put("4", "value");
+		Set<String> set = map.keySet();
+		set.remove("1");
+		
 	}
 }
