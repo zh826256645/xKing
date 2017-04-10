@@ -6,8 +6,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>xKing</title>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/css/application.css"/>"/>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/>" />
+		<%@ include file="head.jsp" %>
 	</head>
 	<body class="index">
 		<div class="row">

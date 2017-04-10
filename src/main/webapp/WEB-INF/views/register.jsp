@@ -7,11 +7,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>xKing</title>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/css/application.css"/>"/>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/>" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/css/font-awesome.min.css"/>" />
-		<script type="text/javascript" src="<c:url value="/js/jquery-3.1.1.min.js"/>" ></script>
-		<script type="text/javascript" src="<c:url value="/js/checkout.js"/>" ></script>
+		<%@ include file="head.jsp" %>
 	</head>
 	<body class="index">
 		<div class="lucency">
