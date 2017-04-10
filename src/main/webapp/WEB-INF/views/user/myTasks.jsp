@@ -27,7 +27,7 @@
 					<div class="row center-myTasks-up">
 						<div class="col-sm-5">
 							<ul class="nav nav-pills">
-								<li class="active"><a>All <span class="badge">20</a></li>
+								<li class="active"><a>All <span class="badge">20</span></a></li>
 								<li ><a href="#">TO DO <span class="badge">3</span></a></li>
 								<li><a href="#">Urgent <span class="badge">10</span></a></li>
 								<li><a href="#">Finished <span class="badge">3</span></a></li>

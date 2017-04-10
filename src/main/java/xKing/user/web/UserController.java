@@ -1,12 +1,6 @@
 package xKing.user.web;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.security.Principal;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -15,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +19,7 @@ import xKing.branch.service.BranchService;
 import xKing.user.domain.User;
 import xKing.user.exception.SameUsernameException;
 import xKing.user.service.UserService;
-import xKing.utils.FontImageUtils;
+
 
 // User 模块的控制器
 @Controller

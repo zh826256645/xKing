@@ -1,6 +1,5 @@
 package xKing.user.web;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
