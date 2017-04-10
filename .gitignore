@@ -1,1 +1,11 @@
 /target/
+/.idea/
+*.zip
+*.rar
+/__pycache__/*
+*.err
+*.tmp
+*.cfg
+.project
+.settings/*
+.classpath
