@@ -7,6 +7,8 @@ import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -27,16 +29,17 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories("**.dao")
+@PropertySource("classpath:jdbc.properties")
 public class DataConfig {
 	
 	// 数据源
 	@Bean
-	public ComboPooledDataSource dataSource() throws PropertyVetoException {
+	public ComboPooledDataSource dataSource(Environment env) throws PropertyVetoException {
 		ComboPooledDataSource pool = new ComboPooledDataSource();
-		pool.setDriverClass("com.mysql.jdbc.Driver");
-		pool.setJdbcUrl("jdbc:mysql://0.0.0.0:3306/xking");
-		pool.setUser("root");
-		pool.setPassword("123456");
+		pool.setDriverClass(env.getProperty("jdbc.driver"));
+		pool.setJdbcUrl(env.getProperty("jdbc.url"));
+		pool.setUser(env.getProperty("jdbc.user"));
+		pool.setPassword(env.getProperty("jdbc.password"));
 		pool.setInitialPoolSize(5);
 		return pool;
 	}
