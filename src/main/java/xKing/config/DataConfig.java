@@ -1,6 +1,7 @@
 package xKing.config;
 
 import java.beans.PropertyVetoException;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -33,9 +34,9 @@ public class DataConfig {
 	public ComboPooledDataSource dataSource() throws PropertyVetoException {
 		ComboPooledDataSource pool = new ComboPooledDataSource();
 		pool.setDriverClass("com.mysql.jdbc.Driver");
-		pool.setJdbcUrl("jdbc:mysql://localhost:3306/xking");
+		pool.setJdbcUrl("jdbc:mysql://0.0.0.0:3306/xking");
 		pool.setUser("root");
-		pool.setPassword("123");
+		pool.setPassword("123456");
 		pool.setInitialPoolSize(5);
 		return pool;
 	}
@@ -48,6 +49,9 @@ public class DataConfig {
 		LocalContainerEntityManagerFactoryBean emfb = new LocalContainerEntityManagerFactoryBean();
 		emfb.setDataSource(dataSource);
 		emfb.setJpaVendorAdapter(jpaVendorAdapter);
+		Properties jpaProperties = new Properties();
+		jpaProperties.put("hibernate.hbm2ddl.auto", "update");
+		emfb.setJpaProperties(jpaProperties);
 		emfb.setPackagesToScan("**.domain");
 		return emfb;
 	}

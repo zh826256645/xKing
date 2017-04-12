@@ -1,4 +1,5 @@
-<meta name="_csrf" content="${_csrf.token}"/><meta name="_csrf_header" content="${_csrf.headerName}">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/application.css"/>"/>
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/>"/>
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/font-awesome.min.css"/>"/>

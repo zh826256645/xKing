@@ -19,7 +19,7 @@
 				<label>Create Branch</label>
 				<hr />
 				<div class="row  center-profile-setting">
-					<sf:form  method="post" commandName="branch" enctype="multipart/form-data">
+					<sf:form  method="post" commandName="branch" action="?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 					<div class="col-sm-6 center-profile-setting-left">
 						<label>Basic information</label><br />
 						<p>Branch's Name</p>
@@ -47,7 +47,7 @@
 							</div>
 						</div>
 						<p>Intro</p>
-    					<sf:textarea path="intro" class="form-control" rows="3"></sf:textarea><br />
+    					<sf:textarea path="intro"  class="form-control" rows="3"></sf:textarea><br />
     					<label>Basic Setting</label><br />
 						<div class="center-profile-setting-li">
 							<p><input type="checkbox" value=""/>  Visitors could not enter</p>
