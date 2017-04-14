@@ -73,7 +73,7 @@
 										<img class="img-thumbnail branch-picture branch-img-small" src="<c:url value="/picture/branch/${branch.branchName}?pid=${branch.picture}"/>" />
 										<a href="<c:url value="/branch/${branch.branchName}"/>">${branch.branchName}</a><br />
 										<small>${branch.intro}</small>
-										<p class="center-branches-time"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;Founded in ${branch.createTime}</p>
+										<p class="center-branches-time"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;创建于 ${branch.createTime}</p>
 										<p class="center-branches-information">
 											<i class="fa fa-user" aria-hidden="true"></i>&nbsp;100&nbsp;&nbsp;&nbsp;&nbsp;
 											<i class="fa fa-level-up" aria-hidden="true"></i>&nbsp;13

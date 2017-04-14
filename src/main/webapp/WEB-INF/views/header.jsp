@@ -13,7 +13,7 @@
 					<!--
              			xKing
                  -->
-					<a class="navbar-brand" href="#" style="font-size: 25px;">xKing</a>
+					<a class="navbar-brand" href="<c:url value="/"/>" style="font-size: 25px;">xKing</a>
 				</div>
 				<!--
               		左导航栏
@@ -21,7 +21,7 @@
                 <div id="navbar" class="navbar-collapse collapse">
                 	<ul class="nav navbar-nav">
                 		<li class="active">
-                			<a href="#"><s:message code="header.index"/></a>
+                			<a href="<c:url value="/user/me"/>"><s:message code="header.index"/></a>
                 		</li>
                 	</ul>
                   	<form class="navbar-form navbar-left" role="search">

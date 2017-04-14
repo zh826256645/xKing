@@ -118,4 +118,18 @@ public class BranchController {
 		model.addAttribute("tab", "message");
 		return "/branch/branchMessage";
 	}
+	
+	
+	// 创建信息页面
+	@GetMapping(path="/{branchName}/message/new")
+	public String createBranchMessagePage(@PathVariable("branchName") String branchName,
+			Principal principal, Model model){
+		
+		Branch currentBranch = branchService.findBranchByBranchName(branchName);
+		User currentUser = userService.getUserByUsername(principal.getName());
+		model.addAttribute("currentBranch", currentBranch);
+		model.addAttribute("currentUser", currentUser);
+		
+		return "/branch/createBranchMessage";
+	}
 }
