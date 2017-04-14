@@ -6,6 +6,7 @@
 	position: relative;
 }
 
+
 .flag {
 }
 
@@ -571,11 +572,13 @@ a.forget {
 .center-profile-setting-left font {
 	font-weight: 100;
 	color: #888888;
-}
+}	
+
 .error-message {
 	font-size: 18px;
 	margin-left: 10px;
 }
+
 .messge-tip {
 	font-size: 13px;
 	padding: 12px;
@@ -611,7 +614,7 @@ a.forget {
 }
 .branch-img-small {
 	width: 160px;
-	height: 200px !important;
+	height: 200px;
 }
 .left-branch-message p {
 	color: white;
@@ -722,5 +725,21 @@ a.forget {
 .branchMember-li-message {
 	padding-top: 20px;
 }
-
-	
+.tab-control {
+	border-left: 1px solid rgb(211,211,211);
+	border-right: 1px solid rgb(211,211,211);
+	border-bottom: 1px solid rgb(211,211,211);
+	padding: 10px;
+}
+.messge-textarea {
+	font-size: 15px !important;
+}
+.message-panel {
+	padding-top: 10px;
+	background-color: rgb(247, 247, 247);
+	border-left: 1px solid rgb(211,211,211);
+	border-right: 1px solid rgb(211,211,211);
+	border-top: 1px solid rgb(211,211,211);
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-top-left-radius: 5px; 
+}
