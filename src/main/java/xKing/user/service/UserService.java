@@ -20,4 +20,6 @@ public interface UserService {
 	String updateIntroduction(String username, String newIntroduction);
 
 	String saveUploda(final String originalFilename, final String username);
+	
+	boolean addFriend(final String username, User currentUser);
 }

@@ -1,6 +1,8 @@
 package xKing.user.web;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -12,12 +14,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchService;
 import xKing.user.domain.User;
 import xKing.user.exception.SameUsernameException;
+import xKing.user.exception.UserNotExistException;
 import xKing.user.service.UserService;
 
 
@@ -141,5 +145,26 @@ public class UserController {
 	@RequestMapping(value="/{userId}")
 	public String userMessage() {
 		return "userMessage";
+	}
+	
+	
+	// 添加朋友
+	@RequestMapping(value="/friends/new", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> addFriend(
+			@RequestParam(required=false, name="username") String username, Principal principal){
+		Map<String, String> map = new HashMap<String, String>();
+		try{
+			User currentUser = userService.getUserByUsername(principal.getName());
+			userService.addFriend(username, currentUser);
+			
+		} catch (UserNotExistException e) {
+			map.put("code", "202");
+			map.put("msg", e.getMessage());
+			return map;
+		}
+		map.put("code", "200");
+		map.put("msg", "添加成功");
+		return map;
 	}
 }

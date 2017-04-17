@@ -1,11 +1,15 @@
 package xKing.user.domain;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -25,15 +29,25 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
+	
 	@NotNull
 	@Size(min=6, max=16, message="{username.size}")
 	private String username;
+	
 	@NotNull
 	@Size(min=6, max=32, message="{password.size}")
 	private String password;
+	
 	@NotNull
 	@Pattern(regexp="^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$", message="{email.pattern}")
 	private String email;
+	
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private List<UserFriend> friends;
+   
+	@OneToMany(mappedBy = "friend", cascade=CascadeType.ALL)
+    protected List<UserFriend> befriended = null;
+    
 	private String name;
 	private String blog;
 	private String picture;
@@ -140,6 +154,18 @@ public class User {
 	}
 	public User(String username, String password) {
 		this(username, password, null);
+	}
+	public List<UserFriend> getFriends() {
+		return friends;
+	}
+	public void setFriends(List<UserFriend> friends) {
+		this.friends = friends;
+	}
+	public List<UserFriend> getBefriended() {
+		return befriended;
+	}
+	public void setBefriended(List<UserFriend> befriended) {
+		this.befriended = befriended;
 	}
 	public User(String username, String password, String email) {
 		super();

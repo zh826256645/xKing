@@ -1,6 +1,7 @@
 package xKing.user.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import xKing.mail.service.MailService;
 import xKing.user.dao.UserRepository;
 import xKing.user.domain.ChangePassword;
 import xKing.user.domain.User;
+import xKing.user.domain.UserFriend;
 import xKing.user.exception.SameUsernameException;
 import xKing.user.exception.UserActivateErrorException;
 import xKing.user.exception.UserNotExistException;
@@ -182,6 +184,28 @@ public class UserSeviceImpl implements UserService {
 			return fileName.substring(i); 
 		}
 		return null;
+	}
+
+	// 添加好友
+	@Override
+	public boolean addFriend(String username, User currentUser) {
+		
+		if(username == null || username.equals(currentUser.getUsername())){
+			String msg = "用户名不能空";
+			if(username.equals(currentUser.getUsername())){
+				msg = "不能添加自己";
+			}
+			throw new UserNotExistException(msg);
+		}
+	
+		User user = getUserByUsername(username);
+		List<UserFriend> friends = currentUser.getFriends();
+		System.out.println(friends);
+		
+		if(user != null){
+			return true;
+		}
+		return false;
 	}
 	
 }
