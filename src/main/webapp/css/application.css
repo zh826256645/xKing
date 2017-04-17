@@ -5,11 +5,12 @@
 	background-repeat: repeat;
 	position: relative;
 }
-
-
+.container {
+	min-width: 1600px;
+	width: 100% !important;
+}
 .flag {
 }
-
 .flag-red {
     height: 170px;
     width: 145px;
@@ -163,13 +164,13 @@ a.forget {
 	margin-top: 5px;
 }
 .left-sidebar {
-	position: fixed !important;
-	bottom: 0;
+	
 	top: 51px;
+	padding-bottom: 700px !important;
 	background-color: #333333;
 	padding-top: 2%;
-	padding-left: 0px !important;
 	padding-right: 0px !important;
+	padding-left: 0px !important;
 	border-right-color: #EEEEEE;
 }
 .left-sidebar a {
@@ -248,8 +249,8 @@ a.forget {
 
 .branch-picture {
 	float: left;
-	width: 150px;
-	height: 150px;
+	width: 150px !important;
+	height: 200px !important;
 	margin-right: 20px;
 }
 .center-branches a {

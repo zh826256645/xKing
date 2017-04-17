@@ -18,66 +18,60 @@
 	</style>
 </head>
 	<body>
-		<%@ include file="../header.jsp" %>
-		<div class="row">
-			<!-- left -->
-			<%@ include file="branchleft.jsp" %>
-			<!-- center -->
-
-			<!-- Right -->
-
-		</div>
-		<!-- Center -->
-		<div class="row">
-			<div class="col-sm-10 col-sm-offset-2">
-				<div class="center-branche-panel">
-					<label>Create Branch's Message</label>
-					<hr />
-					<label>Title</label>
-					<div class="row center-myBranches-up" style="border-bottom: 0px !important;">
-						<form action="#">
-							<div class="col-sm-6">
-								<input type="text"  class="form-control" placeholder="Message Title"/>
+		<div class="container">
+			<%@ include file="../header.jsp" %>
+			<div class="row">
+				<%@ include file="branchleft.jsp" %>
+				<div class="col-xs-10">
+					<div class="center-branche-panel">
+						<label>Create Branch's Message</label>
+						<hr />
+						<label>Title</label>
+						<div class="row center-myBranches-up" style="border-bottom: 0px !important;">
+							<form action="#">
+								<div class="col-sm-6">
+									<input type="text"  class="form-control" placeholder="Message Title"/>
+								</div>
+								<div class="col-sm-2">
+									<div class="input-group">
+									<div class="input-group-addon">Type:</div>
+									<select class="form-control">
+										<option>All</option>
+										<option>School</option>
+										<option>Association</option>
+										<option>Company</option>
+									</select>
+									</div>
+								</div>
+							</form>
+						</div>
+						<label>Message</label>
+						<div class="row">
+							<div class="col-md-8">
+									<div class="message-panel">
+									<ul id="myTab" class="nav nav-tabs" style="padding-left: 20px;">
+										
+									   <li class="active">
+									      <a href="#home" data-toggle="tab">
+									         Write
+									      </a>
+									   </li>
+									   <li><a href="#ios" data-toggle="tab">View</a></li>
+									</ul>
+									</div>
+									<div id="myTabContent" class="tab-content tab-control">
+									   <div class="tab-pane fade in active" id="home">
+										  <br />
+									      <textarea id="text-input" rows="13" class="form-control messge-textarea"  oninput="this.editor.update()">#I'm very happy today!</textarea>
+									   </div>
+									   <div  class="tab-pane fade" id="ios">
+									     <div >
+									     	<article class="markdown-body" id="preview">
+											</article>
+									     </div>
+									   </div>  
+									</div>
 							</div>
-							<div class="col-sm-2">
-								<div class="input-group">
-								<div class="input-group-addon">Type:</div>
-								<select class="form-control">
-									<option>All</option>
-									<option>School</option>
-									<option>Association</option>
-									<option>Company</option>
-								</select>
-								</div>
-							</div>
-						</form>
-					</div>
-					<label>Message</label>
-					<div class="row">
-						<div class="col-md-8">
-								<div class="message-panel">
-								<ul id="myTab" class="nav nav-tabs" style="padding-left: 20px;">
-									
-								   <li class="active">
-								      <a href="#home" data-toggle="tab">
-								         Write
-								      </a>
-								   </li>
-								   <li><a href="#ios" data-toggle="tab">View</a></li>
-								</ul>
-								</div>
-								<div id="myTabContent" class="tab-content tab-control">
-								   <div class="tab-pane fade in active" id="home">
-									  <br />
-								      <textarea id="text-input" rows="13" class="form-control messge-textarea"  oninput="this.editor.update()">#I'm very happy today!</textarea>
-								   </div>
-								   <div  class="tab-pane fade" id="ios">
-								     <div >
-								     	<article class="markdown-body" id="preview">
-										</article>
-								     </div>
-								   </div>  
-								</div>
 						</div>
 					</div>
 				</div>
