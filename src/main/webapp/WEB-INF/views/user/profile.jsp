@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -20,7 +21,7 @@
 							<p class="h4 center-person-message-username"><font>Hi</font> <a href="<c:url value="/setting"/>" class="center-person-message-username">${currentUser.name}</a></p>
 						</div>
 						<div class="col-md-4 center-person-message-center">
-							<p class="center-person-message-label">Public information:</p>
+							<p class="center-person-message-label"><s:message code="profile.publicInformation"/>:</p>
 							<p><i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;&nbsp;<font>${currentUser.email}</font></p>
 							<p><i class="fa fa-rss" aria-hidden="true"></i> &nbsp;&nbsp;<a href="#">${currentUser.blog}</a></p>
 							<p class="hide-p"><i class="fa fa-comment" aria-hidden="true"></i> &nbsp;
@@ -31,7 +32,7 @@
 							</p>
 						</div>
 						<div class="col-md-4 center-person-message-right">
-							<p class="center-person-message-label">Tasks:<font><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp<font id="dateNow"></font></font></p>
+							<p class="center-person-message-label"><s:message code="profile.tasks"/>:<font><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp<font id="dateNow"></font></font></p>
 							<p class="center-person-message-right-task"><a href="#">5</a><font>(TO DO)</font></p>
 						</div>
 					</div>
@@ -62,7 +63,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading" style="border-bottom: 0px; background-color: #f9fafc;">
 								<h3 class="panel-title" style="font-weight: bold;color: black;">
-								<a href="<c:url value="/user/me?tab=branches&page=0&size=3" />">Your Branches</a> <a href="<c:url value="/user/me?tab=branches&page=0&size=3" />" class="more">more branches</a>
+								<a href="<c:url value="/user/me?tab=branches&page=0&size=3" />"><s:message code="profile.yourBranches"/></a> <a href="<c:url value="/user/me?tab=branches&page=0&size=3" />" class="more">more branches</a>
 								</h3>
 							</div>
 							<div class="panel-body">
@@ -92,7 +93,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading" style="border-bottom: 0px; background-color: #f9fafc;">
 								<h3 class="panel-title" style="font-weight: bold;color: black;">
-								<a href="#">Your Tasks</a> <a href="#" class="more">more tasks</a>
+								<a href="#"><s:message code="profile.yourTasks"/></a> <a href="#" class="more">more tasks</a>
 								</h3>
 							</div>
 							<div class="panel-body">
@@ -163,7 +164,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading" style="border-bottom: 0px; background-color: #f9fafc;">
 								<h3 class="panel-title" style="font-weight: bold;color: black;">
-								<a href="#">Your Activity</a> <a href="#" class="more">more activity</a>
+								<a href="#"><s:message code="profile.yourActivity"/></a> <a href="#" class="more">more activity</a>
 								</h3>
 							</div>
 							<div class="panel-body">
@@ -227,7 +228,7 @@
 					<div class="panel panel-default col-sm-10 left-panel">
 						<div class="panel-heading left-panel-label">
 							<h3 class="panel-title">
-								History
+								<s:message code="profile.history"/>
 							</h3>
 						</div>
 						<div class="panel-body left-panel-history">

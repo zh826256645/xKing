@@ -3,6 +3,8 @@ package xKing.config;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 
@@ -35,7 +37,7 @@ public class XKingWebAppInitializer extends AbstractAnnotationConfigDispatcherSe
 	protected void customizeRegistration(Dynamic registration) {
 		registration.setMultipartConfig(
 				// 设置临时保存目录，最大上传图片大小
-				new MultipartConfigElement("C://temp",2*1024*1024, 4*1024*1024, 0)
+				new MultipartConfigElement("/home/zhonghao/temp",2*1024*1024, 4*1024*1024, 0)
 				);
 	}
 }
