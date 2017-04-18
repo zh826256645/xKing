@@ -142,14 +142,23 @@ public class UserController {
 		}
 	}
 	
-	
 	// 获取用户信息,非本人
 	@RequestMapping(value="/{userId}")
 	public String userMessage() {
 		return "userMessage";
 	}
 	
-	// 添加朋友
+	// 获取所有好友请求
+	@RequestMapping(value="/friends/request", method=RequestMethod.GET)
+	public String getFriendsRequest(Model model, Principal principal){
+		User currentUser = userService.getUserByUsername(principal.getName());
+		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("tab", "friends");
+		
+		return "/user/myFriends";
+	}
+	
+	// 发送好友请求
 	@RequestMapping(value="/friends/new", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> addFriend(
@@ -167,6 +176,16 @@ public class UserController {
 		}
 		map.put("code", "200");
 		map.put("msg", "请求发送成功");
+		return map;
+	}
+	
+	// 同意或者，不同意
+	@RequestMapping(value="/friends/state", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> changeFriendState(){
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("code", "200");
+		map.put("msg", "已确认添加！");
 		return map;
 	}
 }

@@ -197,7 +197,7 @@ public class UserSeviceImpl implements UserService {
 		
 		if(username == null || username.equals(currentUser.getUsername())){
 			String msg = "用户名不能空";
-			if(username.equals(currentUser.getUsername())){
+			if(username.equalsIgnoreCase(currentUser.getUsername())){
 				msg = "不能添加自己";
 			}
 			throw new FaultyOperationException(msg);
