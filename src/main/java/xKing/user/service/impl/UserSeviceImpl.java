@@ -1,14 +1,16 @@
 package xKing.user.service.impl;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import xKing.exception.ExistedException;
+import xKing.exception.FaultyOperationException;
 import xKing.mail.domain.Mail;
 import xKing.mail.service.MailService;
+import xKing.user.dao.UserFriendRepository;
 import xKing.user.dao.UserRepository;
 import xKing.user.domain.ChangePassword;
 import xKing.user.domain.User;
@@ -31,6 +33,9 @@ public class UserSeviceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserFriendRepository userFriendRepository;
 
 	
 	// 用户认证
@@ -195,17 +200,23 @@ public class UserSeviceImpl implements UserService {
 			if(username.equals(currentUser.getUsername())){
 				msg = "不能添加自己";
 			}
-			throw new UserNotExistException(msg);
+			throw new FaultyOperationException(msg);
 		}
-	
 		User user = getUserByUsername(username);
-		List<UserFriend> friends = currentUser.getFriends();
-		System.out.println(friends);
-		
-		if(user != null){
-			return true;
+		if(user == null){
+			throw new UserNotExistException("该用户不存在，请确认后在添加");
 		}
-		return false;
+		
+		UserFriend userFriend = userFriendRepository.findOneByUser_idAndFriend_id(currentUser.getId(), user.getId());
+		if(userFriend != null){
+			String msg = "该用户已经是你的好友，不能重复添加";
+			if(userFriend.getState() == 0){
+				msg = "你已经发送发送好友请求，请等待对方确认";
+			}
+			throw new ExistedException(msg);
+		}
+		UserFriend newUserFriend = new UserFriend(currentUser, user);
+		userFriendRepository.save(newUserFriend);
+		return true;
 	}
-	
 }

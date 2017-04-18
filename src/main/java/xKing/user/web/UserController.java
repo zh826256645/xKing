@@ -19,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchService;
+import xKing.exception.ExistedException;
+import xKing.exception.FaultyOperationException;
 import xKing.user.domain.User;
 import xKing.user.exception.SameUsernameException;
 import xKing.user.exception.UserNotExistException;
@@ -147,24 +149,24 @@ public class UserController {
 		return "userMessage";
 	}
 	
-	
 	// 添加朋友
 	@RequestMapping(value="/friends/new", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> addFriend(
 			@RequestParam(required=false, name="username") String username, Principal principal){
+		
 		Map<String, String> map = new HashMap<String, String>();
 		try{
 			User currentUser = userService.getUserByUsername(principal.getName());
 			userService.addFriend(username, currentUser);
 			
-		} catch (UserNotExistException e) {
+		} catch (UserNotExistException|FaultyOperationException|ExistedException e) {
 			map.put("code", "202");
 			map.put("msg", e.getMessage());
 			return map;
 		}
 		map.put("code", "200");
-		map.put("msg", "添加成功");
+		map.put("msg", "请求发送成功");
 		return map;
 	}
 }
