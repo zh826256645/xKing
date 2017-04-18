@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
 import xKing.mail.domain.Mail;
@@ -208,14 +209,35 @@ public class UserSeviceImpl implements UserService {
 		}
 		
 		UserFriend userFriend = userFriendRepository.findOneByUser_idAndFriend_id(currentUser.getId(), user.getId());
-		if(userFriend != null){
+		UserFriend friendUser = userFriendRepository.findOneByUser_idAndFriend_id(user.getId(), currentUser.getId());
+		if(userFriend != null || friendUser != null){
 			String msg = "该用户已经是你的好友，不能重复添加";
-			if(userFriend.getState() == 0){
+			if(userFriend != null && userFriend.getState() == 0){
 				msg = "你已经发送发送好友请求，请等待对方确认";
+			}else if(friendUser != null && friendUser.getState() == 0){
+				msg = "对方已经发送好友请求，请进行确认";
 			}
 			throw new ExistedException(msg);
 		}
+		
 		UserFriend newUserFriend = new UserFriend(currentUser, user);
+		userFriendRepository.save(newUserFriend);
+		return true;
+	}
+
+	// 处理好友请求
+	@Override
+	public boolean setUserFriendState(String username, int state, User currentUser) {
+		if((state != 1 & state != 2) || username == null){
+			throw new FaultyOperationException("错误操作");
+		}
+		User user = this.getUserByUsername(username);
+		UserFriend newUserFriend = userFriendRepository.findOneByUser_idAndFriend_idAndState(user.getId(), currentUser.getId(), 0);
+		if(newUserFriend == null){
+			throw new AbsentException("该用户没有新的好友请求");
+		}
+		
+		newUserFriend.setState(state);
 		userFriendRepository.save(newUserFriend);
 		return true;
 	}

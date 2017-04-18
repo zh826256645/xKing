@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchService;
+import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
 import xKing.user.domain.User;
@@ -182,10 +183,28 @@ public class UserController {
 	// 同意或者，不同意
 	@RequestMapping(value="/friends/state", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> changeFriendState(){
+	public Map<String, String> changeFriendState(
+			@RequestParam(name="state", defaultValue="1", required=false) int state,
+			@RequestParam(name="username", required=false) String username,
+			Principal principal){
+		
 		Map<String, String> map = new HashMap<String, String>();
+		User currentUser = userService.getUserByUsername(principal.getName());
+		try{
+			userService.setUserFriendState(username, state, currentUser);
+		}catch (UserNotExistException|FaultyOperationException|AbsentException e) {
+			map.put("code", "202");
+			map.put("msg", e.getMessage());
+			return map;
+		}
 		map.put("code", "200");
-		map.put("msg", "已确认添加！");
+		String msg = null;
+		if(state == 1){
+			msg = "已确认添加!";
+		} else if(state == 2){
+			msg = "已经拒绝添加!";
+		}
+		map.put("msg", msg);
 		return map;
 	}
 }

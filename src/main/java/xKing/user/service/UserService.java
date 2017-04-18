@@ -22,4 +22,6 @@ public interface UserService {
 	String saveUploda(final String originalFilename, final String username);
 	
 	boolean addFriend(final String username, User currentUser);
+	
+	boolean setUserFriendState(final String username, final int state, User currentUser);
 }

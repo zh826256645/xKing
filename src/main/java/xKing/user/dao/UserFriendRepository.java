@@ -15,4 +15,6 @@ public interface UserFriendRepository extends CrudRepository<UserFriend, Long> {
 	
 	UserFriend findOneByUser_idAndFriend_id(long user_id, long friend_id);
 	
+	UserFriend findOneByUser_idAndFriend_idAndState(long user_id, long friend_id, int state);
+	
 }
