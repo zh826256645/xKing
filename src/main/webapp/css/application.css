@@ -164,13 +164,12 @@ a.forget {
 	margin-top: 5px;
 }
 .left-sidebar {
-	
 	top: 51px;
-	padding-bottom: 700px !important;
+	padding-bottom: 700px;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
 	background-color: #333333;
 	padding-top: 2%;
-	padding-right: 0px !important;
-	padding-left: 0px !important;
 	border-right-color: #EEEEEE;
 }
 .left-sidebar a {
@@ -249,8 +248,8 @@ a.forget {
 
 .branch-picture {
 	float: left;
-	width: 150px !important;
-	height: 200px !important;
+	width: 150px;
+	height: 150px;
 	margin-right: 20px;
 }
 .center-branches a {
@@ -743,4 +742,10 @@ a.forget {
 	border-top: 1px solid rgb(211,211,211);
 	-webkit-border-top-right-radius: 5px;
 	-webkit-border-top-left-radius: 5px; 
+}
+.friend-request {
+	left: 30px;
+}
+.friend-request-li {
+	padding-left: 40px;
 }

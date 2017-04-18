@@ -43,10 +43,11 @@ $(document).ready(function() {
 	$("#introduction-submit").click(function() {
 		var introduction = $("#input-introduction").val();
 		var header = $("meta[name='_csrf_header']").attr("content");  
-		var token = $("meta[name='_csrf']").attr("content");  
+		var token = $("meta[name='_csrf']").attr("content");
+		var host = window.location.host;
 		$.ajax({
 			type:"post",
-			url:"http://localhost:8888/xKing/setting/introduction",
+			url:"http://" + host +"/setting/introduction",
 			data:introduction,
 			contentType:"text/html;charset=UTF-8",
 			async:true,

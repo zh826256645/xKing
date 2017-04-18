@@ -20,4 +20,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	User findByUsername(final String username);
 
 	User saveAndFlush(User user);
+	
+	User findByEmail(final String emali);
 }

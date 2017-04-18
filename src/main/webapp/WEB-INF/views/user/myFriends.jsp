@@ -21,7 +21,7 @@
 								<div class="row center-myBranches-up">
 									<form action="#">
 										<div class="col-xs-4">
-											<input type="text"  class="form-control" placeholder="friend's name"/>
+											<input type="text"  class="form-control" id="friendUsername" placeholder="friend's name"/>
 										</div>
 										<div class="col-xs-3">
 											<div class="input-group">
@@ -34,39 +34,58 @@
 											</select>
 											</div>
 										</div>
-										<div class="col-xs-2">
+										<div class="col-xs-1" style="padding-left: 20px">
 											<input type="submit" class="btn btn-default" value="Search"/>
 										</div>
 									</form>
+										<div class="col-xs-1" style="padding-left: 0px">
+											<button class="btn btn-success" style="height: 32px;margin-top: -15px" id="addFriend">Add Friend</button>
+										</div>
 								</div>
-								<label>All Friends</label>
-								<c:forEach items="${page.content}" var="userFriend">
-								<c:if test="${userFriend.user.username != currentUser.username }">
-									<c:set value="${userFriend.user }" var="friend"/>
-								</c:if>
-								<c:if test="${userFriend.friend.username != currentUser.username }">
-									<c:set value="${userFriend.friend }" var="friend"/>
-								</c:if>
-								<div class="row center-friends-li">
-									<div class="col-xs-1">
-										<img src="<c:url value='/picture/user/${friend.username}'/>?pid=${friend.picture}" class="img-circle heard-profile-picture">
+								<div class="row">
+									<div class="col-xs-8">
+										<label>All Friends</label>
+										<c:forEach items="${page.content}" var="userFriend">
+										<c:if test="${userFriend.user.username != currentUser.username }">
+											<c:set value="${userFriend.user }" var="friend"/>
+										</c:if>
+										<c:if test="${userFriend.friend.username != currentUser.username }">
+											<c:set value="${userFriend.friend }" var="friend"/>
+										</c:if>
+										<div class="row center-friends-li">
+											<div class="col-xs-1">
+												<img src="<c:url value='/picture/user/${friend.username}'/>?pid=${friend.picture}" class="img-circle heard-profile-picture">
+											</div>
+											<div class="col-xs-5 center-friends-li-name">
+												<a href="#"><c:if test="${friend.name != null || friend.name != '' }">${ friend.name }</c:if><c:if test="${ friend.name == null }">${ friend.username }</c:if></a> <span class="badge friend-message">0</span>
+												<p class="p-hide"><i class="fa fa-comment" aria-hidden="true"></i>${ friend.introduction }</p>
+											</div>
+											<div class="col-xs-3 col-xs-offset-2">
+												<button class="btn btn-success">Message</button>
+												<button class="btn btn-danger">Delete</button>
+											</div>
+										</div>
+										</c:forEach>
 									</div>
-									<div class="col-xs-5 center-friends-li-name">
-										<a href="#"><c:if test="${friend.name != null || friend.name != '' }">${ friend.name }</c:if><c:if test="${ friend.name == null }">${ friend.username }</c:if></a> <span class="badge friend-message">0</span>
-										<p class="p-hide"><i class="fa fa-comment" aria-hidden="true"></i>${ friend.introduction }</p>
-									</div>
-									<div class="col-xs-3 col-xs-offset-2">
-										<button class="btn btn-success">Message</button>
-										<button class="btn btn-danger">Delete</button>
+									<div class="col-xs-3 col-xs-offset-1 friend-request">
+										<label>Friend Request</label>
+										<div class="row center-friends-li friend-request-li">
+											<div class="col-xs-3">
+												<img class="img-circle" src="img/profile.jpg">
+											</div>
+											<div class="col-xs-9">
+												<button class="btn">Agree</button>
+												<button class="btn btn-danger">Deny</button>
+											</div>
+										</div>
 									</div>
 								</div>
-								</c:forEach>
 							</div>
 						</div>
 					</div>
 					<c:if test="${page.totalPages >= 1}">
 					<div class="row">
-						<div class="col-xs-10">
+						<div class="col-xs-8">
 							<div style="float: right;">
 								<ul class="pagination" >
 									<li><a href="<c:url value="/user/me?tab=friends&page=0&size=3"/>">&laquo;</a></li>

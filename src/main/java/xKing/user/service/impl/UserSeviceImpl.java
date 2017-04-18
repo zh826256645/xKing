@@ -56,9 +56,16 @@ public class UserSeviceImpl implements UserService {
 	@Override
 	public User register(User user) {
 		User getUser = userRepository.findByUsername(user.getUsername());
+		User eUser = userRepository.findByEmail(user.getEmail());
+				
 		if(getUser != null) {
 			throw new SameUsernameException("用户名重复");
 		}
+		
+		if(eUser != null){
+			throw new SameUsernameException("该 Email 已被注册");
+		}
+		
 		User newUser = userRepository.save(initNewUser(user));
 		Mail mail = this.activationMail(newUser);
 		mailSerivce.sendActivationEmailToUserByVelocity(user.getEmail(), mail);
@@ -198,9 +205,9 @@ public class UserSeviceImpl implements UserService {
 	@Override
 	public boolean addFriend(String username, User currentUser) {
 		
-		if(username == null || username.equals(currentUser.getUsername())){
+		if(username == null || username.equalsIgnoreCase(currentUser.getUsername())){
 			String msg = "用户名不能空";
-			if(username.equalsIgnoreCase(currentUser.getUsername())){
+			if(username != null){
 				msg = "不能添加自己";
 			}
 			throw new FaultyOperationException(msg);

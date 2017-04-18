@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -165,7 +166,7 @@ public class UserController {
 	@RequestMapping(value="/friends/new", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> addFriend(
-			@RequestParam(required=false, name="username") String username, Principal principal){
+			@RequestBody String username, Principal principal){
 		
 		Map<String, String> map = new HashMap<String, String>();
 		try{
