@@ -135,6 +135,8 @@ public class UserController {
 			model.addAttribute("tab", "tasks");
 			return "/user/myTasks";
 		case "friends" :
+			model.addAttribute("page",
+					userService.getFriends(currentUser, pageable));
 			model.addAttribute("tab", "friends");
 			return "/user/myFriends";
 		default :

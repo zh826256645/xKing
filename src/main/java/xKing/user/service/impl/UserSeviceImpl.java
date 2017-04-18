@@ -3,6 +3,8 @@ package xKing.user.service.impl;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -240,5 +242,12 @@ public class UserSeviceImpl implements UserService {
 		newUserFriend.setState(state);
 		userFriendRepository.save(newUserFriend);
 		return true;
+	}
+
+	// 获取好友
+	@Override
+	public Page<UserFriend> getFriends(User currentUser, Pageable pageable) {
+		Page<UserFriend> page = userFriendRepository.findByUser_idOrFriend_idAndStateOrderByCreateTime(currentUser.getId(), currentUser.getId(), 1, pageable);
+		return page;
 	}
 }

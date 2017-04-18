@@ -42,11 +42,11 @@ public class User {
 	@Pattern(regexp="^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$", message="{email.pattern}")
 	private String email;
 	
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="user")
 	private List<UserFriend> friends;
    
-	@OneToMany(mappedBy = "friend", cascade=CascadeType.ALL)
-    protected List<UserFriend> befriended = null;
+	@OneToMany(mappedBy = "friend")
+    protected List<UserFriend> befriended;
     
 	private String name;
 	private String blog;

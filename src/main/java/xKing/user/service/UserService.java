@@ -1,7 +1,11 @@
 package xKing.user.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import xKing.user.domain.ChangePassword;
 import xKing.user.domain.User;
+import xKing.user.domain.UserFriend;
 
 public interface UserService {
 	// 处理用户登录
@@ -24,4 +28,6 @@ public interface UserService {
 	boolean addFriend(final String username, User currentUser);
 	
 	boolean setUserFriendState(final String username, final int state, User currentUser);
+	
+	Page<UserFriend> getFriends(User currentUser, Pageable pageable);
 }

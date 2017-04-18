@@ -15,7 +15,7 @@
 				<a id="tasks" href="<c:url value="/user/me?tab=tasks"/>"><i class="fa fa-tasks fa-3x" aria-hidden="true"></i><br/><s:message code="left.menu.tasks"/></a>
 			</li>
 			<li id="friendes" <c:if test="${tab == 'friends'}"> class="active" </c:if>>
-				<a id="friendes" href="<c:url value="/user/me?tab=friends"/>"><i class="fa fa-users fa-3x" aria-hidden="true"></i><br/><s:message code="left.menu.friends"/></a>
+				<a id="friendes" href="<c:url value="/user/me?tab=friends&page=0&size=8"/>"><i class="fa fa-users fa-3x" aria-hidden="true"></i><br/><s:message code="left.menu.friends"/></a>
 			</li>
 		</ul>
 	</div>

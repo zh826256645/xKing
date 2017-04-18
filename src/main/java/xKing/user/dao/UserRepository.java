@@ -1,5 +1,7 @@
 package xKing.user.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import xKing.user.domain.User;

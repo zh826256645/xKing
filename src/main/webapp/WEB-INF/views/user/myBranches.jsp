@@ -17,7 +17,7 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="center-myBranches">
-							<%@ include file="../message.jsp" %>1
+							<%@ include file="../message.jsp" %>
 								<label>Branches</label>
 								<hr />
 								<div class="row center-myBranches-up">
