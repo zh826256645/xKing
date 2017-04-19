@@ -74,11 +74,11 @@
 											<div class="row center-friends-li friend-request-li">
 											<div class="col-xs-3">
 												<a class="popover-show" data-toggle="popover" data-placement="bottom" onmouseover="showUserInfo(this)"><img src="<c:url value='/picture/user/${friend.username}'/>?pid=${friend.picture}" class="img-circle heard-profile-picture"></a>
-												<div style="display: none;"><a>${friend.username}</a></div>
+												<div style="display: none;" id="friend_username"><a>${friend.username}</a></div>
 											</div>
 											<div class="col-xs-9">
-												<button class="btn">Agree</button>
-												<button class="btn btn-danger">Deny</button>
+												<button class="btn" onclick="friendRequest(this, 1)">Agree</button>
+												<button class="btn btn-danger" onclick="friendRequest(this, 2)">Deny</button>
 											</div>
 										</div>
 										</c:forEach>

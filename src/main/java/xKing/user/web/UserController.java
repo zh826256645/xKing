@@ -189,9 +189,9 @@ public class UserController {
 	@RequestMapping(value="/friends/state", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> changeFriendState(
-			@RequestBody int state, @RequestBody String username,
+			@RequestParam(name="state", defaultValue="1", required=false) int state,
+			@RequestParam(name="username", required=false) String username,
 			Principal principal){
-		
 		Map<String, String> map = new HashMap<String, String>();
 		User currentUser = userService.getUserByUsername(principal.getName());
 		try{
