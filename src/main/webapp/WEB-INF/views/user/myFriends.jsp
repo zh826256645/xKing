@@ -73,7 +73,7 @@
 											<c:set value="${userFriend.user }" var="friend"/>
 											<div class="row center-friends-li friend-request-li">
 											<div class="col-xs-3">
-												<a class="bind_hover_card" data-toggle="popover" data-placement="bottom" data-trigger="hover" onmouseover="showUserInfo(this)"><img src="<c:url value='/picture/user/${friend.username}'/>?pid=${friend.picture}" class="img-circle heard-profile-picture"></a>
+												<a class="popover-show" data-toggle="popover" data-placement="bottom" onmouseover="showUserInfo(this)"><img src="<c:url value='/picture/user/${friend.username}'/>?pid=${friend.picture}" class="img-circle heard-profile-picture"></a>
 												<div style="display: none;"><a>${friend.username}</a></div>
 											</div>
 											<div class="col-xs-9">

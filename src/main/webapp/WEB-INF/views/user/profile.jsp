@@ -58,7 +58,7 @@
 											<c:forEach begin="0" end="${branches.size()}" items="${branches}" var="branch">
 											<div class="center-branches col-xs-6">
 												<div>
-													<img class="img-thumbnail branch-picture branch-img-small" src="<c:url value="/picture/branch/${branch.branchName}?pid=${branch.picture}"/>" />
+													<img class="branch-picture branch-img-small" src="<c:url value="/picture/branch/${branch.branchName}?pid=${branch.picture}"/>" />
 													<a href="<c:url value="/branch/${branch.branchName}"/>">${branch.branchName}</a><br />
 													<small>${branch.intro}</small>
 													<p class="center-branches-time"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;创建于 ${branch.createTime}</p>
