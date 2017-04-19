@@ -127,17 +127,19 @@ public class UserController {
 					currentUser, new PageRequest(0, 2)));
 			model.addAttribute("tab", "profile");
 			return "/user/profile";
+			
 		case "branches" :
-			model.addAttribute("page", 
-					branchMemberSerivce.findByUserId(currentUser, pageable));
+			model.addAttribute("page", branchMemberSerivce.findByUserId(currentUser, pageable));
 			model.addAttribute("tab", "branches");
 			return "/user/myBranches";
+			
 		case "tasks" :
 			model.addAttribute("tab", "tasks");
 			return "/user/myTasks";
+			
 		case "friends" :
-			model.addAttribute("page",
-					userService.getFriends(currentUser, pageable));
+			model.addAttribute("page", userService.getFriends(currentUser, pageable));
+			model.addAttribute("reuqestPage", userService.getFriendRequests(currentUser, pageable));
 			model.addAttribute("tab", "friends");
 			return "/user/myFriends";
 		default :
@@ -187,8 +189,7 @@ public class UserController {
 	@RequestMapping(value="/friends/state", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> changeFriendState(
-			@RequestParam(name="state", defaultValue="1", required=false) int state,
-			@RequestParam(name="username", required=false) String username,
+			@RequestBody int state, @RequestBody String username,
 			Principal principal){
 		
 		Map<String, String> map = new HashMap<String, String>();

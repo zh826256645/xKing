@@ -113,3 +113,15 @@ function imgPreview(fileDom){
     };
     reader.readAsDataURL(file);
 }
+
+function showUserInfo(env) {
+	var username = $(env).next().children().html();
+	 $("[data-toggle='popover']").popover({  
+	        title: username,
+	        trigger: "hover",
+	        placement: "auto right",
+	        delay:{show:100, hide: 0},  
+	        content: function() {  
+	          return "简介";    
+	        }});
+}

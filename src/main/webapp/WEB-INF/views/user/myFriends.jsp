@@ -69,15 +69,19 @@
 									</div>
 									<div class="col-xs-3 col-xs-offset-1 friend-request">
 										<label>Friend Request</label>
-										<div class="row center-friends-li friend-request-li">
+										<c:forEach  items="${reuqestPage.content}" var="userFriend">
+											<c:set value="${userFriend.user }" var="friend"/>
+											<div class="row center-friends-li friend-request-li">
 											<div class="col-xs-3">
-												<img class="img-circle" src="img/profile.jpg">
+												<a class="bind_hover_card" data-toggle="popover" data-placement="bottom" data-trigger="hover" onmouseover="showUserInfo(this)"><img src="<c:url value='/picture/user/${friend.username}'/>?pid=${friend.picture}" class="img-circle heard-profile-picture"></a>
+												<div style="display: none;"><a>${friend.username}</a></div>
 											</div>
 											<div class="col-xs-9">
 												<button class="btn">Agree</button>
 												<button class="btn btn-danger">Deny</button>
 											</div>
 										</div>
+										</c:forEach>
 									</div>
 								</div>
 							</div>

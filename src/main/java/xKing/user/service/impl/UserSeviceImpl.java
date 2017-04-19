@@ -257,4 +257,10 @@ public class UserSeviceImpl implements UserService {
 		Page<UserFriend> page = userFriendRepository.findByUser_idOrFriend_idAndStateOrderByCreateTime(currentUser.getId(), currentUser.getId(), 1, pageable);
 		return page;
 	}
+	
+	// 获取好友请求
+	public Page<UserFriend> getFriendRequests(User currentUser, Pageable pageable) {
+		Page<UserFriend> page = userFriendRepository.findByFriend_idAndStateOrderByCreateTime(currentUser.getId(), 0, pageable);
+		return page;
+	}
 }

@@ -30,4 +30,6 @@ public interface UserService {
 	boolean setUserFriendState(final String username, final int state, User currentUser);
 	
 	Page<UserFriend> getFriends(User currentUser, Pageable pageable);
+	
+	Page<UserFriend> getFriendRequests(User currentUser, Pageable pageable);
 }
