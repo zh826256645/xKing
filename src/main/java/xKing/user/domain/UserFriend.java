@@ -28,7 +28,7 @@ public class UserFriend {
 	private User user;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="firend_id")
+	@JoinColumn(name="friend_id")
 	private User friend;
 	
 	// 添加时间

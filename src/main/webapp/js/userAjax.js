@@ -1,6 +1,13 @@
 $(document).ready(function() {
 	$("#addFriend").click(function(){
 		var username = $("#friendUsername").val();
+		if(!username || typeof(username) == "undefined"){
+			bootbox.alert({
+				message: "请输入要添加的用户！",
+				size: 'small'
+			});
+			return;
+		}
 		var host = window.location.host;
 		var header = $("meta[name='_csrf_header']").attr("content");  
 		var token = $("meta[name='_csrf']").attr("content");  
@@ -40,7 +47,13 @@ function friendRequest(env, state) {
     },
 	success:function(data) {
 		if(data != null) {
-			console.log(data);
+			bootbox.alert({
+				message: data["msg"],
+				size: 'small'
+			});
+			if(data["code"] == "200"){
+				setTimeout("location.reload(true)", 1000);;
+			}
 		}
 	}
 });
