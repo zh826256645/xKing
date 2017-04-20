@@ -27,10 +27,13 @@
 								<div class="col-xs-4">
 									<input type="text"  class="form-control" placeholder="Message's Title"/>
 								</div>
-								<div class="col-xs-2">
+								<div class="col-xs-1">
 									<input type="submit" class="btn btn-default" value="Search"/>
 								</div>
 							</form>
+							<div class="col-xs-1">
+								<a href="<c:url value="/branch/${currentBranch.branchName}/message/new"/>"><button class="btn btn-success">Create New Message</button></a>
+							</div>
 						</div>
 						<label>Official Message</label>
 						<div class="row center-branch-message-li">

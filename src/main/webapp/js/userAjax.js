@@ -32,8 +32,7 @@ $(document).ready(function() {
 	});
 });
 
-function friendRequest(env, state) {
-	var username = $(env).parent().prev().children("#friend_username").children("a").html();
+function friendRequest(env, state, username) {
 	var host = window.location.host;
 	var header = $("meta[name='_csrf_header']").attr("content");  
 	var token = $("meta[name='_csrf']").attr("content");  

@@ -124,12 +124,11 @@ public class BranchController {
 	@GetMapping(path="/{branchName}/message/new")
 	public String createBranchMessagePage(@PathVariable("branchName") String branchName,
 			Principal principal, Model model){
-		
 		Branch currentBranch = branchService.findBranchByBranchName(branchName);
 		User currentUser = userService.getUserByUsername(principal.getName());
 		model.addAttribute("currentBranch", currentBranch);
 		model.addAttribute("currentUser", currentUser);
-		
+		model.addAttribute("tab", "message");
 		return "/branch/createBranchMessage";
 	}
 }
