@@ -16,6 +16,7 @@ import xKing.branch.dao.BranchRepository;
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
 import xKing.branch.domain.BranchRole;
+import xKing.branch.service.BranchAuthorityService;
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchRoleSerivce;
 import xKing.branch.service.BranchService;
@@ -45,6 +46,9 @@ public class BranchSerivceImpl implements BranchService {
 	
 	@Autowired
 	private BranchMemberSerivce branchMemberService;
+	
+	@Autowired
+	private BranchAuthorityService branchAuthorityService;
 	
 	@Autowired
 	private PictureService pictureService;
@@ -86,11 +90,14 @@ public class BranchSerivceImpl implements BranchService {
 		// 创建 branch admin 身份,level 为 1
 		BranchRole adminBranchRole = branchRoleSerivce.addBranchRole(currentBranch, yourRoleName, 1);
 		// 创建 branch newcomer 身份,level 为 99
-		branchRoleSerivce.addBranchRole(currentBranch, newComerRoleName, 99);	
+		branchRoleSerivce.addBranchRole(currentBranch, newComerRoleName, 99);
+		// 创建 branch authority
+		branchAuthorityService.initBranchAuthority(currentBranch, adminBranchRole);
 		// 创建 BranchMember
 		branchMemberService.addBranchMember(
 				currentUser.getUsername(), currentUser.getEmail(),
 				currentBranch, adminBranchRole, currentUser);
+		
 		return this.findBranchByBranchName(branch.getBranchName());
 	}
 	

@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -45,6 +46,8 @@ public class Branch {
 	private List<BranchRole> branchRoles = new ArrayList<BranchRole>();
 	@OneToMany(targetEntity=BranchMember.class, mappedBy="branch", cascade={CascadeType.ALL})
 	private List<BranchMember> branchMembers = new ArrayList<BranchMember>();
+	@OneToOne
+	private BranchAuthority branchAuthority;
 	public long getId() {
 		return id;
 	}
@@ -116,6 +119,14 @@ public class Branch {
 
 	public void setBranchMembers(List<BranchMember> branchMembers) {
 		this.branchMembers = branchMembers;
+	}
+
+	public BranchAuthority getBranchAuthority() {
+		return branchAuthority;
+	}
+
+	public void setBranchAuthority(BranchAuthority branchAuthority) {
+		this.branchAuthority = branchAuthority;
 	}
 
 	@Override

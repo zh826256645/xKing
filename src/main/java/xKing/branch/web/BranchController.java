@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import xKing.branch.domain.Branch;
+import xKing.branch.domain.BranchAuthority;
 import xKing.branch.domain.BranchMember;
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchService;
