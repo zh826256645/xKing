@@ -35,7 +35,7 @@ public class UploadInterceptor implements HandlerInterceptor {
 				 String formkey = iterator.next();
 				 MultipartFile multipartFile = multipartRequest.getFile(formkey);
 				 String type = multipartFile.getContentType();
-				 if(type.equalsIgnoreCase("image/jpeg") || type.equalsIgnoreCase("image/gif") || type.equalsIgnoreCase("image/png")) {
+				 if(type.equalsIgnoreCase("image/jpeg") || type.equalsIgnoreCase("image/gif") || type.equalsIgnoreCase("image/png") || type.equalsIgnoreCase("application/octet-stream")) {
 					 request.getSession().removeAttribute("error");
 					 return true;
 				 } else {

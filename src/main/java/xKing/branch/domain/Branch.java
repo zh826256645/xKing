@@ -46,7 +46,7 @@ public class Branch {
 	private List<BranchRole> branchRoles = new ArrayList<BranchRole>();
 	@OneToMany(targetEntity=BranchMember.class, mappedBy="branch", cascade={CascadeType.ALL})
 	private List<BranchMember> branchMembers = new ArrayList<BranchMember>();
-	@OneToOne
+	@OneToOne(mappedBy="branch")
 	private BranchAuthority branchAuthority;
 	public long getId() {
 		return id;

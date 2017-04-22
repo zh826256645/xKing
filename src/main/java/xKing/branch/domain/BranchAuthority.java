@@ -23,7 +23,7 @@ public class BranchAuthority {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 
-	@OneToOne(mappedBy="branchAuthority")
+	@OneToOne()
 	private Branch branch;
 
 	// 允许进入组织
