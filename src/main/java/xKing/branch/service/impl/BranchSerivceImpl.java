@@ -1,5 +1,6 @@
 package xKing.branch.service.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import xKing.branch.dao.BranchRepository;
 import xKing.branch.domain.Branch;
@@ -21,10 +23,12 @@ import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchRoleSerivce;
 import xKing.branch.service.BranchService;
 import xKing.exception.AbsentException;
+import xKing.exception.PermissionDeniedException;
 import xKing.exception.SameNameException;
 import xKing.picture.service.PictureService;
 import xKing.user.domain.User;
 import xKing.user.service.UserService;
+import xKing.utils.FontImageUtils;
 import xKing.utils.Utils;
 
 /**
@@ -116,6 +120,7 @@ public class BranchSerivceImpl implements BranchService {
 		return pictureService.getPicture(picutre);
 	}
 
+	// 获取 Branch 用户加入的组织
 	@Override
 	public List<Branch> getBranchByUserId(User user, Pageable pageable) {
 		Page<BranchMember> page = branchMemberService.findByUserIdOrderByJoinTimeDesc(user, pageable);
@@ -125,5 +130,50 @@ public class BranchSerivceImpl implements BranchService {
 			branches.add(branchMember.getBranch());
 		} 
 		return branches;
+	}
+
+	// 校验用户的权限
+	@Override
+	public boolean checkUserAuthority(BranchMember member, Branch branch, BranchRole branchRole) {
+		if(branchRole == null) {
+			return true;
+		}
+		
+		if(member == null) {
+			throw new PermissionDeniedException("你并非" + branch.getBranchName() + "成员，不能进行该操作");
+		}
+		
+		if(member.getBranchRole().getRoleLevel() > branchRole.getRoleLevel()) {
+			throw new PermissionDeniedException("对不起权限对" + branch.getBranchName() + "进行这个操作！");
+		}
+		
+		return true;
+	}
+
+	// 更改组织信息
+	@Override
+	public Branch changeBranchInformation(Branch branch, MultipartFile branchPicture, Branch currentBranch) throws IOException {
+		
+		// 判断是否更改了 branchName
+		String newBranchName = branch.getBranchName();
+		if(!newBranchName.trim().isEmpty() && !newBranchName.equals(currentBranch.getBranchName())){
+			if(branchRepository.findByBranchName(newBranchName) != null) {
+				throw new SameNameException("该名字已被创建！");
+			} else {
+				currentBranch.setBranchName(newBranchName);
+			}
+		}
+		
+		// 判断是否有图片
+		if(branchPicture != null && !branchPicture.getOriginalFilename().trim().isEmpty()) {
+			branch.setPicture(branch.getBranchName() + Utils.getExtensionName(branchPicture.getOriginalFilename()));
+			pictureService.savePicuture(branchPicture.getInputStream(), branch.getPicture());
+		}
+		
+		currentBranch.setHomePage(branch.getHomePage());
+		currentBranch.setIntro(branch.getIntro());
+		currentBranch.setType(branch.getType());
+		
+		return branchRepository.save(currentBranch);
 	}
 }

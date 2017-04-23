@@ -165,7 +165,7 @@ a.forget {
 }
 .left-sidebar {
 	top: 51px;
-	padding-bottom: 700px;
+	padding-bottom: 900px;
 	padding-left: 0px !important;
 	padding-right: 0px !important;
 	background-color: #333333;
@@ -747,5 +747,45 @@ a.forget {
 	left: 30px;
 }
 .friend-request-li {
-	padding-left: 40px;
+	padding-left: 30px;
+}
+.role-li {
+	margin-left: 10px !important;
+	padding-top: 10px;
+	border-bottom: 1px solid rgb(211,211,211);
+}
+.role-li-div {
+	border-left: 2px solid black;
+}
+.role-li-name {
+	border-left: 3px solid #0086B3;
+	font-size: 17px !important; 
+	color: black !important;
+	padding-left: 10px;
+}
+.role-li-level {
+	font-size: 18px !important; 
+	color: #5BC0DE !important;
+}
+.role-font {
+	margin-top: 4px;
+	font-size: 18px !important;
+}
+.center-profile-setting-right {
+	margin-top: 145px;
+	border-left: 1px solid #F2F2F2;
+}
+.add-role div {
+	padding-right: 0px !important;
+}
+.center-panel-bottom {
+	padding-left: 25px !important;
+}
+.role-authority{
+	font-size: 15px;
+	padding-top: 20px;
+}
+.role-authority-li label {
+	font-size: 15px;
+	color: #666;
 }

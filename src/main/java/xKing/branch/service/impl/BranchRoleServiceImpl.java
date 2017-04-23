@@ -1,5 +1,7 @@
 package xKing.branch.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,4 +36,9 @@ public class BranchRoleServiceImpl implements BranchRoleSerivce {
 		return currentBranchRole;
 	}
 
+	// 获取 branch 的 Branch Role
+	@Override
+	public List<BranchRole> findByBranchId(Branch branch) {
+		return branchRoleRepository.findByBranchIdOrderByRoleLevelAsc(branch.getId());
+	}
 }

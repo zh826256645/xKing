@@ -4,14 +4,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Branch</title>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/css/application.css"/>"/>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/>"/>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/css/font-awesome.min.css"/>"/>
-		<script type="text/javascript" src="<c:url value="/js/jquery-3.1.1.min.js"/>" ></script>
-		<script type="text/javascript" src="<c:url value="/js/bootstrap.min.js"/>" ></script>
-		<script type="text/javascript" src="<c:url value="/js/profile.js"/>" ></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Branch</title>
+	<%@ include file="../head.jsp" %>
 </head>
 	<body>
 		<div class="container">
@@ -28,7 +23,7 @@
 						        	<div class="col-xs-3 text-center branch-left">
 						        		<br/>
 						        		<img src="<c:url value="/picture/branch/${currentBranch.branchName}?pid=${currentBranch.picture}"/>"  class="branch-img-small"/><br />
-						        		<p class="h3">Welcome to<br/><a>${currentBranch.branchName}</a></p>
+						        		<p class="h3">Welcome to<br/><a href="<c:url value="/branch/${currentBranch.branchName}/setting"/>">${currentBranch.branchName}</a></p>
 						        	</div>
 						        	<div class="col-xs-6 branch-left">
 						        		<label class="label label-color">Message</label><br />

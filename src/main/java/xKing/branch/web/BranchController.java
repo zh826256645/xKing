@@ -89,6 +89,7 @@ public class BranchController {
 			model.addAttribute("error","错误！");
 			return "/user/createBranch";
 		}
+		
 		try {
 			if(branchPicture.getOriginalFilename().trim().isEmpty()) {
 				// 无图片

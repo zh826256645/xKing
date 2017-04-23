@@ -1,5 +1,7 @@
 package xKing.branch.dao;
 
+import java.util.List;
+
 import xKing.branch.domain.BranchRole;
 import xKing.utils.CrudRepository;
 
@@ -13,5 +15,5 @@ import xKing.utils.CrudRepository;
 public interface BranchRoleRepository extends CrudRepository<BranchRole, Long> {
 
 	BranchRole findByRoleNameAndBranch_id (String roleName, long branch_id);
-
+	List<BranchRole> findByBranchIdOrderByRoleLevelAsc(long branch_id);
 }

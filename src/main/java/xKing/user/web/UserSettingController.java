@@ -97,12 +97,16 @@ public class UserSettingController {
 			@RequestPart("profilePicture") MultipartFile userPicture,
 			Principal principal,
 			HttpServletRequest request,
-			RedirectAttributes reModel) throws IOException 
-	{
-		String pid = userService.saveUploda(userPicture.getOriginalFilename(),principal.getName());
-		pictureService.savePicuture(userPicture.getInputStream(), pid);
-		request.getSession().setAttribute("userPicture", pid);
-		reModel.addFlashAttribute("message", "更改头像成功！");
+			RedirectAttributes reModel) throws IOException {
+		
+		if(userPicture.getOriginalFilename().trim().isEmpty()) {
+			reModel.addFlashAttribute("error", "请上传正确的图片");
+		} else {
+			String pid = userService.saveUploda(userPicture.getOriginalFilename(),principal.getName());
+			pictureService.savePicuture(userPicture.getInputStream(), pid);
+			request.getSession().setAttribute("userPicture", pid);
+			reModel.addFlashAttribute("message", "更改头像成功！");
+		}
 		return "redirect:/setting";
 	}
 }

@@ -39,6 +39,9 @@ public class Branch {
 	private String intro;
 	private String picture;
 	private Timestamp createTime;
+	private String country;
+	private String homePage;
+	private String type;
 	@ManyToOne(targetEntity=User.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
 	private User user;
@@ -127,6 +130,29 @@ public class Branch {
 
 	public void setBranchAuthority(BranchAuthority branchAuthority) {
 		this.branchAuthority = branchAuthority;
+	}
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getHomePage() {
+		return homePage;
+	}
+
+	public void setHomePage(String homePage) {
+		this.homePage = homePage;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@Override
