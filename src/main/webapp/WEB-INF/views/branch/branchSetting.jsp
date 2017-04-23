@@ -476,17 +476,17 @@
 					<label>Branch Role</label>
 					<hr/>
 					<div class="row add-role">
-						<form>
+						<sf:form method="post" action="/branch/${ currentBranch.branchName }/role/new">
 							<div class="col-xs-6" style="padding-left: 22px;">
-								<input type="text"  class="form-control" placeholder="Role name"/>
+								<input type="text"  class="form-control" name="roleName" placeholder="Role name"/>
 							</div>
 							<div class="col-xs-3">
-								<input type="text"  class="form-control" placeholder="level"/>
+								<input type="text"  class="form-control" name="roleLevle" placeholder="level"/>
 							</div>
 							<div class="col-xs-2">
 								<input type="submit" class="btn btn-success" value="Add"/>
 							</div>
-						</form>
+						</sf:form>
 					</div>
 					<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 					<div class="row role-li">

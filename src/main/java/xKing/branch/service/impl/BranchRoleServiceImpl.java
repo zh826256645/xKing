@@ -10,6 +10,7 @@ import xKing.branch.dao.BranchRoleRepository;
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchRole;
 import xKing.branch.service.BranchRoleSerivce;
+import xKing.exception.FaultyOperationException;
 import xKing.exception.SameNameException;
 
 @Service
@@ -29,8 +30,11 @@ public class BranchRoleServiceImpl implements BranchRoleSerivce {
 	// 添加 BranchRole
 	@Override
 	public BranchRole addBranchRole(Branch branch, String roleName, int level) {
-		if(branchRoleRepository.findByRoleNameAndBranch_id(roleName, branch.getId()) != null) {
+		if(roleName != null && branchRoleRepository.findByRoleNameAndBranch_id(roleName, branch.getId()) != null) {
 			throw new SameNameException("该身份名已经存在！");
+		}
+		if(level <= 0) {
+			throw new FaultyOperationException("操作错误");
 		}
 		BranchRole currentBranchRole = branchRoleRepository.save(new BranchRole(roleName, level, branch));
 		return currentBranchRole;

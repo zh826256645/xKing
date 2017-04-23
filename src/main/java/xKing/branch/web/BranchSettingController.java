@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -21,6 +22,7 @@ import xKing.branch.domain.BranchRole;
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchRoleSerivce;
 import xKing.branch.service.BranchService;
+import xKing.exception.FaultyOperationException;
 import xKing.exception.SameNameException;
 import xKing.user.domain.User;
 import xKing.user.service.UserService;
@@ -82,7 +84,7 @@ public class BranchSettingController {
 			reModel.addFlashAttribute("message", "修改 " + currentBranch.getBranchName() + " 信息成功");
 			return "redirect:/branch/"+ URLEncoder.encode(currentBranch.getBranchName(), "utf-8") +"/setting";
 			
-		}catch(SameNameException e){
+		} catch(SameNameException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") + "/setting";
 		} catch (Exception e) {
@@ -90,5 +92,35 @@ public class BranchSettingController {
 		}
 		return "redirect:/user/me";
 		
+	}
+	
+	@RequestMapping(path="/{branchName}/role/new", method=RequestMethod.POST)
+	public String addBranchRole(@PathVariable("branchName") String branchName,
+			@RequestParam(required=false, name="roleName") String roleName,
+			@RequestParam(required=false, name="roleLevle", defaultValue="0") int roleLevel,
+			Principal principal, RedirectAttributes reModel) throws UnsupportedEncodingException {
+		try{
+			System.out.println(roleName + roleLevel);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			BranchMember currentUserMember = branchMemberSerivce.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			// 判断用户是否有权限
+			branchService.checkUserAuthority(currentUserMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeInformation());
+			
+			BranchRole newBranchRole = branchRoleSerivce.addBranchRole(currentBranch, roleName, roleLevel);
+			
+			reModel.addFlashAttribute("message", "添加角色 " + newBranchRole.getRoleName() + " 成功！");
+			
+			return "redirect:/branch/"+ URLEncoder.encode(currentBranch.getBranchName(), "utf-8") +"/setting";
+			
+		} catch(SameNameException|FaultyOperationException e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") + "/setting";
+			
+		} catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+		}
+		return "redirect:/user/me";
 	}
 }
