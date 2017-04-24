@@ -18,6 +18,7 @@ import xKing.branch.dao.BranchAuthorityRepository;
 import xKing.branch.dao.BranchRepository;
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchAuthority;
+import xKing.branch.domain.BranchAuthorityName;
 import xKing.branch.domain.BranchMember;
 import xKing.branch.domain.BranchRole;
 import xKing.branch.service.BranchAuthorityService;
@@ -202,24 +203,162 @@ public class BranchSerivceImpl implements BranchService {
 
 		switch(authorityName) 
 		{
+		// 访问权限
 		case "allowInto" :
-			if(roleName != null && !roleName.trim().isEmpty()) {
-				checkBanchRole(becomeRole, "访问权限", currentBranchAuthority.getAllowChangeInformation(), "组织设置权限", null, null);
-				currentBranchAuthority.setAllowInto(becomeRole);
-			} else {
-				currentBranchAuthority.setAllowInto(null);
-			}
+			checkBanchRole(becomeRole, BranchAuthorityName.INTO,
+					       currentBranchAuthority.getAllowSeeMessage(), BranchAuthorityName.SEEMESSAGE,
+					       null, null);
+			checkBanchRole(becomeRole, BranchAuthorityName.INTO,
+				       currentBranchAuthority.getAllowTakeTask(), BranchAuthorityName.TAKETASK,
+				       null, null);
+			checkBanchRole(becomeRole, BranchAuthorityName.INTO,
+				       currentBranchAuthority.getAllowPublishComment(), BranchAuthorityName.PUBLISHCOMMENT,
+				       null, null);
+			checkBanchRole(becomeRole, BranchAuthorityName.INTO,
+				       currentBranchAuthority.getAllowSeeMember(), BranchAuthorityName.SEEMEMBER,
+				       null, null);
+			currentBranchAuthority.setAllowInto(becomeRole);
 			branchAuthorityRepository.save(currentBranchAuthority);
-			return "访问权限";
-			
-		case "allowChangeInformation" :
+			return BranchAuthorityName.INTO;
+		
+		// 设置更改权限
+		case "allowChangeInformation":
 			if(becomeRole == null) {
 				throw new FaultyOperationException("该权限不能为空");
 			}
-			checkBanchRole(becomeRole, "组织设置权限", null, null, currentBranchAuthority.getAllowInto(), "组织访问权限");
+			checkBanchRole(becomeRole, BranchAuthorityName.CHANGEINFORMATION,
+					   null, null,
+					   currentBranchAuthority.getAllowDeleteMessage(), BranchAuthorityName.DELETEMESSAGE);
+			checkBanchRole(becomeRole, BranchAuthorityName.CHANGEINFORMATION,
+					   null, null,
+					   currentBranchAuthority.getAllowDeleteTask(), BranchAuthorityName.DELETETASK);
+			checkBanchRole(becomeRole, BranchAuthorityName.CHANGEINFORMATION,
+						   null, null,
+						   currentBranchAuthority.getAllowDeleteComment(), BranchAuthorityName.DELETECOMMENT);
+			checkBanchRole(becomeRole, BranchAuthorityName.CHANGEINFORMATION,
+					   null, null,
+					   currentBranchAuthority.getAllowDeleteMember(), BranchAuthorityName.DELETEMEMBER);
 			currentBranchAuthority.setAllowChangeInformation(becomeRole);
 			branchAuthorityRepository.save(currentBranchAuthority);
-			return "组织设置权限";
+			return BranchAuthorityName.CHANGEINFORMATION;
+		
+		// 信息查看权限
+		case "allowSeeMessage":
+			checkBanchRole(becomeRole, BranchAuthorityName.SEEMESSAGE,
+						   currentBranchAuthority.getAllowCreateMessage(), BranchAuthorityName.CREATEMESSAGE,
+					       currentBranchAuthority.getAllowInto(), BranchAuthorityName.INTO);
+			
+			currentBranchAuthority.setAllowSeeMessage(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.SEEMESSAGE;
+		
+		// 信息创建权限
+		case "allowCreateMessage":
+			checkBanchRole(becomeRole, BranchAuthorityName.CREATEMESSAGE,
+						   currentBranchAuthority.getAllowChangeMessage(), BranchAuthorityName.CHANGEMESSAGE,
+					       currentBranchAuthority.getAllowSeeMessage(), BranchAuthorityName.SEEMESSAGE);
+			
+			currentBranchAuthority.setAllowCreateMessage(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.CREATEMESSAGE;
+		
+		// 信息更改权限
+		case "allowChangeMessage":
+			checkBanchRole(becomeRole, BranchAuthorityName.CHANGEMESSAGE,
+						   currentBranchAuthority.getAllowDeleteMessage(), BranchAuthorityName.DELETEMESSAGE,
+					       currentBranchAuthority.getAllowCreateMessage(), BranchAuthorityName.CREATEMESSAGE);
+			
+			currentBranchAuthority.setAllowChangeMessage(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.CHANGEMESSAGE;
+		
+		case "allowDeleteMessage":
+			checkBanchRole(becomeRole, BranchAuthorityName.DELETEMEMBER,
+						   currentBranchAuthority.getAllowChangeInformation(), BranchAuthorityName.CHANGEINFORMATION,
+					       currentBranchAuthority.getAllowChangeMessage(), BranchAuthorityName.CHANGEMESSAGE);
+			currentBranchAuthority.setAllowDeleteMessage(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.DELETEMEMBER;
+		
+		case "allowTakeTask":
+			checkBanchRole(becomeRole, BranchAuthorityName.TAKETASK,
+					   	   currentBranchAuthority.getAllowCreateTask(), BranchAuthorityName.CREATETASK,
+				           currentBranchAuthority.getAllowInto(), BranchAuthorityName.INTO);
+			currentBranchAuthority.setAllowTakeTask(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.TAKETASK;
+		
+		case "allowCreateTask":
+			checkBanchRole(becomeRole, BranchAuthorityName.CREATETASK,
+				   	   	   currentBranchAuthority.getAllowChangeTask(), BranchAuthorityName.CHANGETASK,
+			               currentBranchAuthority.getAllowTakeTask(), BranchAuthorityName.TAKETASK);
+			currentBranchAuthority.setAllowCreateTask(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.CREATETASK;
+		
+		case "allowChangeTask":
+			checkBanchRole(becomeRole, BranchAuthorityName.CHANGETASK,
+			   	   	   	   currentBranchAuthority.getAllowDeleteTask(), BranchAuthorityName.DELETETASK,
+		                   currentBranchAuthority.getAllowCreateTask(), BranchAuthorityName.CREATETASK);
+			currentBranchAuthority.setAllowChangeTask(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.CHANGETASK;
+			
+		case "allowDeleteTask":
+			checkBanchRole(becomeRole, BranchAuthorityName.DELETETASK,
+			   	   	   	   currentBranchAuthority.getAllowChangeInformation(), BranchAuthorityName.CHANGEINFORMATION,
+		                   currentBranchAuthority.getAllowChangeTask(), BranchAuthorityName.CHANGETASK);
+			currentBranchAuthority.setAllowDeleteTask(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.DELETETASK;
+			
+		case "allowPublishComment":
+			checkBanchRole(becomeRole, BranchAuthorityName.PUBLISHCOMMENT,
+		   	   	   	   	   currentBranchAuthority.getAllowDeleteComment(), BranchAuthorityName.DELETECOMMENT,
+	                       currentBranchAuthority.getAllowInto(), BranchAuthorityName.INTO);
+		    currentBranchAuthority.setAllowPublishComment(becomeRole);
+		    branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.PUBLISHCOMMENT;
+		
+		case "allowDeleteComment":
+			checkBanchRole(becomeRole, BranchAuthorityName.DELETECOMMENT,
+						   currentBranchAuthority.getAllowChangeInformation(), BranchAuthorityName.CHANGEINFORMATION,
+						   currentBranchAuthority.getAllowPublishComment(), BranchAuthorityName.PUBLISHCOMMENT);
+			currentBranchAuthority.setAllowDeleteComment(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.DELETECOMMENT;
+		
+		case "allowSeeMember":
+			checkBanchRole(becomeRole, BranchAuthorityName.SEEMEMBER,
+					   	   currentBranchAuthority.getAllowAddMember(), BranchAuthorityName.ADDMEMBER,
+					       currentBranchAuthority.getAllowInto(), BranchAuthorityName.INTO);
+			currentBranchAuthority.setAllowSeeMember(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.SEEMEMBER;
+		
+		case "allowAddMember":
+			checkBanchRole(becomeRole, BranchAuthorityName.ADDMEMBER,
+					   	   currentBranchAuthority.getAllowChangeMember(), BranchAuthorityName.CHANGEMEMBER,
+					       currentBranchAuthority.getAllowSeeMember(), BranchAuthorityName.SEEMEMBER);
+			currentBranchAuthority.setAllowAddMember(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.ADDMEMBER;
+		
+		case "allowChangeMember":
+			checkBanchRole(becomeRole, BranchAuthorityName.CHANGEMEMBER,
+					   	   currentBranchAuthority.getAllowDeleteMember(), BranchAuthorityName.DELETEMEMBER,
+					       currentBranchAuthority.getAllowAddMember(), BranchAuthorityName.ADDMEMBER);
+			currentBranchAuthority.setAllowChangeMember(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.CHANGEMEMBER;
+			
+		case "allowDeleteMember":
+			checkBanchRole(becomeRole, BranchAuthorityName.DELETECOMMENT,
+					   	   currentBranchAuthority.getAllowChangeInformation(), BranchAuthorityName.CHANGEINFORMATION,
+					       currentBranchAuthority.getAllowChangeMember(), BranchAuthorityName.CHANGEMEMBER);
+			currentBranchAuthority.setAllowDeleteMember(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return BranchAuthorityName.DELETECOMMENT;
 			
 		default:
 			return "没有设置";
@@ -230,10 +369,11 @@ public class BranchSerivceImpl implements BranchService {
 		if(maxAuthorityName != null && maxRole == null) {
 			throw new FaultyOperationException("请先定义 " + maxAuthorityName);
 		}
-		if(minRole != null && becomeRlole.getRoleLevel() > minRole.getRoleLevel()) {
+		
+		if((becomeRlole == null && minRole != null) || (minRole != null && becomeRlole != null && becomeRlole.getRoleLevel() > minRole.getRoleLevel())) {
 			throw new FaultyOperationException(currentAuthorityName + " 不能小于 " + minAuthorityName);
 		}
-		if(maxRole != null && becomeRlole.getRoleLevel() < maxRole.getRoleLevel()) {
+		if(becomeRlole != null && maxRole != null && becomeRlole.getRoleLevel() < maxRole.getRoleLevel()) {
 			throw new FaultyOperationException(currentAuthorityName + " 不能大于 " + maxAuthorityName);
 		}
 		return true;

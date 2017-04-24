@@ -47,6 +47,7 @@ public class BranchRoleServiceImpl implements BranchRoleSerivce {
 		return branchRoleRepository.findByBranchIdOrderByRoleLevelAsc(branch.getId());
 	}
 
+	// 添加 BranchRole
 	@Override
 	public BranchRole addBranchRole(Branch branch, BranchMember currentMember, String roleName, int rolelevel) {
 		

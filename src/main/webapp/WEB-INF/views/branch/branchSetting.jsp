@@ -119,20 +119,24 @@
 							<div class="row role-authority-li" style="padding-left: 17px;">
 								<label>Message Authority</label>
 								<div class="row role-authority">
-									<form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowSeeMessage">
 										<div class="col-xs-4">
 											<div class="input-group">
 												<div class="input-group-addon">See Message:</div>
-												<select class="form-control">
+												<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowSeeMessage == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="">every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowSeeMessage != null }">
+													<option value="">every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowSeeMessage != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowSeeMessage.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowSeeMessage.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowSeeMessage == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 												</select>
@@ -141,21 +145,25 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
-									<form>
+									</sf:form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowCreateMessage">
 										<div class="col-xs-4">
 										<div class="input-group">
 											<div class="input-group-addon">Create Message:</div>
-											<select class="form-control">
+											<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowCreateMessage == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="">every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowCreateMessage != null }">
+													<option value="">every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowCreateMessage != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowCreateMessage.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowCreateMessage.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowCreateMessage == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 											</select>
@@ -164,23 +172,27 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
+									</sf:form>
 								</div>
 								<div class="row role-authority">
-									<form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowChangeMessage">
 										<div class="col-xs-4">
 											<div class="input-group">
 												<div class="input-group-addon">Change Message:</div>
-												<select class="form-control">
+												<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowChangeMessage == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="">every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowChangeMessage != null }">
+													<option value="">every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowChangeMessage != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowChangeMessage.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowChangeMessage.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowChangeMessage == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 												</select>
@@ -189,21 +201,25 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
-									<form>
+									</sf:form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowDeleteMessage">
 										<div class="col-xs-4">
 										<div class="input-group">
 											<div class="input-group-addon">Delete Message:</div>
-											<select class="form-control">
+											<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowDeleteMessage == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="">every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowDeleteMessage != null }">
+													<option value="">every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowDeleteMessage != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowDeleteMessage.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowDeleteMessage.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowDeleteMessage == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 											</select>
@@ -212,27 +228,31 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
+									</sf:form>
 								</div>
 							</div>
 							<br />
 							<div class="row role-authority-li" style="padding-left: 17px;">
 								<label>Task Authority</label>
 								<div class="row role-authority">
-									<form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowTakeTask">
 										<div class="col-xs-4">
 											<div class="input-group">
 												<div class="input-group-addon">Take Task:</div>
-												<select class="form-control">
+												<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowTakeTask == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="">every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowTakeTask != null }">
+													<option value="">every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowTakeTask != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowTakeTask.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowTakeTask.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowTakeTask == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 												</select>
@@ -241,21 +261,25 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
-									<form>
+									</sf:form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowCreateTask">
 										<div class="col-xs-4">
 										<div class="input-group">
 											<div class="input-group-addon">Create Task:</div>
-											<select class="form-control">
+											<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowCreateTask == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="">every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowCreateTask != null }">
+													<option value="">every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowCreateTask != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowCreateTask.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowCreateTask.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowCreateTask == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 											</select>
@@ -264,23 +288,30 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
+									</sf:form>
 								</div>
 								<div class="row role-authority">
-									<form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowChangeTask">
 										<div class="col-xs-4">
 											<div class="input-group">
 												<div class="input-group-addon">Change Task:</div>
-												<select class="form-control">
+												<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowChangeTask == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="">every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowChangeTask != null }">
+													<option value="">every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowChangeTask != null }">
+													<option value="">every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowChangeTask != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowChangeTask.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowChangeTask.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowChangeTask == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 												</select>
@@ -289,21 +320,25 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
-									<form>
+									</sf:form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowDeleteTask">
 										<div class="col-xs-4">
 										<div class="input-group">
 											<div class="input-group-addon">Delete Task:</div>
-											<select class="form-control">
+											<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowDeleteTask == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="">every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowDeleteTask != null }">
+													<option value="">every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowDeleteTask != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowDeleteTask.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowDeleteTask.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowDeleteTask == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 											</select>
@@ -312,27 +347,31 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
+									</sf:form>
 								</div>
 							</div>
 							<br />
 							<div class="row role-authority-li" style="padding-left: 17px;">
 								<label>Comment Authority</label>
 								<div class="row role-authority">
-									<form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowPublishComment">
 										<div class="col-xs-4">
 											<div class="input-group">
 												<div class="input-group-addon">Publish Comment:</div>
-												<select class="form-control">
+												<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowPublishComment == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="">every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowPublishComment != null }">
+													<option value="">every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowPublishComment != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowPublishComment.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowPublishComment.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowPublishComment == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 												</select>
@@ -341,21 +380,25 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
-									<form>
+									</sf:form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowDeleteComment">
 										<div class="col-xs-4">
 										<div class="input-group">
 											<div class="input-group-addon">Delete Comment:</div>
-											<select class="form-control">
+											<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowDeleteComment == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="">every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowDeleteComment != null }">
+													<option value="">every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowDeleteComment != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowDeleteComment.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowDeleteComment.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowDeleteComment == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 											</select>
@@ -364,27 +407,31 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
+									</sf:form>
 								</div>
 							</div>
 							<br />
 							<div class="row role-authority-li" style="padding-left: 17px;">
 								<label>Member Authority</label>
 								<div class="row role-authority">
-									<form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowSeeMember">
 										<div class="col-xs-4">
 											<div class="input-group">
 												<div class="input-group-addon">See Members:</div>
-												<select class="form-control">
+												<select class="form-control" name="roleName">
 													<c:if test="${ currentBranch.branchAuthority.allowSeeMember == null }">
-														<option selected="selected" >every one</option>
+														<option selected="selected" value="">every one</option>
+													</c:if>
+													<c:if test="${ currentBranch.branchAuthority.allowSeeMember != null }">
+														<option value="">every one</option>
 													</c:if>
 													<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 														<c:if test="${ currentBranch.branchAuthority.allowSeeMember != null }">
-															<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowSeeMember.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+															<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowSeeMember.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 														</c:if>
 														<c:if test="${ currentBranch.branchAuthority.allowSeeMember == null }">
-															<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+															<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 														</c:if>
 													</c:forEach>
 												</select>
@@ -393,21 +440,25 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
-									<form>
+									</sf:form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowAddMember">
 										<div class="col-xs-4">
 										<div class="input-group">
 											<div class="input-group-addon">Add Member:</div>
-											<select class="form-control">
+											<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowAddMember == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="" >every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowAddMember != null }">
+													<option value="" >every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowAddMember != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowAddMember.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowAddMember.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowAddMember == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 											</select>
@@ -416,23 +467,27 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
+									</sf:form>
 								</div>
 								<div class="row role-authority">
-									<form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowChangeMember">
 										<div class="col-xs-4">
 											<div class="input-group">
 												<div class="input-group-addon">Change Member:</div>
-												<select class="form-control">
+												<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowChangeMember == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="">every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowChangeMember != null }">
+													<option value="">every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowChangeMember != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowChangeMember.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowChangeMember.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowChangeMember == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 												</select>
@@ -441,21 +496,25 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
-									<form>
+									</sf:form>
+									<sf:form method="post" action="/branch/${ currentBranch.branchName }/authority">
+										<input type="hidden" name="authorityName"  value="allowDeleteMember">
 										<div class="col-xs-4">
 										<div class="input-group">
 											<div class="input-group-addon">Delete Member:</div>
-											<select class="form-control">
+											<select class="form-control" name="roleName">
 												<c:if test="${ currentBranch.branchAuthority.allowDeleteMember == null }">
-													<option selected="selected" >every one</option>
+													<option selected="selected" value="" >every one</option>
+												</c:if>
+												<c:if test="${ currentBranch.branchAuthority.allowDeleteMember != null }">
+													<option value="" >every one</option>
 												</c:if>
 												<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 													<c:if test="${ currentBranch.branchAuthority.allowDeleteMember != null }">
-														<option value="${ branchRole.id }" <c:if test="${ currentBranch.branchAuthority.allowDeleteMember.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }" <c:if test="${ currentBranch.branchAuthority.allowDeleteMember.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
 													</c:if>
 													<c:if test="${ currentBranch.branchAuthority.allowDeleteMember == null }">
-														<option value="${ branchRole.id }">${ branchRole.roleName }</option>
+														<option value="${ branchRole.roleName }">${ branchRole.roleName }</option>
 													</c:if>
 												</c:forEach>
 											</select>
@@ -464,7 +523,7 @@
 										<div class="col-xs-2 role-submit">
 											<input type="submit" value="Change" class="btn btn-info" />
 										</div>
-									</form>
+									</sf:form>
 								</div>
 							</div>
 						</div>
