@@ -7,6 +7,9 @@ public class Mail {
 	private String username;
 	private String activeCode;
 	private String time;
+	private String hostName;
+	private String scheme;
+	
 	public String getSubject() {
 		return subject;
 	}
@@ -36,5 +39,17 @@ public class Mail {
 	}
 	public void setTime(String time) {
 		this.time = time;
+	}
+	public String getHostName() {
+		return hostName;
+	}
+	public void setHostName(String hostName) {
+		this.hostName = hostName;
+	}
+	public String getScheme() {
+		return scheme;
+	}
+	public void setScheme(String scheme) {
+		this.scheme = scheme;
 	}
 }

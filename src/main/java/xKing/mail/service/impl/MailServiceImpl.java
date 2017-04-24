@@ -77,6 +77,8 @@ public class MailServiceImpl implements MailService {
 		model.put("key", mail.getActiveCode());
 		model.put("text", mail.getText());
 		model.put("date", mail.getTime());
+		model.put("scheme", mail.getScheme());
+		model.put("hostName", mail.getHostName());
 		String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, emailTemplate,
 				"UTF-8", model);
 		mailVelocity.setText(text);

@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -69,14 +71,14 @@ public class UserController {
 	public String register(
 			@Validated User user, Errors errors,
 			Model model,
-			RedirectAttributes reModel) {
+			RedirectAttributes reModel, HttpServletRequest request) {
 		if(errors.hasErrors()) {
 			model.addAttribute("errors", true);
 			return "register";
 		}
 		try {
+			userService.register(user, request.getScheme(),  request.getServerName() + ":" + request.getServerPort());
 			reModel.addFlashAttribute("message", "注册成功！请进行登录");
-			userService.register(user);
 			return "redirect:/user";
 		} catch (SameUsernameException e) {
 			model.addAttribute("error", e.getMessage());

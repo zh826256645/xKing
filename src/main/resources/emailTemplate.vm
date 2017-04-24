@@ -13,7 +13,7 @@
 						<p>欢迎注册 <a href="#" style="font-size: 20px; font-weight: bold;">xKing</a>!</p>
 						<hr />
 						<p>为了你的账户安全，请点击下面的链接进行账号激活</p><br />
-						<p><a href="http://192.168.14.188:8888/xKing/user/state?username=${username}&&key=${key}" target="_blank">http://192.168.14.188:8888/xKing/user/state?username=${username}&&key=${key}</a><font style="color:#EEA236;"> （请在收到邮件内后的30分中内激活，否则该链接将失效）</font></p><br />
+						<p><a href="${scheme}://${hostName}/user/state?username=${username}&&key=${key}" target="_blank">${scheme}://${hostName}/user/state?username=${username}&&key=${key}</a><font style="color:#EEA236;"> （请在收到邮件内后的30分中内激活，否则该链接将失效）</font></p><br />
 						<p>为了你的账号安全：</p>
 						<u>
 							<li>别将该链接透露给第三者</li><br />

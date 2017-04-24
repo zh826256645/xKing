@@ -39,7 +39,7 @@ public class TestUserService {
 	@Test 
 	public void testRegister() {
 		User user = new User("Zhonghao", "123456", "826256645@qq.com");
-		User newUser = userSerivce.register(user);
+		User newUser = userSerivce.register(user, "http", "localhost:8888");
 		Assert.assertNotNull(newUser);
 	}
 	

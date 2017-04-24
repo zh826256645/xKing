@@ -51,23 +51,22 @@ public class UserSeviceImpl implements UserService {
 		}
 		return null;
 	}
-
+	
 	// 用户注册
 	@Override
-	public User register(User user) {
+	public User register(User user, String scheme, String hostName) {
 		User getUser = userRepository.findByUsername(user.getUsername());
 		User eUser = userRepository.findByEmail(user.getEmail());
 				
 		if(getUser != null) {
 			throw new SameUsernameException("用户名重复");
 		}
-		
 		if(eUser != null){
 			throw new SameUsernameException("该 Email 已被注册");
 		}
 		
 		User newUser = userRepository.save(initNewUser(user));
-		Mail mail = this.activationMail(newUser);
+		Mail mail = this.activationMail(newUser, scheme, hostName);
 		mailSerivce.sendActivationEmailToUserByVelocity(user.getEmail(), mail);
 		return newUser;
 	}
@@ -185,6 +184,19 @@ public class UserSeviceImpl implements UserService {
 	protected Mail activationMail(User user) {
 		Mail mail = new Mail();
 		mail.setSubject("xKing 账户激活邮件");
+		mail.setActiveCode(user.getKeyCode());
+		mail.setUsername(user.getUsername());
+		mail.setText("");
+		mail.setTime(Utils.getCurrentDate());
+		return mail;
+	}
+	
+	// 设置激活邮件
+	protected Mail activationMail(User user, String scheme, String hostName) {
+		Mail mail = new Mail();
+		mail.setSubject("xKing 账户激活邮件");
+		mail.setScheme(scheme);
+		mail.setHostName(hostName);
 		mail.setActiveCode(user.getKeyCode());
 		mail.setUsername(user.getUsername());
 		mail.setText("");

@@ -10,8 +10,8 @@ import xKing.user.domain.UserFriend;
 public interface UserService {
 	// 处理用户登录
 	User Login(final User user);
-	
-	User register(final User user);
+
+	User register(final User user, String scheme, String hostName);
 	
 	User getUserByUsername(final String username);
 	

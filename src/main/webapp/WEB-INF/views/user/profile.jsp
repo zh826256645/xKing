@@ -15,6 +15,7 @@
 				<%@ include file="userleft.jsp" %>
 				<!-- center -->
 				<div class="col-xs-7 center">
+					<%@ include file="../message.jsp" %>
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="panel panel-default center-person">

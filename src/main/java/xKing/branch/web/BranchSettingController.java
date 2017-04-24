@@ -1,5 +1,8 @@
 package xKing.branch.web;
 
+/**
+ * Branch 设置控制器
+ */
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.Principal;
@@ -43,6 +46,7 @@ public class BranchSettingController {
 	@Autowired
 	private BranchMemberSerivce branchMemberSerivce;
 
+	// Branch 设置页面
 	@RequestMapping(path="/{branchName}/setting",method=RequestMethod.GET)
 	public String settingPage(@PathVariable("branchName") String branchName,
 			Principal principal, Model model, RedirectAttributes reModel){
@@ -68,6 +72,7 @@ public class BranchSettingController {
 		return "/branch/branchSetting";
 	}
 	
+	// 修改 Branch 基本信息
 	@RequestMapping(path="/{branchName}/setting",method=RequestMethod.POST)
 	public String setting(@PathVariable("branchName") String branchName,
 			@RequestPart("branchPicture") MultipartFile branchPicture, Branch branch,
@@ -94,13 +99,13 @@ public class BranchSettingController {
 		
 	}
 	
+	// 添加 Branch 角色
 	@RequestMapping(path="/{branchName}/role/new", method=RequestMethod.POST)
 	public String addBranchRole(@PathVariable("branchName") String branchName,
 			@RequestParam(required=false, name="roleName") String roleName,
 			@RequestParam(required=false, name="roleLevle", defaultValue="0") int roleLevel,
 			Principal principal, RedirectAttributes reModel) throws UnsupportedEncodingException {
 		try{
-			System.out.println(roleName + roleLevel);
 			User currentUser = userService.getUserByUsername(principal.getName());
 			Branch currentBranch = branchService.findBranchByBranchName(branchName);
 			BranchMember currentUserMember = branchMemberSerivce.findByBranchidAndUserId(currentBranch, currentUser);
@@ -109,15 +114,12 @@ public class BranchSettingController {
 			branchService.checkUserAuthority(currentUserMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeInformation());
 			
 			BranchRole newBranchRole = branchRoleSerivce.addBranchRole(currentBranch, roleName, roleLevel);
-			
 			reModel.addFlashAttribute("message", "添加角色 " + newBranchRole.getRoleName() + " 成功！");
-			
 			return "redirect:/branch/"+ URLEncoder.encode(currentBranch.getBranchName(), "utf-8") +"/setting";
 			
 		} catch(SameNameException|FaultyOperationException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") + "/setting";
-			
 		} catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 		}
