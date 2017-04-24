@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import xKing.branch.dao.BranchAuthorityRepository;
 import xKing.branch.dao.BranchRepository;
 import xKing.branch.domain.Branch;
+import xKing.branch.domain.BranchAuthority;
 import xKing.branch.domain.BranchMember;
 import xKing.branch.domain.BranchRole;
 import xKing.branch.service.BranchAuthorityService;
@@ -23,12 +25,13 @@ import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchRoleSerivce;
 import xKing.branch.service.BranchService;
 import xKing.exception.AbsentException;
+import xKing.exception.FaultyOperationException;
 import xKing.exception.PermissionDeniedException;
 import xKing.exception.SameNameException;
 import xKing.picture.service.PictureService;
 import xKing.user.domain.User;
 import xKing.user.service.UserService;
-import xKing.utils.FontImageUtils;
+
 import xKing.utils.Utils;
 
 /**
@@ -44,6 +47,9 @@ public class BranchSerivceImpl implements BranchService {
 
 	@Autowired
 	private BranchRepository branchRepository;
+	
+	@Autowired
+	private BranchAuthorityRepository branchAuthorityRepository;
 	
 	@Autowired
 	private BranchRoleSerivce branchRoleSerivce;
@@ -175,5 +181,61 @@ public class BranchSerivceImpl implements BranchService {
 		currentBranch.setType(branch.getType());
 		
 		return branchRepository.save(currentBranch);
+	}
+
+	// 更改组织权限
+	@Override
+	public String changeBranchAuthority(Branch currentBranch, BranchMember currentMember, String roleName, final String authorityName) {
+		BranchAuthority currentBranchAuthority = currentBranch.getBranchAuthority();
+		BranchRole becomeRole = null;
+		if(roleName != null && !roleName.trim().isEmpty()) {
+			becomeRole = branchRoleSerivce.findByRoleNameAndBranchId(roleName, currentBranch);
+		}
+		if(authorityName == null || (roleName != null && !roleName.trim().isEmpty() && becomeRole == null)) {
+			throw new FaultyOperationException("错误操作！");
+		}
+		if(becomeRole != null) {
+			if(currentMember.getBranchRole().getRoleLevel() > becomeRole.getRoleLevel()) {
+				throw new FaultyOperationException("你不能设置比自己权限大的角色！");
+			}
+		}
+
+		switch(authorityName) 
+		{
+		case "allowInto" :
+			if(roleName != null && !roleName.trim().isEmpty()) {
+				checkBanchRole(becomeRole, "访问权限", currentBranchAuthority.getAllowChangeInformation(), "组织设置权限", null, null);
+				currentBranchAuthority.setAllowInto(becomeRole);
+			} else {
+				currentBranchAuthority.setAllowInto(null);
+			}
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return "访问权限";
+			
+		case "allowChangeInformation" :
+			if(becomeRole == null) {
+				throw new FaultyOperationException("该权限不能为空");
+			}
+			checkBanchRole(becomeRole, "组织设置权限", null, null, currentBranchAuthority.getAllowInto(), "组织访问权限");
+			currentBranchAuthority.setAllowChangeInformation(becomeRole);
+			branchAuthorityRepository.save(currentBranchAuthority);
+			return "组织设置权限";
+			
+		default:
+			return "没有设置";
+		}
+	}
+	
+	protected boolean checkBanchRole(BranchRole becomeRlole, String currentAuthorityName, BranchRole maxRole, String maxAuthorityName, BranchRole minRole, String minAuthorityName) {
+		if(maxAuthorityName != null && maxRole == null) {
+			throw new FaultyOperationException("请先定义 " + maxAuthorityName);
+		}
+		if(minRole != null && becomeRlole.getRoleLevel() > minRole.getRoleLevel()) {
+			throw new FaultyOperationException(currentAuthorityName + " 不能小于 " + minAuthorityName);
+		}
+		if(maxRole != null && becomeRlole.getRoleLevel() < maxRole.getRoleLevel()) {
+			throw new FaultyOperationException(currentAuthorityName + " 不能大于 " + maxAuthorityName);
+		}
+		return true;
 	}
 }

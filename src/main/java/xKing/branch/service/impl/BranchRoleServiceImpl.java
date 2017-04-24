@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import xKing.branch.dao.BranchRoleRepository;
 import xKing.branch.domain.Branch;
+import xKing.branch.domain.BranchMember;
 import xKing.branch.domain.BranchRole;
 import xKing.branch.service.BranchRoleSerivce;
 import xKing.exception.FaultyOperationException;
@@ -44,5 +45,21 @@ public class BranchRoleServiceImpl implements BranchRoleSerivce {
 	@Override
 	public List<BranchRole> findByBranchId(Branch branch) {
 		return branchRoleRepository.findByBranchIdOrderByRoleLevelAsc(branch.getId());
+	}
+
+	@Override
+	public BranchRole addBranchRole(Branch branch, BranchMember currentMember, String roleName, int rolelevel) {
+		
+		if(roleName != null && branchRoleRepository.findByRoleNameAndBranch_id(roleName, branch.getId()) != null) {
+			throw new SameNameException("该身份名已经存在！");
+		}
+		if( rolelevel <= 0) {
+			throw new FaultyOperationException("操作错误");
+		}
+		if(currentMember.getBranchRole().getRoleLevel() > rolelevel) {
+			throw new FaultyOperationException("你不能添加比自己权限大的角色");
+		}
+		BranchRole currentBranchRole = branchRoleRepository.save(new BranchRole(roleName,  rolelevel, branch));
+		return currentBranchRole;
 	}
 }

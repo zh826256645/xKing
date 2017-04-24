@@ -29,4 +29,6 @@ public interface BranchService {
 	boolean checkUserAuthority(BranchMember member, Branch branch, BranchRole branchRole);
 	
 	Branch changeBranchInformation(Branch branch, MultipartFile branchPicture, Branch currentBranch) throws IOException;
+	
+	String changeBranchAuthority(Branch currentBranch,BranchMember currentMember, String roleName, final String authorityName);
 }

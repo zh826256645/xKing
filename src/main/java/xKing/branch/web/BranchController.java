@@ -54,6 +54,10 @@ public class BranchController {
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("currentUser", currentUser);
 			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			// 判断用户是否有权限
+			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowInto());
+			
 			if(branchMember != null) {
 				model.addAttribute("currentBranchMember", branchMember);
 			} else {
