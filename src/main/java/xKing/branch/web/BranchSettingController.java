@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,6 +27,7 @@ import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchRoleSerivce;
 import xKing.branch.service.BranchService;
 import xKing.exception.FaultyOperationException;
+import xKing.exception.PermissionDeniedException;
 import xKing.exception.SameNameException;
 import xKing.user.domain.User;
 import xKing.user.service.UserService;
@@ -152,5 +154,34 @@ public class BranchSettingController {
 			reModel.addFlashAttribute("error", e.getMessage());
 		}
 		return "redirect:/user/me";
+	}
+	
+	@RequestMapping(path="/{branchName}/role/setting", method=RequestMethod.POST)
+	public String changgBranchRoleInfo(@PathVariable("branchName") String branchName,
+			@RequestParam(name="oldRoleName", required=false) String oldRoleName,
+			@RequestParam(name="newRoleName") String newRoleName,
+			@RequestParam(name="newRoleLevel", required=false, defaultValue="0") int newRoleLevel,
+			Principal principal, RedirectAttributes reModel) throws UnsupportedEncodingException{
+		
+		try{
+			User currentUser = userService.getUserByUsername(principal.getName());
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			BranchMember currentUserMember = branchMemberSerivce.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			// 判断用户是否有权限
+			branchService.checkUserAuthority(currentUserMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeInformation());
+			
+			branchService.changeBranchRole(currentBranch, currentUserMember, oldRoleName, newRoleName, newRoleLevel);
+			reModel.addFlashAttribute("message", oldRoleName + " 修改为 " + newRoleName + " " + newRoleLevel);
+			return "redirect:/branch/"+ URLEncoder.encode(currentBranch.getBranchName(), "utf-8") +"/setting";
+			
+		} catch(SameNameException|FaultyOperationException|PermissionDeniedException e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") + "/setting";
+		} catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+		}
+		return "redirect:/user/me";
+		
 	}
 }

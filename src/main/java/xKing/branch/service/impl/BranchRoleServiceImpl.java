@@ -63,4 +63,20 @@ public class BranchRoleServiceImpl implements BranchRoleSerivce {
 		BranchRole currentBranchRole = branchRoleRepository.save(new BranchRole(roleName,  rolelevel, branch));
 		return currentBranchRole;
 	}
+
+	// 修改 branch
+	@Override
+	public BranchRole ChangeBranchRole(Branch currentBranch, BranchRole oldBranchRole, String newRoleName, int newRoleLevel) {
+		if(oldBranchRole == null || newRoleName == null || newRoleLevel <= 0) {
+			throw new FaultyOperationException("错误操作");
+		}
+		
+		if(newRoleLevel == oldBranchRole.getRoleLevel() && branchRoleRepository.findByRoleNameAndBranch_id(newRoleName, currentBranch.getId()) != null) {
+			throw new SameNameException("该身份名已经存在！");
+		}
+		
+		oldBranchRole.setRoleName(newRoleName);
+		oldBranchRole.setRoleLevel(newRoleLevel);
+		return branchRoleRepository.save(oldBranchRole);
+	}
 }

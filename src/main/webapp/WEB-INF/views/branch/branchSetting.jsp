@@ -550,8 +550,25 @@
 					<div class="row role-li">
 						<div class="col-xs-5" style="padding-left: 0px;"><p class="role-li-name">${ branchRole.roleName }</p></div>
 						<div class="col-xs-3"><p class="role-li-level">${ branchRole.roleLevel }</p></div>
-						<div class="col-xs-2"><i class="fa fa-edit role-font" style="color: #67B168;" aria-hidden="true"></i></div>
+						<div class="col-xs-2"><i class="fa fa-edit role-font" style="color: #67B168;cursor: pointer;" aria-hidden="true" onclick="changeRole(this)"></i></div>
 						<div class="col-xs-2"><i class="fa fa-times role-font" style="color: #D9534F;" aria-hidden="true"></i></div>
+					</div>
+					<div class="row add-role" style="display: none;">
+						<sf:form method="post" action="/branch/${ currentBranch.branchName }/role/setting">
+							<input type="hidden" value="${ branchRole.roleName }" name="oldRoleName">
+							<div class="col-xs-4" style="padding-left: 22px;">
+								<input type="text"  class="form-control" placeholder="Rolename" name="newRoleName" value="${ branchRole.roleName }"/>
+							</div>
+							<div class="col-xs-3">
+								<input type="text"  class="form-control" placeholder="level" name="newRoleLevel" value="${ branchRole.roleLevel }"/>
+							</div>
+							<div class="col-xs-2">
+								<input type="submit" class="btn btn-success" value="YES"/>
+							</div>
+						</sf:form>
+							<div class="col-xs-2" style="margin-left: 4px;">
+								<button class="btn btn-warning" onclick="noChangeRole(this)">No</button>
+							</div>
 					</div>
 					</c:forEach>
 				</div>

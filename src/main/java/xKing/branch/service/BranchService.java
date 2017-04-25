@@ -31,4 +31,6 @@ public interface BranchService {
 	Branch changeBranchInformation(Branch branch, MultipartFile branchPicture, Branch currentBranch) throws IOException;
 	
 	String changeBranchAuthority(Branch currentBranch,BranchMember currentMember, String roleName, final String authorityName);
+
+	boolean changeBranchRole(Branch currentBranch, BranchMember currentMember, String oldRoleName, String newRoleName, int newRoleLevel);
 }

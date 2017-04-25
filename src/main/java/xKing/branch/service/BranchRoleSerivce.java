@@ -14,4 +14,6 @@ public interface BranchRoleSerivce {
 	BranchRole findByRoleNameAndBranchId(String roleName, Branch branch);
 	
 	List<BranchRole> findByBranchId(Branch branch);
+	
+	BranchRole ChangeBranchRole(Branch currentBranch, BranchRole oldBranchRole, String newRoleName, int newRoleLevel);
 }

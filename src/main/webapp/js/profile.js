@@ -124,3 +124,15 @@ function showUserInfo(env, username) {
 	          return "简介" ;    
 	        }});
 }
+
+function changeRole(env) {
+	var role = $(env).parent().parent();
+	role.css("display", "none");
+	role.next().css("display", "block");
+}
+
+function noChangeRole(env) {
+	var form = $(env).parent().parent();
+	form.css("display", "none");
+	form.prev().css("display", "block");
+}

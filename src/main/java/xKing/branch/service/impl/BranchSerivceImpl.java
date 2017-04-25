@@ -195,11 +195,7 @@ public class BranchSerivceImpl implements BranchService {
 		if(authorityName == null || (roleName != null && !roleName.trim().isEmpty() && becomeRole == null)) {
 			throw new FaultyOperationException("错误操作！");
 		}
-		if(becomeRole != null) {
-			if(currentMember.getBranchRole().getRoleLevel() > becomeRole.getRoleLevel()) {
-				throw new FaultyOperationException("你不能设置比自己权限大的角色！");
-			}
-		}
+		this.checkBecomeRole(currentBranch, currentMember, becomeRole);
 
 		switch(authorityName) 
 		{
@@ -265,8 +261,8 @@ public class BranchSerivceImpl implements BranchService {
 		// 信息更改权限
 		case "allowChangeMessage":
 			checkBanchRole(becomeRole, BranchAuthorityName.CHANGEMESSAGE,
-						   					   currentBranchAuthority.getAllowDeleteMessage(), BranchAuthorityName.DELETEMESSAGE,
-					                           currentBranchAuthority.getAllowCreateMessage(), BranchAuthorityName.CREATEMESSAGE);
+						   currentBranchAuthority.getAllowDeleteMessage(), BranchAuthorityName.DELETEMESSAGE,
+					       currentBranchAuthority.getAllowCreateMessage(), BranchAuthorityName.CREATEMESSAGE);
 			
 			currentBranchAuthority.setAllowChangeMessage(becomeRole);
 			branchAuthorityRepository.save(currentBranchAuthority);
@@ -376,6 +372,19 @@ public class BranchSerivceImpl implements BranchService {
 		}
 	}
 	
+	// 修改角色
+	@Override
+	public boolean changeBranchRole(Branch currentBranch, BranchMember currentMember, String oldRoleName,
+			String newRoleName, int newRoleLevel) {
+		BranchRole oldBranchRole = branchRoleSerivce.findByRoleNameAndBranchId(oldRoleName, currentBranch);
+		int memberLevel = currentMember.getBranchRole().getRoleLevel();
+		if(oldBranchRole.getRoleLevel() < memberLevel || newRoleLevel < memberLevel){
+			throw new PermissionDeniedException("你没有权限设置权限等级比你高的角色");
+		}
+		branchRoleSerivce.ChangeBranchRole(currentBranch, oldBranchRole, newRoleName, newRoleLevel);
+		return true;
+	}
+	
 	// 判断能否对权限进行修改
 	protected boolean checkBanchRole(BranchRole becomeRlole, String currentAuthorityName, BranchRole maxRole, String maxAuthorityName, BranchRole minRole, String minAuthorityName) {
 		if(maxAuthorityName != null && maxRole == null) {
@@ -387,6 +396,16 @@ public class BranchSerivceImpl implements BranchService {
 		}
 		if(becomeRlole != null && maxRole != null && becomeRlole.getRoleLevel() < maxRole.getRoleLevel()) {
 			throw new FaultyOperationException(currentAuthorityName + " 不能大于 " + maxAuthorityName);
+		}
+		return true;
+	}
+	
+	// 判断改角色是否符合要求
+	protected boolean checkBecomeRole(Branch currentBranch, BranchMember currentMember, BranchRole becomeRole) {
+		if(becomeRole != null) {
+			if(currentMember.getBranchRole().getRoleLevel() > becomeRole.getRoleLevel()) {
+				throw new FaultyOperationException("你不能设置比自己权限大的角色！");
+			}
 		}
 		return true;
 	}
