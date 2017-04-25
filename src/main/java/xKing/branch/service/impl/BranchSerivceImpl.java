@@ -265,13 +265,14 @@ public class BranchSerivceImpl implements BranchService {
 		// 信息更改权限
 		case "allowChangeMessage":
 			checkBanchRole(becomeRole, BranchAuthorityName.CHANGEMESSAGE,
-						   currentBranchAuthority.getAllowDeleteMessage(), BranchAuthorityName.DELETEMESSAGE,
-					       currentBranchAuthority.getAllowCreateMessage(), BranchAuthorityName.CREATEMESSAGE);
+						   					   currentBranchAuthority.getAllowDeleteMessage(), BranchAuthorityName.DELETEMESSAGE,
+					                           currentBranchAuthority.getAllowCreateMessage(), BranchAuthorityName.CREATEMESSAGE);
 			
 			currentBranchAuthority.setAllowChangeMessage(becomeRole);
 			branchAuthorityRepository.save(currentBranchAuthority);
 			return BranchAuthorityName.CHANGEMESSAGE;
 		
+		// 信息删除权限
 		case "allowDeleteMessage":
 			checkBanchRole(becomeRole, BranchAuthorityName.DELETEMEMBER,
 						   currentBranchAuthority.getAllowChangeInformation(), BranchAuthorityName.CHANGEINFORMATION,
@@ -280,6 +281,7 @@ public class BranchSerivceImpl implements BranchService {
 			branchAuthorityRepository.save(currentBranchAuthority);
 			return BranchAuthorityName.DELETEMEMBER;
 		
+		// 获取任务权限
 		case "allowTakeTask":
 			checkBanchRole(becomeRole, BranchAuthorityName.TAKETASK,
 					   	   currentBranchAuthority.getAllowCreateTask(), BranchAuthorityName.CREATETASK,
@@ -288,6 +290,7 @@ public class BranchSerivceImpl implements BranchService {
 			branchAuthorityRepository.save(currentBranchAuthority);
 			return BranchAuthorityName.TAKETASK;
 		
+		// 任务创建权限
 		case "allowCreateTask":
 			checkBanchRole(becomeRole, BranchAuthorityName.CREATETASK,
 				   	   	   currentBranchAuthority.getAllowChangeTask(), BranchAuthorityName.CHANGETASK,
@@ -296,6 +299,7 @@ public class BranchSerivceImpl implements BranchService {
 			branchAuthorityRepository.save(currentBranchAuthority);
 			return BranchAuthorityName.CREATETASK;
 		
+		// 任务更改权限
 		case "allowChangeTask":
 			checkBanchRole(becomeRole, BranchAuthorityName.CHANGETASK,
 			   	   	   	   currentBranchAuthority.getAllowDeleteTask(), BranchAuthorityName.DELETETASK,
@@ -303,7 +307,8 @@ public class BranchSerivceImpl implements BranchService {
 			currentBranchAuthority.setAllowChangeTask(becomeRole);
 			branchAuthorityRepository.save(currentBranchAuthority);
 			return BranchAuthorityName.CHANGETASK;
-			
+		
+		// 任务删除权限
 		case "allowDeleteTask":
 			checkBanchRole(becomeRole, BranchAuthorityName.DELETETASK,
 			   	   	   	   currentBranchAuthority.getAllowChangeInformation(), BranchAuthorityName.CHANGEINFORMATION,
@@ -311,7 +316,8 @@ public class BranchSerivceImpl implements BranchService {
 			currentBranchAuthority.setAllowDeleteTask(becomeRole);
 			branchAuthorityRepository.save(currentBranchAuthority);
 			return BranchAuthorityName.DELETETASK;
-			
+		
+		// 评论发布权限
 		case "allowPublishComment":
 			checkBanchRole(becomeRole, BranchAuthorityName.PUBLISHCOMMENT,
 		   	   	   	   	   currentBranchAuthority.getAllowDeleteComment(), BranchAuthorityName.DELETECOMMENT,
@@ -320,6 +326,7 @@ public class BranchSerivceImpl implements BranchService {
 		    branchAuthorityRepository.save(currentBranchAuthority);
 			return BranchAuthorityName.PUBLISHCOMMENT;
 		
+		// 评论删除权限
 		case "allowDeleteComment":
 			checkBanchRole(becomeRole, BranchAuthorityName.DELETECOMMENT,
 						   currentBranchAuthority.getAllowChangeInformation(), BranchAuthorityName.CHANGEINFORMATION,
@@ -328,6 +335,7 @@ public class BranchSerivceImpl implements BranchService {
 			branchAuthorityRepository.save(currentBranchAuthority);
 			return BranchAuthorityName.DELETECOMMENT;
 		
+		// 成员查看权限
 		case "allowSeeMember":
 			checkBanchRole(becomeRole, BranchAuthorityName.SEEMEMBER,
 					   	   currentBranchAuthority.getAllowAddMember(), BranchAuthorityName.ADDMEMBER,
@@ -336,6 +344,7 @@ public class BranchSerivceImpl implements BranchService {
 			branchAuthorityRepository.save(currentBranchAuthority);
 			return BranchAuthorityName.SEEMEMBER;
 		
+		// 成员添加权限
 		case "allowAddMember":
 			checkBanchRole(becomeRole, BranchAuthorityName.ADDMEMBER,
 					   	   currentBranchAuthority.getAllowChangeMember(), BranchAuthorityName.CHANGEMEMBER,
@@ -344,6 +353,7 @@ public class BranchSerivceImpl implements BranchService {
 			branchAuthorityRepository.save(currentBranchAuthority);
 			return BranchAuthorityName.ADDMEMBER;
 		
+		// 成员修改权限
 		case "allowChangeMember":
 			checkBanchRole(becomeRole, BranchAuthorityName.CHANGEMEMBER,
 					   	   currentBranchAuthority.getAllowDeleteMember(), BranchAuthorityName.DELETEMEMBER,
@@ -351,20 +361,22 @@ public class BranchSerivceImpl implements BranchService {
 			currentBranchAuthority.setAllowChangeMember(becomeRole);
 			branchAuthorityRepository.save(currentBranchAuthority);
 			return BranchAuthorityName.CHANGEMEMBER;
-			
+		
+		// 成员删除权限
 		case "allowDeleteMember":
-			checkBanchRole(becomeRole, BranchAuthorityName.DELETECOMMENT,
+			checkBanchRole(becomeRole, BranchAuthorityName.DELETEMEMBER,
 					   	   currentBranchAuthority.getAllowChangeInformation(), BranchAuthorityName.CHANGEINFORMATION,
 					       currentBranchAuthority.getAllowChangeMember(), BranchAuthorityName.CHANGEMEMBER);
 			currentBranchAuthority.setAllowDeleteMember(becomeRole);
 			branchAuthorityRepository.save(currentBranchAuthority);
-			return BranchAuthorityName.DELETECOMMENT;
+			return BranchAuthorityName.DELETEMEMBER;
 			
 		default:
-			return "没有设置";
+			throw new FaultyOperationException("错误操作！");
 		}
 	}
 	
+	// 判断能否对权限进行修改
 	protected boolean checkBanchRole(BranchRole becomeRlole, String currentAuthorityName, BranchRole maxRole, String maxAuthorityName, BranchRole minRole, String minAuthorityName) {
 		if(maxAuthorityName != null && maxRole == null) {
 			throw new FaultyOperationException("请先定义 " + maxAuthorityName);
