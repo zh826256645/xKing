@@ -5,6 +5,8 @@ import java.security.Principal;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -124,16 +126,45 @@ public class BranchController {
 		return "/branch/branchMessage";
 	}
 	
-	
 	// 创建信息页面
 	@GetMapping(path="/{branchName}/message/new")
 	public String createBranchMessagePage(@PathVariable("branchName") String branchName,
-			Principal principal, Model model){
-		Branch currentBranch = branchService.findBranchByBranchName(branchName);
-		User currentUser = userService.getUserByUsername(principal.getName());
-		model.addAttribute("currentBranch", currentBranch);
-		model.addAttribute("currentUser", currentUser);
-		model.addAttribute("tab", "message");
+			Principal principal, Model model,RedirectAttributes reModel){
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("currentUser", currentUser);
+			model.addAttribute("tab", "message");
 		return "/branch/createBranchMessage";
+		} catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	// 成员页面
+	@GetMapping(path="/{branchName}/member")
+	public String getBranchMemberPage(@PathVariable("branchName") String branchName,
+			Principal principal, Pageable pageable, Model model, RedirectAttributes reModel){
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			// 判断用户是否由权限
+			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowSeeMember());
+			
+			Page<BranchMember> currentMemberPage = branchMemberService.findByBranch(currentBranch, pageable);
+			
+			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("currentUser", currentUser);
+			model.addAttribute("page", currentMemberPage);
+			model.addAttribute("tab", "member");
+		return "/branch/branchMember";
+		} catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
 	}
 }

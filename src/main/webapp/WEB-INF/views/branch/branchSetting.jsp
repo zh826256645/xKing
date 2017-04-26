@@ -546,6 +546,7 @@
 							</div>
 						</sf:form>
 					</div>
+					<br/>
 					<c:forEach items="${ currentBranchRoleList }" var="branchRole">
 					<div class="row role-li">
 						<div class="col-xs-5" style="padding-left: 0px;"><p class="role-li-name">${ branchRole.roleName }</p></div>

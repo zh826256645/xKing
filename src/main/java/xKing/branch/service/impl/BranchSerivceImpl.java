@@ -147,7 +147,7 @@ public class BranchSerivceImpl implements BranchService {
 		}
 		
 		if(member == null) {
-			throw new PermissionDeniedException("你并非" + branch.getBranchName() + "成员，不能进行该操作");
+			throw new PermissionDeniedException("请先加入 " + branch.getBranchName() + " 组织！");
 		}
 		
 		if(member.getBranchRole().getRoleLevel() > branchRole.getRoleLevel()) {

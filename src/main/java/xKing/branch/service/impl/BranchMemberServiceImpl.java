@@ -72,5 +72,11 @@ public class BranchMemberServiceImpl implements BranchMemberSerivce{
 	public Page<BranchMember> findByUserIdOrderByJoinTimeDesc(User user, Pageable pageable) {
 		return branchMemberRepository.findByUser_idOrderByJoinTimeDesc(user.getId(), pageable);
 	}
+
+	// 通过 branch id 查找 branch
+	@Override
+	public Page<BranchMember> findByBranch(Branch branch, Pageable pageable) {
+		return branchMemberRepository.findByBranch_id(branch.getId(), pageable);
+	}
 	
 }

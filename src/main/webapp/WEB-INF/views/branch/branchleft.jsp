@@ -24,8 +24,10 @@
 		 >
 			<a id="branches" href="<c:url value="/branch/${currentBranch.branchName}/message" />">Message</a>
 		</li>
-		<li id="tasks" >
-			<a id="tasks" href="BranchMember.html">Members</a>
+		<li id="tasks"  <c:if test="${tab == 'member'}">
+			class="active"
+			</c:if>>
+			<a id="tasks" href="<c:url value="/branch/${currentBranch.branchName}/member?page=0&size=10" />">Members</a>
 		</li>
 		<li id="tasks">
 			<a id="tasks" href="#">Tasks</a>
