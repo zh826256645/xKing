@@ -278,4 +278,11 @@ public class UserSeviceImpl implements UserService {
 		Page<UserFriend> page = userFriendRepository.findByFriend_idAndStateOrderByCreateTime(currentUser.getId(), 0, pageable);
 		return page;
 	}
+
+	// 处理 组织邀请
+	@Override
+	public boolean handelMemberRequest(User currentUser, String branchName, int State) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

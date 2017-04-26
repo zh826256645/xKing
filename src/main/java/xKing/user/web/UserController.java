@@ -226,6 +226,7 @@ public class UserController {
 			Principal principal, RedirectAttributes reMoldel){
 		try {
 			User currentUser = userService.getUserByUsername(principal.getName());
+			
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
