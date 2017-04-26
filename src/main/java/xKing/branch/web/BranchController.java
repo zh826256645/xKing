@@ -158,6 +158,7 @@ public class BranchController {
 	public String getBranchMemberPage(@PathVariable("branchName") String branchName,
 			Principal principal, Pageable pageable, Model model, RedirectAttributes reModel){
 		try{
+			System.out.println(branchName);
 			Branch currentBranch = branchService.findBranchByBranchName(branchName);
 			User currentUser = userService.getUserByUsername(principal.getName());
 			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);

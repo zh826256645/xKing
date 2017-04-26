@@ -8,6 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import xKing.branch.domain.Branch;
+import xKing.branch.domain.BranchMemberRequest;
+import xKing.branch.domain.BranchRole;
+import xKing.branch.service.BranchMemberRequestService;
+import xKing.branch.service.BranchMemberSerivce;
+import xKing.branch.service.BranchService;
 import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
@@ -39,6 +45,15 @@ public class UserSeviceImpl implements UserService {
 	
 	@Autowired
 	private UserFriendRepository userFriendRepository;
+	
+	@Autowired
+	private BranchService branchService;
+	
+	@Autowired
+	private BranchMemberRequestService branchMemberRequestService;
+	
+	@Autowired
+	private BranchMemberSerivce branchMemberService;
 
 	
 	// 用户认证
@@ -281,8 +296,21 @@ public class UserSeviceImpl implements UserService {
 
 	// 处理 组织邀请
 	@Override
-	public boolean handelMemberRequest(User currentUser, String branchName, int State) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean handelMemberRequest(User currentUser, String branchName, int state) {
+		Branch branch = branchService.findBranchByBranchName(branchName);
+		BranchMemberRequest memberRequest = branchMemberRequestService.getByUserAndBranchAndState(currentUser, branch, 1);
+		if(memberRequest == null || memberRequest.getState() != 1) {
+			throw new FaultyOperationException("错误操作");
+		}
+		
+		if(state == 1) {
+			BranchRole newBranchRole = branch.getNewMemberRole();
+			branchMemberService.addBranchMember(currentUser.getUsername(), currentUser.getEmail(), branch, newBranchRole, currentUser);
+			branchMemberRequestService.removeBranchMemberRequest(memberRequest);
+			return true;
+		} else {
+			branchMemberRequestService.removeBranchMemberRequest(memberRequest);
+			return false;
+		}
 	}
 }

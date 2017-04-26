@@ -226,10 +226,16 @@ public class UserController {
 			Principal principal, RedirectAttributes reMoldel){
 		try {
 			User currentUser = userService.getUserByUsername(principal.getName());
-			
+			boolean result = userService.handelMemberRequest(currentUser, branchName, state);
+			if(result){
+				reMoldel.addFlashAttribute("message", "已同意加入！");
+			} else {
+				reMoldel.addFlashAttribute("message", "已拒绝加入！");
+			}
+			return "redirect:/user/me?tab=branches";
 		}catch (Exception e) {
-			// TODO: handle exception
+			reMoldel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
 		}
-		return null;
 	}
 }

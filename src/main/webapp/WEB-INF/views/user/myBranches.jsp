@@ -86,7 +86,22 @@
 												<a style="font-size: 22px !important; ">${memberRequest.branch.branchName}</a>
 												<p class="hide-p">${ memberRequest.message }</p>
 												<div class="btn-line">
-													<button class="btn btn-info">Join</button>&nbsp;&nbsp;<button class="btn btn-warning">Reject</button>
+													<div class="row">
+														<div class="col-xs-5">
+															<sf:form method="post" action="/user/member/request">
+																<input type="hidden" value="1" name="state">
+																<input type="hidden" value="${memberRequest.branch.branchName}" name="branchName">
+																<button class="btn btn-info">Join</button>
+															</sf:form>
+														</div>
+														<div class="col-xs-5">
+															<sf:form method="post" action="/user/member/request">
+																<input type="hidden" value="2" name="state">
+																<input type="hidden" value="${memberRequest.branch.branchName}" name="branchName">
+																<button class="btn btn-warning">No</button>
+															</sf:form>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>

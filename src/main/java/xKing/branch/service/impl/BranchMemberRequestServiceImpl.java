@@ -24,6 +24,12 @@ public class BranchMemberRequestServiceImpl implements BranchMemberRequestServic
 	public BranchMemberRequest getByUserAndBranch(User user, Branch branch) {
 		return branchMemberRequestRepository.findByUser_idAndBranch_id(user.getId(), branch.getId());
 	}
+	
+	@Override
+	public BranchMemberRequest getByUserAndBranchAndState(User user, Branch branch, int state) {
+		// TODO Auto-generated method stub
+		return branchMemberRequestRepository.findByUser_idAndBranch_idAndState(user.getId(), branch.getId(), state);
+	}
 
 	// 通过 组织 Id 和 state 获取 成员请求
 	@Override
@@ -42,5 +48,24 @@ public class BranchMemberRequestServiceImpl implements BranchMemberRequestServic
 	@Override
 	public Page<BranchMemberRequest> getByUserAndState(User currentUser, int state, Pageable pageable) {
 		return branchMemberRequestRepository.findByUser_idAndStateOrderByRequestTimeDesc(currentUser.getId(), state, pageable);
+	}
+
+	// 删除 brnachMemberRequest
+	@Override
+	public void removeBranchMemberRequest(BranchMemberRequest branchMemberRequest) {
+		int state = 0;
+
+		if(branchMemberRequest.getState() == 1) {
+			state = 2;
+		} else {
+			state = 1;
+		}
+		
+		BranchMemberRequest memberRequest = this.getByUserAndBranchAndState(branchMemberRequest.getUser(), branchMemberRequest.getBranch(), state);
+		
+		if(memberRequest != null) {
+			branchMemberRequestRepository.delete(memberRequest);
+		}
+		branchMemberRequestRepository.delete(branchMemberRequest);
 	}
 }

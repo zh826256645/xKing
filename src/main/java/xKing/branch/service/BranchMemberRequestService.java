@@ -11,9 +11,13 @@ public interface BranchMemberRequestService {
 
 	BranchMemberRequest getByUserAndBranch(User user, Branch branch);
 	
+	BranchMemberRequest getByUserAndBranchAndState(User user, Branch branch, int state);
+	
 	BranchMemberRequest addNewBranchMemberRequest(Branch branch, User user, String message, int state);
 	
 	Page<BranchMemberRequest> getByBranchAndState(Branch currentBranch, int state, Pageable pageable);
 	
 	Page<BranchMemberRequest> getByUserAndState(User currentUser, int state, Pageable pageable);
+	
+	void removeBranchMemberRequest(BranchMemberRequest branchMemberRequest);
 }
