@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -154,6 +155,32 @@ public class BranchController {
 			
 			// 判断用户是否由权限
 			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowSeeMember());
+			
+			Page<BranchMember> currentMemberPage = branchMemberService.findByBranch(currentBranch, pageable);
+			
+			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("currentUser", currentUser);
+			model.addAttribute("page", currentMemberPage);
+			model.addAttribute("tab", "member");
+		return "/branch/branchMember";
+		} catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	// 成员页面
+	@PostMapping(path="/{branchName}/member/add")
+	public String addBranchMemberPage(@PathVariable("branchName") String branchName,
+			@RequestParam(name="username", required=false) String username,
+			Principal principal, Pageable pageable, Model model, RedirectAttributes reModel){
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			// 判断用户是否由权限
+			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowAddMember());
 			
 			Page<BranchMember> currentMemberPage = branchMemberService.findByBranch(currentBranch, pageable);
 			

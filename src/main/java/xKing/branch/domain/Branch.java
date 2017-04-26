@@ -42,15 +42,23 @@ public class Branch {
 	private String country;
 	private String homePage;
 	private String type;
+	
 	@ManyToOne(targetEntity=User.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
 	private User user;
+	
 	@OneToMany(targetEntity=BranchRole.class, mappedBy="branch", cascade={CascadeType.ALL})
 	private List<BranchRole> branchRoles = new ArrayList<BranchRole>();
+	
 	@OneToMany(targetEntity=BranchMember.class, mappedBy="branch", cascade={CascadeType.ALL})
 	private List<BranchMember> branchMembers = new ArrayList<BranchMember>();
+	
 	@OneToOne(mappedBy="branch")
 	private BranchAuthority branchAuthority;
+	
+	@OneToMany(targetEntity=BranchMemberRequest.class, mappedBy="branch", cascade={CascadeType.ALL})
+	private List<BranchMemberRequest> branchMemberRequests = new ArrayList<BranchMemberRequest>();
+	
 	public long getId() {
 		return id;
 	}
@@ -153,6 +161,14 @@ public class Branch {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public List<BranchMemberRequest> getBranchMemberRequests() {
+		return branchMemberRequests;
+	}
+
+	public void setBranchMemberRequests(List<BranchMemberRequest> branchMemberRequests) {
+		this.branchMemberRequests = branchMemberRequests;
 	}
 
 	@Override

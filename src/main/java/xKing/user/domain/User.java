@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import xKing.branch.domain.BranchMemberRequest;
+
 /**
  * User 领域模型
  * 
@@ -45,6 +47,9 @@ public class User {
    
 	@OneToMany(mappedBy = "friend")
     protected List<UserFriend> befriended;
+	
+	@OneToMany(mappedBy = "user")
+	private List<BranchMemberRequest> branchMemberRequests;
     
 	private String name;
 	private String blog;
