@@ -42,6 +42,8 @@ public class Branch {
 	private String country;
 	private String homePage;
 	private String type;
+	@OneToOne
+	private BranchRole newMemberRole ;
 	
 	@ManyToOne(targetEntity=User.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
@@ -169,6 +171,14 @@ public class Branch {
 
 	public void setBranchMemberRequests(List<BranchMemberRequest> branchMemberRequests) {
 		this.branchMemberRequests = branchMemberRequests;
+	}
+
+	public BranchRole getNewMemberRole() {
+		return newMemberRole;
+	}
+
+	public void setNewMemberRole(BranchRole newMemberRole) {
+		this.newMemberRole = newMemberRole;
 	}
 
 	@Override

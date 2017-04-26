@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import xKing.branch.service.BranchMemberRequestService;
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchService;
 import xKing.exception.AbsentException;
@@ -46,6 +47,9 @@ public class UserController {
 	
 	@Autowired
 	private BranchService branchService;
+	
+	@Autowired
+	private BranchMemberRequestService branchMemberRequestService;
 	
 	// 登录页面
 	@RequestMapping(method=RequestMethod.GET)
@@ -132,6 +136,7 @@ public class UserController {
 			
 		case "branches" :
 			model.addAttribute("page", branchMemberSerivce.findByUserId(currentUser, pageable));
+			model.addAttribute("invitePage", branchMemberRequestService.getByUserAndState(currentUser, 1, pageable));
 			model.addAttribute("tab", "branches");
 			return "/user/myBranches";
 			
@@ -212,5 +217,18 @@ public class UserController {
 		}
 		map.put("msg", msg);
 		return map;
+	}
+	
+	// 处理 组织邀请
+	@RequestMapping(value="/member/request", method=RequestMethod.POST)
+	public String handelMemberRequest(@RequestParam(name="branchName", required=false) String branchName, 
+			@RequestParam(name="state", required=false, defaultValue="0") int state,
+			Principal principal, RedirectAttributes reMoldel){
+		try {
+			User currentUser = userService.getUserByUsername(principal.getName());
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
 	}
 }

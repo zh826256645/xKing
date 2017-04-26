@@ -16,7 +16,7 @@
 				<!-- left -->
 				<%@ include file="branchleft.jsp" %>
 				<!-- center -->
-				<div class="col-xs-7 ">
+				<div class="col-xs-10 ">
 					<div class="center-branche-panel">
 					<%@ include file="../message.jsp" %>
 						<label>Member</label>
@@ -34,25 +34,44 @@
 								</div>
 							</sf:form>
 						</div>
-						<label>All Member</label>
+						
 						<div class="row">
-						<c:forEach items="${ page.content }" var="member">
-							<div class="col-xs-6 branchMember-li">
-								<div class="row">
-									<div class="col-xs-3">
-										<img class="img-circle center-person-picture" src="<c:url value='/picture/user/${member.user.username}'/>?pid=${member.user.picture}" />
+						<div class="col-xs-8">
+							<label>All Member</label>
+							<div class="row">
+								<c:forEach items="${ page.content }" var="member">
+									<div class="col-xs-6 branchMember-li">
+										<div class="row">
+											<div class="col-xs-3">
+												<img class="img-circle center-person-picture" src="<c:url value='/picture/user/${member.user.username}'/>?pid=${member.user.picture}" />
+											</div>
+											<div class="col-xs-6 branchMember-li-message">
+												<a href="#">${ member.memberName }</a> <small>${ member.branchRole.roleName }</small><br/>
+												<p class="hide-p">${ member.user.introduction }</p>
+											</div>
+											<div class="col-xs-3">
+												<br /><br />
+												<button class="btn btn-success">Add Friend</button>
+											</div>
+										</div>
 									</div>
-									<div class="col-xs-6 branchMember-li-message">
-										<a href="#">${ member.memberName }</a> <small>${ member.branchRole.roleName }</small><br/>
-										<p class="hide-p">${ member.user.introduction }</p>
-									</div>
-									<div class="col-xs-3">
-										<br /><br />
-										<button class="btn btn-success">Add Friend</button>
-									</div>
+								</c:forEach>
 								</div>
 							</div>
-						</c:forEach>
+							<div class="col-xs-3 col-xs-offset-1 friend-request">
+								<label>Invite Request</label>
+								<c:forEach  items="${invitePage.content}" var="memberRequest">
+											<div class="row center-friends-li friend-request-li branchMember-li">
+												<div class="col-xs-3">
+													<img src="<c:url value='/picture/user/${memberRequest.user.username}'/>?pid=${memberRequest.user.picture}" class="img-circle heard-profile-picture">
+												</div>
+												<div class="col-xs-5">
+													<a href="#">${ memberRequest.user.username }</a>
+													<p class="hide-p">${ memberRequest.message }</p>
+												</div>
+										</div>
+								</c:forEach>
+							</div>
 						</div>
 					</div>
 					<c:if test="${page.totalPages >= 1}">

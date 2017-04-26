@@ -23,6 +23,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
+import xKing.branch.domain.BranchMemberRequest;
+import xKing.branch.service.BranchMemberRequestService;
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchService;
 import xKing.exception.FaultyOperationException;
@@ -50,6 +52,9 @@ public class BranchController {
 	
 	@Autowired
 	private BranchMemberSerivce branchMemberService;
+	
+	@Autowired
+	private BranchMemberRequestService branchMemberRequestService;
 
 	// Branch 主页
 	@GetMapping(path="/{branchName}")
@@ -161,10 +166,12 @@ public class BranchController {
 			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowSeeMember());
 			
 			Page<BranchMember> currentMemberPage = branchMemberService.findByBranch(currentBranch, pageable);
+			Page<BranchMemberRequest> inviteRequestPage = branchMemberRequestService.getByBranchAndState(currentBranch, 1, pageable);
 			
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("page", currentMemberPage);
+			model.addAttribute("invitePage", inviteRequestPage);
 			model.addAttribute("tab", "member");
 		return "/branch/branchMember";
 		} catch (Exception e) {

@@ -789,3 +789,20 @@ a.forget {
 	font-size: 15px;
 	color: #666;
 }
+.branch-img-small-small {
+	width: 105px;
+	height: 139px;
+}
+.invite-request-li {
+	border-bottom: 1px solid #f2f2f2;
+	padding-bottom: 10px;
+		padding-top: 10px;
+}
+.invite-request-li p {
+	margin-top: 5px;
+	font-size: 15px;
+	color: gray;
+}
+.btn-line {
+	margin-top: 40px;
+}

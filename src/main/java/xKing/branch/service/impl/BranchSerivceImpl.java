@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import xKing.branch.dao.BranchAuthorityRepository;
-import xKing.branch.dao.BranchMemberRequestRepository;
 import xKing.branch.dao.BranchRepository;
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchAuthority;
@@ -73,10 +72,6 @@ public class BranchSerivceImpl implements BranchService {
 	@Autowired
 	private BranchMemberRequestService branchMemberRequestService;
 	
-	@Autowired
-	private BranchMemberRequestRepository branchMemberRequestRepository;
-
-	
 	// 通过 BranId 查找 Branch
 	@Override
 	public Branch findBranchByBranchId(long branchId) {
@@ -110,13 +105,16 @@ public class BranchSerivceImpl implements BranchService {
 		// 创建 branch admin 身份,level 为 1
 		BranchRole adminBranchRole = branchRoleSerivce.addBranchRole(currentBranch, yourRoleName, 1);
 		// 创建 branch newcomer 身份,level 为 99
-		branchRoleSerivce.addBranchRole(currentBranch, newComerRoleName, 99);
+		BranchRole newMemberRole = branchRoleSerivce.addBranchRole(currentBranch, newComerRoleName, 99);
 		// 创建 branch authority
 		branchAuthorityService.initBranchAuthority(currentBranch, adminBranchRole);
 		// 创建 BranchMember
 		branchMemberService.addBranchMember(
 				currentUser.getUsername(), currentUser.getEmail(),
 				currentBranch, adminBranchRole, currentUser);
+		
+		currentBranch.setNewMemberRole(newMemberRole);
+		branchRepository.save(currentBranch);
 		
 		return this.findBranchByBranchName(branch.getBranchName());
 	}
@@ -411,12 +409,7 @@ public class BranchSerivceImpl implements BranchService {
 			throw new FaultyOperationException("请求已发出，请不要重复发出邀请！");
 		}
 		
-		BranchMemberRequest newMemberRequest = new BranchMemberRequest();
-		newMemberRequest.setBranch(currentBranch);
-		newMemberRequest.setUser(inviteUser);
-		newMemberRequest.setMessage(message);
-		newMemberRequest.setState(1);
-		branchMemberRequestRepository.save(newMemberRequest);
+		branchMemberRequestService.addNewBranchMemberRequest(currentBranch, inviteUser, message, 1);
 		return true;
 	}
 	

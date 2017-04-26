@@ -44,40 +44,61 @@
 										<a href="<c:url value="/branch/new"/>"><button class="btn btn-success">Create New Branche</button></a>
 									</div>
 								</div>
-								<label>All Branches</label>
-								<c:forEach items="${page.content}" var="branchMember" >
-								<div class="row center-branches-li">
-									<div class="col-xs-2">
-										<img src="<c:url value="/picture/branch/${branchMember.branch.branchName}?pid=${branchMember.branch.picture}"/>"  class="branch-img-small"/><br />
-									</div>
-									<div class="col-xs-8 center-branches-li-message">
-										<div style="margin-bottom: 10px"><a href="<c:url value="/branch/${branchMember.branch.branchName}"/>">${branchMember.branch.branchName}</a><br/></div>
-										<span class="label label-info">Association</span>
-										<p class="p-label">Information</p>
-										<div class="row center-branches-li-message-body">
-											<div class="col-xs-5" style="background-color: #f9fafc;">
-												<p>Users:<font>100</font> &nbsp;&nbsp;&nbsp;Active:<font>79</font></p>
-												<p>Public Email:<font>${branchMember.branch.email}</font></p>
-												<p class="hide-p">Affiche Info:<font>${branchMember.branch.intro}</font></p>
+								<div class="row">
+									<div class="col-xs-8">
+										<label>All Branches</label>
+										<c:forEach items="${page.content}" var="branchMember" >
+										<div class="row center-branches-li">
+											<div class="col-xs-2">
+												<img src="<c:url value="/picture/branch/${branchMember.branch.branchName}?pid=${branchMember.branch.picture}"/>"  class="branch-img-small"/><br />
 											</div>
-											<div class="col-xs-5" style="background-color: #f9fafc;">
-												<p>Your name:<font>${branchMember.memberName}</font></p>
-												<p>Role:<font>${branchMember.branchRole.roleName}</font>&nbsp;&nbsp;&nbsp;Your Task:<font>4</font></p>
-												<p>Your Email:<font>${branchMember.email}</font></p>
+											<div class="col-xs-9 center-branches-li-message">
+												<div style="margin-bottom: 10px"><a href="<c:url value="/branch/${branchMember.branch.branchName}"/>">${branchMember.branch.branchName}</a><br/></div>
+												<span class="label label-info">Association</span>
+												<p class="p-label">Information</p>
+												<div class="row center-branches-li-message-body">
+													<div class="col-xs-5" style="background-color: #f9fafc;">
+														<p>Users:<font>100</font> &nbsp;&nbsp;&nbsp;Active:<font>79</font></p>
+														<p>Public Email:<font>${branchMember.branch.email}</font></p>
+														<p class="hide-p">Affiche Info:<font>${branchMember.branch.intro}</font></p>
+													</div>
+													<div class="col-xs-5" style="background-color: #f9fafc;">
+														<p>Your name:<font>${branchMember.memberName}</font></p>
+														<p>Role:<font>${branchMember.branchRole.roleName}</font>&nbsp;&nbsp;&nbsp;Your Task:<font>4</font></p>
+														<p>Your Email:<font>${branchMember.email}</font></p>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-1">
+												<a href="<c:url value="/branch/${branchMember.branch.branchName}"/>"><button class="btn btn-info">enter Into</button></a>
 											</div>
 										</div>
+										</c:forEach>
 									</div>
-									<div class="col-xs-1">
-										<a href="<c:url value="/branch/${branchMember.branch.branchName}"/>"><button class="btn btn-info">enter Into</button></a>
+									<div class="col-xs-3 friend-request">
+										<label>Invite Request</label><br/><br/>
+										<c:forEach items="${ invitePage.content }" var="memberRequest">
+										<div class="row invite-request-li">
+											<div class="col-xs-4">
+												<img src="<c:url value="/picture/branch/${memberRequest.branch.branchName}?pid=${memberRequest.branch.picture}"/>"  class="branch-img-small-small"/>
+											</div>
+											<div class="col-xs-7">
+												<a style="font-size: 22px !important; ">${memberRequest.branch.branchName}</a>
+												<p class="hide-p">${ memberRequest.message }</p>
+												<div class="btn-line">
+													<button class="btn btn-info">Join</button>&nbsp;&nbsp;<button class="btn btn-warning">Reject</button>
+												</div>
+											</div>
+										</div>
+										</c:forEach>
 									</div>
 								</div>
-								</c:forEach>
 							</div>
 						</div>
 					</div>
 					<c:if test="${page.totalPages >= 1}">
 					<div class="row">
-						<div class="col-xs-10">
+						<div class="col-xs-8">
 							<div style="float: right;">
 								<ul class="pagination" >
 									<li><a href="<c:url value="/user/me?tab=branches&page=0&size=3"/>">&laquo;</a></li>

@@ -37,6 +37,8 @@ public class BranchMemberRequest {
 	// 组织邀请 state = 1
 	// 用户请求 state = 2
 	private int state;
+	
+	private long requestTime;
 
 	public long getId() {
 		return id;
@@ -76,6 +78,27 @@ public class BranchMemberRequest {
 
 	public void setState(int state) {
 		this.state = state;
+	}
+
+	public long getRequestTime() {
+		return requestTime;
+	}
+
+	public void setRequestTime(long requestTime) {
+		this.requestTime = requestTime;
+	}
+
+	public BranchMemberRequest() {
+		super();
+	}
+
+	public BranchMemberRequest(Branch branch, User user, String message, int state) {
+		super();
+		this.branch = branch;
+		this.user = user;
+		this.message = message;
+		this.state = state;
+		this.requestTime = System.currentTimeMillis();
 	}	
-	
+
 }

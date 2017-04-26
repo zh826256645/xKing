@@ -74,6 +74,9 @@ public class UserSeviceImpl implements UserService {
 	// 根据用户名获取用户
 	@Override
 	public User getUserByUsername(String username) {
+		if(username == null || username.trim().isEmpty()) {
+			throw new FaultyOperationException("错误操作！");
+		}
 		User user = userRepository.findByUsername(username);
 		if(user != null) {
 			return user;
