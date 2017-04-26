@@ -235,4 +235,23 @@ public class BranchAuthority {
 		this.branch = branch;
 		this.setAllowChangeInformation(role);
 	}
+	
+	// 重置权限
+	public void reset(){
+		this.allowSeeMessage = this.allowChangeInformation;
+		this.allowAddMember = this.allowChangeInformation;
+		this.allowCreateMessage = this.allowChangeInformation;
+		this.allowChangeMessage =this.allowChangeInformation;
+		this.allowDeleteMessage = this.allowChangeInformation;
+		this.allowSeeMember = this.allowChangeInformation;
+		this.allowAddMember = this.allowChangeInformation;
+		this.allowDeleteMember = this.allowChangeInformation;
+		this.allowChangeMember =this.allowChangeInformation;
+		this.allowCreateTask = this.allowChangeInformation;
+		this.allowChangeTask = this.allowChangeInformation;
+		this.allowTakeTask = this.allowChangeInformation;
+		this.allowDeleteTask = this.allowChangeInformation;
+		this.allowPublishComment = this.allowChangeInformation;
+		this.allowDeleteComment = this.allowChangeInformation;
+	}
 }

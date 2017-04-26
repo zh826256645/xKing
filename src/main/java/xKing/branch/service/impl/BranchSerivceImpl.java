@@ -377,11 +377,17 @@ public class BranchSerivceImpl implements BranchService {
 	public boolean changeBranchRole(Branch currentBranch, BranchMember currentMember, String oldRoleName,
 			String newRoleName, int newRoleLevel) {
 		BranchRole oldBranchRole = branchRoleSerivce.findByRoleNameAndBranchId(oldRoleName, currentBranch);
+		int oldBranchLevel = oldBranchRole.getRoleLevel(); 
 		int memberLevel = currentMember.getBranchRole().getRoleLevel();
 		if(oldBranchRole.getRoleLevel() < memberLevel || newRoleLevel < memberLevel){
 			throw new PermissionDeniedException("你没有权限设置权限等级比你高的角色");
 		}
 		branchRoleSerivce.ChangeBranchRole(currentBranch, oldBranchRole, newRoleName, newRoleLevel);
+		
+		if(newRoleLevel != oldBranchLevel){
+			// 对权限等级修改将重置 branch 设置
+			branchAuthorityService.resetBranchAthority(currentBranch);
+		}
 		return true;
 	}
 	

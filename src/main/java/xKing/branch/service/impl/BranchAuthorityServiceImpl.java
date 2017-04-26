@@ -26,4 +26,12 @@ public class BranchAuthorityServiceImpl implements BranchAuthorityService {
 		return currentBranchAuthority;
 	}
 
+	// 对 branchAuthority 进行重置
+	@Override
+	public BranchAuthority resetBranchAthority(Branch currentBranch) {
+		BranchAuthority oldBranchAuthority = currentBranch.getBranchAuthority();
+		oldBranchAuthority.reset();
+		return branchAuthorityRepository.save(oldBranchAuthority);
+	}
+
 }

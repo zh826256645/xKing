@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -162,20 +161,20 @@ public class BranchSettingController {
 			@RequestParam(name="newRoleName") String newRoleName,
 			@RequestParam(name="newRoleLevel", required=false, defaultValue="0") int newRoleLevel,
 			Principal principal, RedirectAttributes reModel) throws UnsupportedEncodingException{
-		
+		Branch currentBranch = null;
 		try{
 			User currentUser = userService.getUserByUsername(principal.getName());
-			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			currentBranch = branchService.findBranchByBranchName(branchName);
 			BranchMember currentUserMember = branchMemberSerivce.findByBranchidAndUserId(currentBranch, currentUser);
 			
 			// 判断用户是否有权限
 			branchService.checkUserAuthority(currentUserMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeInformation());
 			
 			branchService.changeBranchRole(currentBranch, currentUserMember, oldRoleName, newRoleName, newRoleLevel);
-			reModel.addFlashAttribute("message", oldRoleName + " 修改为 " + newRoleName + " " + newRoleLevel);
+			reModel.addFlashAttribute("message", oldRoleName + " 修改为 " + newRoleName + " " + newRoleLevel + ";请注意如果你对 角色权限等级 进行了修改，组织设置将会重置！");
 			return "redirect:/branch/"+ URLEncoder.encode(currentBranch.getBranchName(), "utf-8") +"/setting";
 			
-		} catch(SameNameException|FaultyOperationException|PermissionDeniedException e) {
+		}catch(SameNameException|FaultyOperationException|PermissionDeniedException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") + "/setting";
 		} catch (Exception e) {

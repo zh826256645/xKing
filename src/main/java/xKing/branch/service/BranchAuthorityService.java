@@ -7,4 +7,6 @@ import xKing.branch.domain.BranchRole;
 public interface BranchAuthorityService {
 	
 	BranchAuthority initBranchAuthority(Branch currentBranch, BranchRole branchRole);
+	
+	BranchAuthority resetBranchAthority(Branch currentBranch);
 }
