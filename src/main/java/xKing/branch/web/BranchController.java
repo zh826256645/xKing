@@ -1,5 +1,7 @@
 package xKing.branch.web;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.Principal;
 
 import javax.validation.Valid;
@@ -23,7 +25,9 @@ import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchService;
+import xKing.exception.FaultyOperationException;
 import xKing.user.domain.User;
+import xKing.user.exception.UserNotExistException;
 import xKing.user.service.UserService;
 import xKing.utils.FontImageUtils;
 
@@ -144,7 +148,7 @@ public class BranchController {
 		}
 	}
 	
-	// 成员页面
+	// 用户页面
 	@GetMapping(path="/{branchName}/member")
 	public String getBranchMemberPage(@PathVariable("branchName") String branchName,
 			Principal principal, Pageable pageable, Model model, RedirectAttributes reModel){
@@ -169,11 +173,12 @@ public class BranchController {
 		}
 	}
 	
-	// 成员页面
-	@PostMapping(path="/{branchName}/member/add")
-	public String addBranchMemberPage(@PathVariable("branchName") String branchName,
+	// 邀请用户
+	@PostMapping(path="/{branchName}/member/invite")
+	public String inviteUser(@PathVariable("branchName") String branchName,
 			@RequestParam(name="username", required=false) String username,
-			Principal principal, Pageable pageable, Model model, RedirectAttributes reModel){
+			@RequestParam(name="message", required=false) String message,
+			Principal principal, Pageable pageable, Model model, RedirectAttributes reModel) throws UnsupportedEncodingException{
 		try{
 			Branch currentBranch = branchService.findBranchByBranchName(branchName);
 			User currentUser = userService.getUserByUsername(principal.getName());
@@ -182,13 +187,13 @@ public class BranchController {
 			// 判断用户是否由权限
 			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowAddMember());
 			
-			Page<BranchMember> currentMemberPage = branchMemberService.findByBranch(currentBranch, pageable);
+			branchService.inviteUser(currentBranch, username, message);
 			
-			model.addAttribute("currentBranch", currentBranch);
-			model.addAttribute("currentUser", currentUser);
-			model.addAttribute("page", currentMemberPage);
-			model.addAttribute("tab", "member");
-		return "/branch/branchMember";
+			reModel.addFlashAttribute("message", "邀请成功！");
+			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") + "/member";
+		}catch (FaultyOperationException|UserNotExistException e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") + "/member";
 		} catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/user/me";

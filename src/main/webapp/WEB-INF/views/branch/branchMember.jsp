@@ -18,17 +18,21 @@
 				<!-- center -->
 				<div class="col-xs-7 ">
 					<div class="center-branche-panel">
+					<%@ include file="../message.jsp" %>
 						<label>Member</label>
 						<hr />
 						<div class="row center-myBranches-up">
-							<form action="#">
+							<sf:form method="post" action="/branch/${ currentBranch.branchName }/member/invite">
 								<div class="col-xs-4">
-									<input type="text"  class="form-control" placeholder="ID Name"/>
+									<input type="text"  class="form-control" placeholder="ID Name" name="username"/>
+								</div>
+								<div class="col-xs-4">
+									<input type="text"  class="form-control" placeholder="Invite Message" name="message"/>
 								</div>
 								<div class="col-xs-2">
-									<input type="submit" class="btn btn-default" value="Search"/>
+									<input type="submit" class="btn btn-default" value="Invite"/>
 								</div>
-							</form>
+							</sf:form>
 						</div>
 						<label>All Member</label>
 						<div class="row">

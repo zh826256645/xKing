@@ -15,13 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import xKing.branch.dao.BranchAuthorityRepository;
+import xKing.branch.dao.BranchMemberRequestRepository;
 import xKing.branch.dao.BranchRepository;
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchAuthority;
 import xKing.branch.domain.BranchAuthorityName;
 import xKing.branch.domain.BranchMember;
+import xKing.branch.domain.BranchMemberRequest;
 import xKing.branch.domain.BranchRole;
 import xKing.branch.service.BranchAuthorityService;
+import xKing.branch.service.BranchMemberRequestService;
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchRoleSerivce;
 import xKing.branch.service.BranchService;
@@ -66,6 +69,12 @@ public class BranchSerivceImpl implements BranchService {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private BranchMemberRequestService branchMemberRequestService;
+	
+	@Autowired
+	private BranchMemberRequestRepository branchMemberRequestRepository;
 
 	
 	// 通过 BranId 查找 Branch
@@ -145,15 +154,12 @@ public class BranchSerivceImpl implements BranchService {
 		if(branchRole == null) {
 			return true;
 		}
-		
 		if(member == null) {
 			throw new PermissionDeniedException("请先加入 " + branch.getBranchName() + " 组织！");
 		}
-		
 		if(member.getBranchRole().getRoleLevel() > branchRole.getRoleLevel()) {
 			throw new PermissionDeniedException("对不起权限对" + branch.getBranchName() + "进行这个操作！");
 		}
-		
 		return true;
 	}
 
@@ -388,6 +394,29 @@ public class BranchSerivceImpl implements BranchService {
 			// 对权限等级修改将重置 branch 设置
 			branchAuthorityService.resetBranchAthority(currentBranch);
 		}
+		return true;
+	}
+
+	// 邀请用户
+	@Override
+	public boolean inviteUser(Branch currentBranch, String username, String message) {
+		User inviteUser = userService.getUserByUsername(username);
+		BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, inviteUser);
+		if(branchMember != null) {
+			throw new FaultyOperationException("该用户已经是组织成员！");
+		}
+		BranchMemberRequest memberRequest = branchMemberRequestService.getByUserAndBranch(inviteUser, currentBranch);
+		
+		if(memberRequest != null) {
+			throw new FaultyOperationException("请求已发出，请不要重复发出邀请！");
+		}
+		
+		BranchMemberRequest newMemberRequest = new BranchMemberRequest();
+		newMemberRequest.setBranch(currentBranch);
+		newMemberRequest.setUser(inviteUser);
+		newMemberRequest.setMessage(message);
+		newMemberRequest.setState(1);
+		branchMemberRequestRepository.save(newMemberRequest);
 		return true;
 	}
 	

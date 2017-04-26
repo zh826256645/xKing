@@ -33,4 +33,6 @@ public interface BranchService {
 	String changeBranchAuthority(Branch currentBranch,BranchMember currentMember, String roleName, final String authorityName);
 
 	boolean changeBranchRole(Branch currentBranch, BranchMember currentMember, String oldRoleName, String newRoleName, int newRoleLevel);
+	
+	boolean inviteUser(Branch currentBranch, String username, String message);
 }
