@@ -98,10 +98,14 @@ public class BranchSerivceImpl implements BranchService {
 		if(branchRepository.findByBranchName(branch.getBranchName()) != null) {
 			throw new SameNameException("该名字已被创建！");
 		}
+		if(yourRoleName.equalsIgnoreCase(newComerRoleName)){
+			throw new FaultyOperationException("两个角色名字不能一样！");
+		}
 		User currentUser = userService.getUserByUsername(username);
 		branch.setUser(currentUser);
 		branch.setCreateTime(new Timestamp(new Date().getTime()));
 		Branch currentBranch = branchRepository.save(branch);
+		
 		// 创建 branch admin 身份,level 为 1
 		BranchRole adminBranchRole = branchRoleSerivce.addBranchRole(currentBranch, yourRoleName, 1);
 		// 创建 branch newcomer 身份,level 为 99
@@ -403,7 +407,13 @@ public class BranchSerivceImpl implements BranchService {
 		if(branchMember != null) {
 			throw new FaultyOperationException("该用户已经是组织成员！");
 		}
-		BranchMemberRequest memberRequest = branchMemberRequestService.getByUserAndBranch(inviteUser, currentBranch);
+		BranchMemberRequest joinRequest = branchMemberRequestService.getByUserAndBranchAndState(inviteUser, currentBranch, 2);
+		if(joinRequest != null) {
+			branchMemberService.addBranchMember(inviteUser.getUsername(), inviteUser.getEmail(), currentBranch, currentBranch.getNewMemberRole(), inviteUser);
+			branchMemberRequestService.removeBranchMemberRequest(joinRequest);
+			return false;
+		}
+		BranchMemberRequest memberRequest = branchMemberRequestService.getByUserAndBranchAndState(inviteUser, currentBranch, 1);
 		
 		if(memberRequest != null) {
 			throw new FaultyOperationException("请求已发出，请不要重复发出邀请！");
@@ -411,6 +421,29 @@ public class BranchSerivceImpl implements BranchService {
 		
 		branchMemberRequestService.addNewBranchMemberRequest(currentBranch, inviteUser, message, 1);
 		return true;
+	}
+
+	// 处理用户加入请求
+	@Override
+	public boolean handleJoinRequest(Branch currentBranch, String username, int state) {
+		User user = userService.getUserByUsername(username);
+		BranchMemberRequest memberRequest = branchMemberRequestService.getByUserAndBranchAndState(user, currentBranch, 2);
+		if(memberRequest == null) {
+			throw new FaultyOperationException("没有该请求！");
+		}
+		BranchMember member = branchMemberService.findByBranchidAndUserId(currentBranch, user);
+		if(member != null) {
+			branchMemberRequestService.removeBranchMemberRequest(memberRequest);
+			throw new FaultyOperationException("该用户已经是组织成员！");
+		}
+		if(state == 1){
+			branchMemberService.addBranchMember(user.getUsername(), user.getEmail(), currentBranch, currentBranch.getNewMemberRole(), user);
+			branchMemberRequestService.removeBranchMemberRequest(memberRequest);
+			return true;
+		} else {
+			branchMemberRequestService.removeBranchMemberRequest(memberRequest);
+			return false;
+		}
 	}
 	
 	// 判断能否对权限进行修改
@@ -437,4 +470,5 @@ public class BranchSerivceImpl implements BranchService {
 		}
 		return true;
 	}
+
 }

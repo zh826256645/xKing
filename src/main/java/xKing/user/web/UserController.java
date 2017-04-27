@@ -137,6 +137,7 @@ public class UserController {
 		case "branches" :
 			model.addAttribute("page", branchMemberSerivce.findByUserId(currentUser, pageable));
 			model.addAttribute("invitePage", branchMemberRequestService.getByUserAndState(currentUser, 1, pageable));
+			model.addAttribute("requestJoinPage", branchMemberRequestService.getByUserAndState(currentUser, 2, pageable));
 			model.addAttribute("tab", "branches");
 			return "/user/myBranches";
 			
@@ -174,8 +175,7 @@ public class UserController {
 	// 发送好友请求
 	@RequestMapping(value="/friends/new", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> addFriend(
-			@RequestBody String username, Principal principal){
+	public Map<String, String> addFriend(@RequestBody String username, Principal principal){
 		
 		Map<String, String> map = new HashMap<String, String>();
 		try{
@@ -233,8 +233,31 @@ public class UserController {
 				reMoldel.addFlashAttribute("message", "已拒绝加入！");
 			}
 			return "redirect:/user/me?tab=branches";
-		}catch (Exception e) {
+		} catch (Exception e) {
 			reMoldel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	// 申请加入组织
+	@RequestMapping(value="/branch/request", method=RequestMethod.POST)
+	public String RequestJoin(@RequestParam(name="branchName", required=false) String branchName,
+			@	RequestParam (name="message", required=false) String message,
+			Principal principal, RedirectAttributes reModel) {
+		try {
+			User currentUser = userService.getUserByUsername(principal.getName());
+			boolean result = userService.requestJoin(currentUser, branchName, message);
+			if(result){
+				reModel.addFlashAttribute("message", "请申请加入 " + branchName + " !");
+			} else {
+				reModel.addFlashAttribute("message", branchName + "已对你发出邀请，已经直接加入该组织！");
+			}
+			return "redirect:/user/me?tab=branches";
+		}catch (AbsentException|FaultyOperationException e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me?tab=branches";
+		} catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/user/me";
 		}
 	}

@@ -4,7 +4,6 @@ package xKing.branch.web;
  * Branch 设置控制器
  */
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.List;
 
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriUtils;
 
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
@@ -88,11 +88,11 @@ public class BranchSettingController {
 		
 			currentBranch = branchService.changeBranchInformation(branch, branchPicture, currentBranch);
 			reModel.addFlashAttribute("message", "修改 " + currentBranch.getBranchName() + " 信息成功");
-			return "redirect:/branch/"+ URLEncoder.encode(currentBranch.getBranchName(), "utf-8") +"/setting";
+			return "redirect:/branch/"+ UriUtils.encode(currentBranch.getBranchName(), "utf-8") +"/setting";
 			
 		} catch(SameNameException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
-			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") + "/setting";
+			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/setting";
 		} catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 		}
@@ -116,11 +116,11 @@ public class BranchSettingController {
 			
 			BranchRole newBranchRole = branchRoleSerivce.addBranchRole(currentBranch, currentUserMember, roleName, roleLevel);
 			reModel.addFlashAttribute("message", "添加角色 " + newBranchRole.getRoleName() + " 成功！");
-			return "redirect:/branch/"+ URLEncoder.encode(currentBranch.getBranchName(), "utf-8") +"/setting";
+			return "redirect:/branch/"+ UriUtils.encode(currentBranch.getBranchName(), "utf-8") +"/setting";
 			
 		} catch(SameNameException|FaultyOperationException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
-			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") + "/setting";
+			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/setting";
 		} catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 		}
@@ -144,11 +144,11 @@ public class BranchSettingController {
 			String message = branchService.changeBranchAuthority(currentBranch, currentUserMember, roleName, authorityName);
 			
 			reModel.addFlashAttribute("message", "修改 " + message + " 成功");
-			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") +"/setting";
+			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") +"/setting";
 			
 		} catch(SameNameException|FaultyOperationException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
-			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8")  + "/setting";
+			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8")  + "/setting";
 		} catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 		}
@@ -172,11 +172,11 @@ public class BranchSettingController {
 			
 			branchService.changeBranchRole(currentBranch, currentUserMember, oldRoleName, newRoleName, newRoleLevel);
 			reModel.addFlashAttribute("message", oldRoleName + " 修改为 " + newRoleName + " " + newRoleLevel + ";请注意如果你对 角色权限等级 进行了修改，组织设置将会重置！");
-			return "redirect:/branch/"+ URLEncoder.encode(currentBranch.getBranchName(), "utf-8") +"/setting";
+			return "redirect:/branch/"+ UriUtils.encode(currentBranch.getBranchName(), "utf-8") +"/setting";
 			
 		}catch(SameNameException|FaultyOperationException|PermissionDeniedException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
-			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") + "/setting";
+			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/setting";
 		} catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 		}

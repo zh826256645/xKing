@@ -34,4 +34,6 @@ public interface UserService {
 	Page<UserFriend> getFriendRequests(User currentUser, Pageable pageable);
 	
 	boolean handelMemberRequest(User currentUser, String branchName, int state);
+	
+	boolean requestJoin(User currentUser, String branchName, String message);
 }

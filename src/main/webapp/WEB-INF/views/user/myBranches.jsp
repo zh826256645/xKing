@@ -21,31 +21,23 @@
 								<label>Branches</label>
 								<hr />
 								<div class="row center-myBranches-up">
-									<form action="#">
+								<sf:form method="post" action="/user/branch/request">
 										<div class="col-xs-4">
-											<input type="text"  class="form-control" placeholder="branch's name"/>
+											<input type="text"  class="form-control" placeholder="branch's name" name="branchName"/>
 										</div>
 										<div class="col-xs-3">
-											<div class="input-group">
-											<div class="input-group-addon">Type:</div>
-											<select class="form-control">
-												<option>All</option>
-												<option>School</option>
-												<option>Association</option>
-												<option>Company</option>
-											</select>
-											</div>
+											<input type="text"  class="form-control" placeholder="Request Message" name="message"/>
 										</div>
 										<div class="col-xs-2">
-											<input type="submit" class="btn btn-default" value="Search"/>
+											<input type="submit" class="btn btn-default" value="Join"/>
 										</div>
-									</form>
+									</sf:form>
 									<div class="col-xs-2">
 										<a href="<c:url value="/branch/new"/>"><button class="btn btn-success">Create New Branche</button></a>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-xs-8">
+									<div class="col-xs-9">
 										<label>All Branches</label>
 										<c:forEach items="${page.content}" var="branchMember" >
 										<div class="row center-branches-li">
@@ -76,6 +68,7 @@
 										</c:forEach>
 									</div>
 									<div class="col-xs-3 friend-request">
+										<div class="row">
 										<label>Invite Request</label><br/><br/>
 										<c:forEach items="${ invitePage.content }" var="memberRequest">
 										<div class="row invite-request-li">
@@ -106,6 +99,23 @@
 											</div>
 										</div>
 										</c:forEach>
+									</div>
+										<div class="row">
+										<label>Request Join</label><br/><br/>
+										<c:forEach items="${ requestJoinPage.content }" var="memberRequest">
+										<div class="row invite-request-li">
+											<div class="col-xs-4">
+												<img src="<c:url value="/picture/branch/${memberRequest.branch.branchName}?pid=${memberRequest.branch.picture}"/>"  class="branch-img-small-small"/>
+											</div>
+											<div class="col-xs-7">
+												<a style="font-size: 22px !important; ">${memberRequest.branch.branchName}</a>
+												<p class="hide-p">${ memberRequest.message }</p>
+												<div class="btn-line">
+												</div>
+											</div>
+										</div>
+										</c:forEach>
+									</div>
 									</div>
 								</div>
 							</div>

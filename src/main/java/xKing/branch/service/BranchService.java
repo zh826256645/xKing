@@ -35,4 +35,6 @@ public interface BranchService {
 	boolean changeBranchRole(Branch currentBranch, BranchMember currentMember, String oldRoleName, String newRoleName, int newRoleLevel);
 	
 	boolean inviteUser(Branch currentBranch, String username, String message);
+	
+	boolean handleJoinRequest(Branch currentBranch, String username, int state);
 }

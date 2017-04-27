@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import xKing.branch.domain.Branch;
+import xKing.branch.domain.BranchMember;
 import xKing.branch.domain.BranchMemberRequest;
 import xKing.branch.domain.BranchRole;
 import xKing.branch.service.BranchMemberRequestService;
@@ -298,9 +299,14 @@ public class UserSeviceImpl implements UserService {
 	@Override
 	public boolean handelMemberRequest(User currentUser, String branchName, int state) {
 		Branch branch = branchService.findBranchByBranchName(branchName);
+		BranchMember member = branchMemberService.findByBranchidAndUserId(branch, currentUser);
+		if(member != null) {
+			throw new FaultyOperationException("你已经是改组织的成员！");
+		}
 		BranchMemberRequest memberRequest = branchMemberRequestService.getByUserAndBranchAndState(currentUser, branch, 1);
-		if(memberRequest == null || memberRequest.getState() != 1) {
-			throw new FaultyOperationException("错误操作");
+		if(memberRequest == null) {
+			branchMemberRequestService.removeBranchMemberRequest(memberRequest);
+			throw new FaultyOperationException("没有该请求！");
 		}
 		
 		if(state == 1) {
@@ -312,5 +318,27 @@ public class UserSeviceImpl implements UserService {
 			branchMemberRequestService.removeBranchMemberRequest(memberRequest);
 			return false;
 		}
+	}
+
+	// 请求加入组织
+	@Override
+	public boolean requestJoin(User currentUser, String branchName, String message) {
+		Branch branch = branchService.findBranchByBranchName(branchName);
+		BranchMember member = branchMemberService.findByBranchidAndUserId(branch, currentUser);
+		if(member != null){
+			throw new FaultyOperationException("你已经是该组织的成员！");
+		}
+		BranchMemberRequest userRequest = branchMemberRequestService.getByUserAndBranchAndState(currentUser, branch, 2);
+		if(userRequest != null) {
+			throw new FaultyOperationException("请不要重复请求!");
+		}
+		BranchMemberRequest inviteRequest = branchMemberRequestService.getByUserAndBranchAndState(currentUser, branch, 1);
+		if(inviteRequest != null) {
+			branchMemberService.addBranchMember(currentUser.getUsername(), currentUser.getEmail(), branch, branch.getNewMemberRole(), currentUser);
+			branchMemberRequestService.removeBranchMemberRequest(inviteRequest);
+			return false;
+		}
+		branchMemberRequestService.addNewBranchMemberRequest(branch, currentUser, message, 2);
+		return true;
 	}
 }

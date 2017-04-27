@@ -1,7 +1,6 @@
 package xKing.branch.web;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.security.Principal;
 
 import javax.validation.Valid;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriUtils;
 
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
@@ -105,7 +105,6 @@ public class BranchController {
 			model.addAttribute("error","错误！");
 			return "/user/createBranch";
 		}
-		
 		try {
 			if(branchPicture.getOriginalFilename().trim().isEmpty()) {
 				// 无图片
@@ -168,11 +167,13 @@ public class BranchController {
 			
 			Page<BranchMember> currentMemberPage = branchMemberService.findByBranch(currentBranch, pageable);
 			Page<BranchMemberRequest> inviteRequestPage = branchMemberRequestService.getByBranchAndState(currentBranch, 1, pageable);
+			Page<BranchMemberRequest> joinRequestPage = branchMemberRequestService.getByBranchAndState(currentBranch, 2, pageable);
 			
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("page", currentMemberPage);
 			model.addAttribute("invitePage", inviteRequestPage);
+			model.addAttribute("joinRequestPage", joinRequestPage);
 			model.addAttribute("tab", "member");
 		return "/branch/branchMember";
 		} catch (Exception e) {
@@ -186,7 +187,7 @@ public class BranchController {
 	public String inviteUser(@PathVariable("branchName") String branchName,
 			@RequestParam(name="username", required=false) String username,
 			@RequestParam(name="message", required=false) String message,
-			Principal principal, Pageable pageable, Model model, RedirectAttributes reModel) throws UnsupportedEncodingException{
+			Principal principal, Model model, RedirectAttributes reModel) throws UnsupportedEncodingException{
 		try{
 			Branch currentBranch = branchService.findBranchByBranchName(branchName);
 			User currentUser = userService.getUserByUsername(principal.getName());
@@ -195,13 +196,46 @@ public class BranchController {
 			// 判断用户是否由权限
 			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowAddMember());
 			
-			branchService.inviteUser(currentBranch, username, message);
-			
-			reModel.addFlashAttribute("message", "邀请成功！");
-			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") + "/member";
+			boolean result = branchService.inviteUser(currentBranch, username, message);
+			if(result){
+				reModel.addFlashAttribute("message", "邀请成功！");
+			} else {
+				reModel.addFlashAttribute("message", "该用户已经提交了申请，自动同意加入！");
+			}
+			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/member";
 		}catch (FaultyOperationException|UserNotExistException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
-			return "redirect:/branch/"+ URLEncoder.encode(branchName, "utf-8") + "/member";
+			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/member";
+		} catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	// 处理用户加入请求
+	@PostMapping(path="/{branchName}/member/request")
+	public String handleJoinRequest(@PathVariable("branchName") String branchName,
+			@RequestParam(name="username", required=false) String username,
+			@RequestParam(name="state", required=false, defaultValue="0") int state, 
+			Principal principal, Model model, RedirectAttributes reModel ) throws UnsupportedEncodingException {
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			// 判断用户是否由权限
+			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowAddMember());
+			
+			boolean result = branchService.handleJoinRequest(currentBranch, username, state);
+			if(result){
+				reModel.addFlashAttribute("message", "已同意添加！");
+			} else {
+				reModel.addFlashAttribute("message", "已拒绝添加！");
+			}
+			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/member";
+		}catch (FaultyOperationException|UserNotExistException e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/member";
 		} catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/user/me";

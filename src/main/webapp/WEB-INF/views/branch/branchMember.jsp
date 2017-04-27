@@ -59,6 +59,7 @@
 								</div>
 							</div>
 							<div class="col-xs-3 col-xs-offset-1 friend-request">
+								<div class="row">
 								<label>Invite Request</label>
 								<c:forEach  items="${invitePage.content}" var="memberRequest">
 											<div class="row center-friends-li friend-request-li branchMember-li">
@@ -71,6 +72,35 @@
 												</div>
 										</div>
 								</c:forEach>
+								</div>
+								<div class="row">
+								<label>join Request</label>
+								<c:forEach  items="${joinRequestPage.content}" var="memberRequest">
+											<div class="row center-friends-li branchMember-li">
+												<div class="col-xs-3">
+													<img src="<c:url value='/picture/user/${memberRequest.user.username}'/>?pid=${memberRequest.user.picture}" class="img-circle heard-profile-picture">
+												</div>
+												<div class="col-xs-4">
+													<a href="#">${ memberRequest.user.username }</a>
+													<p class="hide-p">${ memberRequest.message }</p>
+												</div>
+												<div class="col-xs-2">
+														<sf:form method="post" action="/branch/${ currentBranch.branchName }/member/request">
+															<input type="hidden" name="state" value="1">
+															<input type="hidden" name="username" value="${memberRequest.user.username}">
+															<button class="btn btn-info">Agree</button>
+														</sf:form>
+												</div>
+												<div class="col-xs-2">
+														<sf:form method="post" action="/branch/${ currentBranch.branchName }/member/request">
+															<input type="hidden" name="state" value="2">
+															<input type="hidden" name="username" value="${memberRequest.user.username}">
+															<button class="btn btn-warning">No</button>
+														</sf:form>
+												</div>
+										</div>
+								</c:forEach>
+								</div>
 							</div>
 						</div>
 					</div>
