@@ -809,3 +809,22 @@ a.forget {
 .username-p {
 	top: 5px !important;; 
 }
+.project-name {
+	font-size: 21px;
+	font-weight: 600;
+	margin-top: 5px;
+}
+.project-li {
+	border-bottom: 1px solid #f2f2f2;
+	margin-left: 10px !important;
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+.project-li i {
+	font-size: 14px;
+}
+.project-picture {
+	width: 35px;
+	height: 35px;
+	margin-top: 5px;
+}

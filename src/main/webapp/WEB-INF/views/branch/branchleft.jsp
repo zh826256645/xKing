@@ -29,8 +29,10 @@
 			</c:if>>
 			<a id="tasks" href="<c:url value="/branch/${currentBranch.branchName}/member?page=0&size=10" />">Members</a>
 		</li>
-		<li id="tasks">
-			<a id="tasks" href="#">Tasks</a>
+		<li id="tasks" <c:if test="${tab == 'project'}">
+					class="active"
+			</c:if>>
+			<a id="tasks" href="<c:url value="/branch/${currentBranch.branchName}/project?page=0&size=10" />">Project</a>
 		</li>
 	</ul>
 </div>

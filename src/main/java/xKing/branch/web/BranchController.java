@@ -135,7 +135,6 @@ public class BranchController {
 	@GetMapping(path="/{branchName}/message")
 	public String getBranchMessage(@PathVariable("branchName") String branchName, 
 			Model model) {
-		
 		model.addAttribute("currentBranch", branchService.findBranchByBranchName(branchName));
 		model.addAttribute("tab", "message");
 		return "/branch/branchMessage";
@@ -270,6 +269,23 @@ public class BranchController {
 		} catch (FaultyOperationException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/member";
+		} catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	@GetMapping(path="/{branchName}/project")
+	public String branchProjectPage(@PathVariable(name="branchName") String branchName,
+			Principal principal,Model model, RedirectAttributes reModel){
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			
+			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("currentUser", currentUser);
+			model.addAttribute("tab", "project");
+		return "/branch/branchProject";
 		} catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/user/me";
