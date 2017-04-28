@@ -78,5 +78,11 @@ public class BranchMemberServiceImpl implements BranchMemberSerivce{
 	public Page<BranchMember> findByBranch(Branch branch, Pageable pageable) {
 		return branchMemberRepository.findByBranch_id(branch.getId(), pageable);
 	}
+
+	// 更新 branchMember
+	@Override
+	public BranchMember update(BranchMember branchMember) {
+		return branchMemberRepository.save(branchMember);
+	}
 	
 }

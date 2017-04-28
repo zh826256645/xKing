@@ -23,4 +23,6 @@ public interface BranchMemberSerivce {
 	Page<BranchMember> findByUserIdOrderByJoinTimeDesc(User user, Pageable pageable);
 	
 	Page<BranchMember> findByBranch(Branch branch, Pageable pageable);
+	
+	BranchMember update(BranchMember branchMember);
 }

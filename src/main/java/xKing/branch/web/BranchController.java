@@ -2,6 +2,7 @@ package xKing.branch.web;
 
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -24,8 +25,10 @@ import org.springframework.web.util.UriUtils;
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
 import xKing.branch.domain.BranchMemberRequest;
+import xKing.branch.domain.BranchRole;
 import xKing.branch.service.BranchMemberRequestService;
 import xKing.branch.service.BranchMemberSerivce;
+import xKing.branch.service.BranchRoleSerivce;
 import xKing.branch.service.BranchService;
 import xKing.exception.FaultyOperationException;
 import xKing.user.domain.User;
@@ -55,6 +58,9 @@ public class BranchController {
 	
 	@Autowired
 	private BranchMemberRequestService branchMemberRequestService;
+	
+	@Autowired
+	private BranchRoleSerivce branchRoleService;
 
 	// Branch 主页
 	@GetMapping(path="/{branchName}")
@@ -168,12 +174,14 @@ public class BranchController {
 			Page<BranchMember> currentMemberPage = branchMemberService.findByBranch(currentBranch, pageable);
 			Page<BranchMemberRequest> inviteRequestPage = branchMemberRequestService.getByBranchAndState(currentBranch, 1, pageable);
 			Page<BranchMemberRequest> joinRequestPage = branchMemberRequestService.getByBranchAndState(currentBranch, 2, pageable);
+			List<BranchRole> currentBranchRoleList = branchRoleService.findByBranchId(currentBranch);
 			
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("page", currentMemberPage);
 			model.addAttribute("invitePage", inviteRequestPage);
 			model.addAttribute("joinRequestPage", joinRequestPage);
+			model.addAttribute("currentBranchRoleList", currentBranchRoleList);
 			model.addAttribute("tab", "member");
 		return "/branch/branchMember";
 		} catch (Exception e) {
@@ -234,6 +242,32 @@ public class BranchController {
 			}
 			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/member";
 		}catch (FaultyOperationException|UserNotExistException e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/member";
+		} catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	// 修改成员角色
+	@PostMapping(path="/{branchName}/member/role")
+	public String changeMemberRole(@PathVariable(name="branchName") String branchName, 
+			@RequestParam(name="username", required=false) String username,
+			@RequestParam(name="roleName", required=false) String roleName,
+			Principal principal, RedirectAttributes reModel) throws UnsupportedEncodingException {
+		try {
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			// 判断用户是否由权限
+			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeMember());
+			
+			branchService.changeMemberRole(currentBranch, branchMember, username, roleName);
+			reModel.addFlashAttribute("message", "修改成员 " + username + " 角色为 " + roleName);
+			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/member";
+		} catch (FaultyOperationException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/member";
 		} catch (Exception e) {

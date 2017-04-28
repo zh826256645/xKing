@@ -45,14 +45,30 @@
 											<div class="col-xs-3">
 												<img class="img-circle center-person-picture" src="<c:url value='/picture/user/${member.user.username}'/>?pid=${member.user.picture}" />
 											</div>
+											<sf:form method="post" action="/branch/${ currentBranch.branchName }/member/role">
 											<div class="col-xs-6 branchMember-li-message">
-												<a href="#">${ member.memberName }</a> <small>${ member.branchRole.roleName }</small><br/>
+												<div class="row">
+													<div class="col-xs-5" style="padding-right: 0px">
+														<p class="hide-p username-p"><a href="#">${ member.memberName }</a></p>
+													</div>
+													
+													<div class="col-xs-6" style="padding-left: 8px">
+															<input type="hidden" name="username" value="${ member.user.username }">											
+															<select class="form-control" name="roleName">	
+															<c:forEach items="${ currentBranchRoleList }" var="branchRole">
+																	<option value="${ branchRole.roleName }" <c:if test="${ member.branchRole.id == branchRole.id }">selected="selected"</c:if>>${ branchRole.roleName }</option>
+															</c:forEach>
+															</select>
+															<br/>
+													</div>
+												</div>
 												<p class="hide-p">${ member.user.introduction }</p>
 											</div>
 											<div class="col-xs-3">
 												<br /><br />
-												<button class="btn btn-success">Add Friend</button>
+												<button class="btn btn-success">Change</button>
 											</div>
+											</sf:form>
 										</div>
 									</div>
 								</c:forEach>

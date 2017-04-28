@@ -446,6 +446,32 @@ public class BranchSerivceImpl implements BranchService {
 		}
 	}
 	
+	// 更改成员角色
+	@Override
+	public boolean changeMemberRole(Branch currentBranch, BranchMember currentUserMember, String username, String roleName) {
+		if(currentUserMember.getUser().getUsername().equalsIgnoreCase(username)) {
+			throw new FaultyOperationException("不能修改自己的角色！");
+		}
+		User user = userService.getUserByUsername(username);
+		BranchMember member = branchMemberService.findByBranchidAndUserId(currentBranch, user);
+		if(member == null) {
+			throw new FaultyOperationException("该用户并未组织成员！");
+		}
+		if(currentUserMember.getBranchRole().getRoleLevel() > member.getBranchRole().getRoleLevel()) {
+			throw new FaultyOperationException("你的权限小于该用户的权限，不能进行更改操作！");
+		}
+		BranchRole branchRole = branchRoleSerivce.findByRoleNameAndBranchId(roleName, currentBranch);
+		if(branchRole == null) {
+			throw new FaultyOperationException("没有该角色！");
+		}
+		if(currentUserMember.getBranchRole().getRoleLevel() >  branchRole.getRoleLevel()) {
+			throw new FaultyOperationException("你没有权限设置成员为比自己大的权限");
+		}
+		member.setBranchRole(branchRole);
+		branchMemberService.update(member);
+		return true;
+	}
+	
 	// 判断能否对权限进行修改
 	protected boolean checkBanchRole(BranchRole becomeRlole, String currentAuthorityName, BranchRole maxRole, String maxAuthorityName, BranchRole minRole, String minAuthorityName) {
 		if(maxAuthorityName != null && maxRole == null) {
@@ -470,5 +496,4 @@ public class BranchSerivceImpl implements BranchService {
 		}
 		return true;
 	}
-
 }
