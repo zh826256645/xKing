@@ -274,21 +274,4 @@ public class BranchController {
 			return "redirect:/user/me";
 		}
 	}
-	
-	@GetMapping(path="/{branchName}/project")
-	public String branchProjectPage(@PathVariable(name="branchName") String branchName,
-			Principal principal,Model model, RedirectAttributes reModel){
-		try{
-			Branch currentBranch = branchService.findBranchByBranchName(branchName);
-			User currentUser = userService.getUserByUsername(principal.getName());
-			
-			model.addAttribute("currentBranch", currentBranch);
-			model.addAttribute("currentUser", currentUser);
-			model.addAttribute("tab", "project");
-		return "/branch/branchProject";
-		} catch (Exception e) {
-			reModel.addFlashAttribute("error", e.getMessage());
-			return "redirect:/user/me";
-		}
-	}
 }

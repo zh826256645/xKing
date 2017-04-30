@@ -17,62 +17,40 @@
 				<%@ include file="branchleft.jsp" %>
 				<div class="col-xs-7">
 					<div class="center-branche-panel">
+						<%@ include file="../message.jsp" %>
 						<label>Project</label>
 						<hr />
 						<div class="row center-myBranches-up">
-							<form action="#">
+							<sf:form action="" method="post">
 								<div class="col-xs-4">
-									<input type="text"  class="form-control" placeholder="Project Name"/>
+									<input type="text"  class="form-control" placeholder="Project Name" name="projectName"/>
 								</div>
 								<div class="col-xs-2">
 									<input type="submit" class="btn btn-default" value="Add"/>
 								</div>
-							</form>
+							</sf:form>
 						</div>
 						<label>Branch Project</label>
+						<c:forEach items="${ page.content }" var="project">
 						<div class="row project-li">
 							<div class="col-xs-3">
-								<p class="hide-p project-name"><a>xKing 项目组</a></p>
+								<p class="hide-p project-name"><a>${ project.projectName }</a></p>
 							</div>
 							<div class="col-xs-5">
 								<div class="row">
-									<img src="img/11.jpg" class="img-circle project-picture">
-									<img src="img/profile.jpg" class="img-circle project-picture">
-									<img src="img/11.jpg" class="img-circle project-picture">
-									<img src="img/profile.jpg" class="img-circle project-picture">
-									<img src="img/11.jpg" class="img-circle project-picture">
-									<img src="img/11.jpg" class="img-circle project-picture">
+									<c:forEach items="${ project.projectMember }" var="member" end="6">
+										<img src="<c:url value='/picture/user/${member.user.username}'/>?pid=${member.user.picture}" class="img-circle project-picture">
+									</c:forEach>
 								</div>
 							</div>
 							<div class="col-xs-2" style="padding-top: 15px">
-								<i class="fa fa-calendar" aria-hidden="true"></i><font> 2016-10-11</font>
+								<i class="fa fa-calendar" aria-hidden="true"></i><font> ${ project.getFormatTime() }</font>
 							</div>
 							<div class="col-xs-2" style="padding-top: 6px">
 								<button class="btn btn-info">Into</button>
 							</div>
 						</div>
-						<div class="row project-li">
-							<div class="col-xs-3">
-								<p class="hide-p project-name"><a>xKing 项目组</a></p>
-							</div>
-							<div class="col-xs-5">
-								<div class="row">
-									<img src="img/11.jpg" class="img-circle project-picture">
-									<img src="img/profile.jpg" class="img-circle project-picture">
-									<img src="img/11.jpg" class="img-circle project-picture">
-									<img src="img/profile.jpg" class="img-circle project-picture">
-									<img src="img/11.jpg" class="img-circle project-picture">
-									<img src="img/11.jpg" class="img-circle project-picture">
-
-								</div>
-							</div>
-							<div class="col-xs-2" style="padding-top: 15px">
-								<i class="fa fa-calendar" aria-hidden="true"></i><font> 2016-10-11</font>
-							</div>
-							<div class="col-xs-2" style="padding-top: 6px">
-								<button class="btn btn-info">Into</button>
-							</div>
-						</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>

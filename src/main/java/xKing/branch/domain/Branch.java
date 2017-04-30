@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import xKing.project.domain.Project;
 import xKing.user.domain.User;
 
 /**
@@ -60,6 +61,9 @@ public class Branch {
 	
 	@OneToMany(targetEntity=BranchMemberRequest.class, mappedBy="branch", cascade={CascadeType.ALL})
 	private List<BranchMemberRequest> branchMemberRequests = new ArrayList<BranchMemberRequest>();
+	
+	@OneToMany(targetEntity=Project.class, mappedBy="branch")
+	private List<Project> projects = new ArrayList<Project>();
 	
 	public long getId() {
 		return id;

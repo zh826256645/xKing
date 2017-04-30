@@ -52,7 +52,7 @@
 														<p class="hide-p username-p"><a href="#">${ member.memberName }</a></p>
 													</div>
 													
-													<div class="col-xs-6" style="padding-left: 8px">
+													<div class="col-xs-6" style="padding-left: 8px; height: 45px">
 															<input type="hidden" name="username" value="${ member.user.username }">											
 															<select class="form-control" name="roleName">	
 															<c:forEach items="${ currentBranchRoleList }" var="branchRole">
@@ -62,7 +62,9 @@
 															<br/>
 													</div>
 												</div>
-												<p class="hide-p">${ member.user.introduction }</p>
+												<div class="row">
+													&nbsp;&nbsp;&nbsp;&nbsp;<small class="hide-p">${ member.user.introduction }</small>
+												</div>
 											</div>
 											<div class="col-xs-3">
 												<br /><br />

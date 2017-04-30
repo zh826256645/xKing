@@ -26,4 +26,10 @@ public class Utils {
 		return null;
 	}
 	
+	// 格式化时间
+	public static String getFormatData(long time) {
+		SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" );
+		String date = format.format(new Date(time));
+		return date;
+	}
 }
