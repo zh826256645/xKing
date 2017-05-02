@@ -22,17 +22,18 @@
 			<%@ include file="../header.jsp" %>
 			<div class="row">
 				<%@ include file="branchleft.jsp" %>
-				<div class="col-xs-10">
+				<div class="col-xs-7">
 					<div class="center-branche-panel">
+						<%@ include file="../message.jsp" %>
 						<label>Create Branch's Message</label>
 						<hr />
 						<label>Title</label>
 						<div class="row center-myBranches-up" style="border-bottom: 0px !important;">
 							<form action="#">
-								<div class="col-sm-6">
+								<div class="col-xs-6">
 									<input type="text"  class="form-control" placeholder="Message Title"/>
 								</div>
-								<div class="col-sm-2">
+								<div class="col-xs-2">
 									<div class="input-group">
 									<div class="input-group-addon">Type:</div>
 									<select class="form-control">
@@ -47,46 +48,82 @@
 						</div>
 						<label>Message</label>
 						<div class="row">
-							<div class="col-md-8">
-									<div class="message-panel">
-									<ul id="myTab" class="nav nav-tabs" style="padding-left: 20px;">
-										
-									   <li class="active">
-									      <a href="#home" data-toggle="tab">
-									         Write
-									      </a>
-									   </li>
-									   <li><a href="#ios" data-toggle="tab">View</a></li>
-									</ul>
-									</div>
-									<div id="myTabContent" class="tab-content tab-control">
-									   <div class="tab-pane fade in active" id="home">
-										  <br />
-									      <textarea id="text-input" rows="13" class="form-control messge-textarea"  oninput="this.editor.update()">#I'm very happy today!</textarea>
-									   </div>
-									   <div  class="tab-pane fade" id="ios">
-									     <div >
-									     	<article class="markdown-body" id="preview">
-											</article>
-									     </div>
-									   </div>  
-									</div>
+							<div class="col-xs-11">
+								<div class="message-panel">
+								<ul id="myTab" class="nav nav-tabs" style="padding-left: 20px;">
+									
+								   <li class="active">
+								      <a href="#home" data-toggle="tab">
+								         Write
+								      </a>
+								   </li>
+								   <li>
+								   		<a href="#ios" data-toggle="tab" onclick="editor()">View</a>
+								   </li>
+								</ul>
+								</div>
+								<div id="myTabContent" class="tab-content tab-control">
+								   <div class="tab-pane fade in active" id="home">
+									  <br />
+								      <textarea id="text-input" rows="13" class="form-control messge-textarea">#I'm very happy today!</textarea>
+								   </div>
+								   <div  class="tab-pane fade" id="ios">
+								     <div >
+								     	<article class="markdown-body" id="preview">
+										</article>
+								     </div>
+								   </div>  
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				<div class="col-xs-2 center-branche-panel center-profile-setting-right" >
+					<label>Message Tag</label>
+					<hr/>
+					<div class="row add-role">
+						<sf:form action="/branch/${ currentBranch.branchName }/message/tag/new" method="post">
+							<div class="col-xs-9" style="padding-left: 22px;">
+								<input type="text"  class="form-control" placeholder="Tag name" name="tagName"/>
+							</div>
+							<div class="col-xs-2">
+								<input type="submit" class="btn btn-success" value="Add"/>
+							</div>
+						</sf:form>
+					</div>
+					<br />
+					<c:forEach items="${ messageTags }" var="tag">
+					<div class="row role-li" >
+							<div class="col-xs-5" style="padding-left: 0px;"><p class="hide-p" style="font-size: 16px;"><i class="fa fa-tag" aria-hidden="true" style="font-size: 14px;margin-right: 5px;"></i>${ tag.tagName }</p></div>
+							<div class="col-xs-2"><i class="fa fa-edit role-font" style="color: #67B168;cursor: pointer;" aria-hidden="true" onclick="changeRole(this)"></i></div>
+							<div class="col-xs-2"><i class="fa fa-times role-font" style="color: #D9534F;" aria-hidden="true"></i></div>
+					</div>
+					<div class="row add-role" style="display: none;">
+						<form>
+							<div class="col-xs-4" style="padding-left: 22px;">
+								<input type="text"  class="form-control" placeholder="Role name"/>
+							</div>
+							<div class="col-xs-3">
+								<input type="text"  class="form-control" placeholder="level"/>
+							</div>
+							<div class="col-xs-2">
+								<input type="submit" class="btn btn-success" value="YES"/>
+							</div>
+						</form>
+							<div class="col-xs-2" style="margin-left: 4px;">
+								<button class="btn btn-warning" onclick="noChangeRole(this)">No</button>
+							</div>
+					</div>
+					</c:forEach>
+				</div>
 			</div>
 		</div>
 		<script>
-	      function Editor(input, preview) {
-	        this.update = function () {
-	          preview.innerHTML = markdown.toHTML(input.value);
-	        };
-	        input.editor = this;
-	        this.update();
-	      }
-	      var $ = function (id) { return document.getElementById(id); };
-	      new Editor($("text-input"), $("preview"));
+	      function editor() {
+		      	document.getElementById('preview').innerHTML = "";
+				var text = $("#text-input").val();
+				document.getElementById('preview').innerHTML = (marked(text));
+		      }
 	    </script>
 	</body>
 </html>

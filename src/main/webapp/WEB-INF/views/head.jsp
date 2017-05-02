@@ -10,5 +10,5 @@
 <script type="text/javascript" src="<c:url value="/js/profile.js"/>" ></script>
 <script type="text/javascript" src="<c:url value="/js/utils.js"/>" ></script>
 <script type="text/javascript" src="<c:url value="/js/checkout.js"/>" ></script>
-<script type="text/javascript" src="<c:url value="/js/markdown.min.js"/>" ></script>
+<script type="text/javascript" src="<c:url value="/js/marked.min.js"/>" ></script>
 <script type="text/javascript" src="<c:url value="/js/userAjax.js"/>" ></script>

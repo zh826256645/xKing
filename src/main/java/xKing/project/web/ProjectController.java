@@ -29,6 +29,12 @@ import xKing.project.service.ProjectService;
 import xKing.user.domain.User;
 import xKing.user.service.UserService;
 
+/**
+ * 组织信息控制器
+ * 
+ * @author zhonghao
+ *
+ */
 @Controller
 @RequestMapping("/branch/{branchName}/project")
 public class ProjectController {

@@ -131,32 +131,6 @@ public class BranchController {
 		}
 	}
 	
-	// Branch Message 页面
-	@GetMapping(path="/{branchName}/message")
-	public String getBranchMessage(@PathVariable("branchName") String branchName, 
-			Model model) {
-		model.addAttribute("currentBranch", branchService.findBranchByBranchName(branchName));
-		model.addAttribute("tab", "message");
-		return "/branch/branchMessage";
-	}
-	
-	// 创建信息页面
-	@GetMapping(path="/{branchName}/message/new")
-	public String createBranchMessagePage(@PathVariable("branchName") String branchName,
-			Principal principal, Model model,RedirectAttributes reModel){
-		try{
-			Branch currentBranch = branchService.findBranchByBranchName(branchName);
-			User currentUser = userService.getUserByUsername(principal.getName());
-			model.addAttribute("currentBranch", currentBranch);
-			model.addAttribute("currentUser", currentUser);
-			model.addAttribute("tab", "message");
-		return "/branch/createBranchMessage";
-		} catch (Exception e) {
-			reModel.addFlashAttribute("error", e.getMessage());
-			return "redirect:/user/me";
-		}
-	}
-	
 	// 用户页面
 	@GetMapping(path="/{branchName}/member")
 	public String getBranchMemberPage(@PathVariable("branchName") String branchName,
