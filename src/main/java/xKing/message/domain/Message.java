@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
@@ -24,8 +26,12 @@ public class Message {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
+	@NotNull
+	@Size(min=1, message="标题不能为空")
 	private String title;
 	
+	@NotNull
+	@Size(min=1, message="内容不能为空")
 	private String messageContent;
 	
 	private String tag;
@@ -33,7 +39,7 @@ public class Message {
 	@ManyToOne(targetEntity=Branch.class)
 	private Branch branch;
 	
-	@ManyToOne(targetEntity=Branch.class)
+	@ManyToOne(targetEntity=BranchMember.class)
 	private BranchMember branchMember;
 	
 	@ManyToOne(targetEntity=MessageTag.class)

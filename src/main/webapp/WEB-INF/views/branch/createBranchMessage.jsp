@@ -28,23 +28,22 @@
 						<label>Create Branch's Message</label>
 						<hr />
 						<label>Title</label>
+						<sf:form action="" method="post" commandName="branchMessage">
 						<div class="row center-myBranches-up" style="border-bottom: 0px !important;">
-							<form action="#">
-								<div class="col-xs-6">
-									<input type="text"  class="form-control" placeholder="Message Title"/>
+							<div class="col-xs-6">
+								<input type="text"  class="form-control" placeholder="Message Title" name="title"/>
+							</div>
+							<div class="col-xs-3">
+								<div class="input-group">
+								<div class="input-group-addon">Type:</div>
+								<select class="form-control" name="messageTag">
+									<option value="" selected="selected">All</option>
+								<c:forEach items="${ messageTags }" var="tag">
+									<option value="${ tag.tagName }">${ tag.tagName }</option>
+								</c:forEach>
+								</select>
 								</div>
-								<div class="col-xs-2">
-									<div class="input-group">
-									<div class="input-group-addon">Type:</div>
-									<select class="form-control">
-										<option>All</option>
-										<option>School</option>
-										<option>Association</option>
-										<option>Company</option>
-									</select>
-									</div>
-								</div>
-							</form>
+							</div>		
 						</div>
 						<label>Message</label>
 						<div class="row">
@@ -65,7 +64,7 @@
 								<div id="myTabContent" class="tab-content tab-control">
 								   <div class="tab-pane fade in active" id="home">
 									  <br />
-								      <textarea id="text-input" rows="13" class="form-control messge-textarea">#I'm very happy today!</textarea>
+								      <textarea id="text-input" rows="13" class="form-control messge-textarea" name="messageContent"></textarea>
 								   </div>
 								   <div  class="tab-pane fade" id="ios">
 								     <div >
@@ -76,6 +75,12 @@
 								</div>
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-xs-1 col-xs-offset-10">
+								<input type="submit" value="sumbit" class="btn btn-info">
+							</div>
+						</div>
+						</sf:form>
 					</div>
 				</div>
 				<div class="col-xs-2 center-branche-panel center-profile-setting-right" >

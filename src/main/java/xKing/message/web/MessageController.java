@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchService;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
+import xKing.message.domain.Message;
 import xKing.message.domain.MessageTag;
 import xKing.message.service.MessageService;
 import xKing.user.domain.User;
@@ -83,6 +86,7 @@ public class MessageController {
 			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("messageTags", messageTags);
 			model.addAttribute("tab", "message");
+			model.addAttribute("branchMessage", new Message());
 		return "/branch/createBranchMessage";
 		} catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
@@ -105,6 +109,36 @@ public class MessageController {
 			messageService.addMessageTag(currentBranch, branchMember, tagName);
 			
 			reModel.addFlashAttribute("message", "添加标签 " + tagName + " 成功");
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message/new";
+		}catch (ExistedException|FaultyOperationException e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message/new";
+		} catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	@PostMapping(path="/new")
+	public String createMessage(@PathVariable("branchName") String branchName, Principal principal,
+			@Validated Message branchMessage, Errors errors,
+			Model model, RedirectAttributes reModel) throws UnsupportedEncodingException {
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			// 判断用户是否由权限
+			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowCreateMessage());
+			
+			if(errors.hasErrors()) {
+				model.addAttribute("errors", true);
+				model.addAttribute("currentBranch", currentBranch);
+				model.addAttribute("tab", "message");
+				return "/branch/createBranchMessage";
+			}
+
+			reModel.addFlashAttribute("message", "添加信息成功");
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message/new";
 		}catch (ExistedException|FaultyOperationException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
