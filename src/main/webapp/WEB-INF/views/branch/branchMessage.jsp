@@ -31,58 +31,21 @@
 							</div>
 						</div>
 						<label>Official Message</label>
+						<c:forEach items="${ page.content }" var="branchMessage">
 						<div class="row center-branch-message-li">
 							<div class="col-xs-8">
 								<p class="hide-p">
-								[Active] <a href="#">We well have a party in the 2016-11-23，welcome to join us!</a>
+								 <c:if test="${ branchMessage.messageTag != null }">[${ branchMessage.messageTag.tagName }]</c:if><c:if test="${ branchMessage.messageTag == null }">[All]</c:if><a href="#">${ branchMessage.title }</a>
 								</p>
 							</div>
 							<div class="col-xs-3">
-								<i class="fa fa-calendar" aria-hidden="true"></i><font> 2016-10-11</font>
+								<i class="fa fa-calendar" aria-hidden="true"></i><font> ${ branchMessage.getFormatTime() }</font>
 							</div>
 							<div class="col-xs-1">
 								<a href="#"><button class="btn btn-info">Read</button></a>
 							</div>
 						</div>
-						<div class="row center-branch-message-li">
-							<div class="col-xs-8">
-								<p class="hide-p">
-								[Active] <a href="#">We well have a party in the 2016-11-23，welcome to join us!</a>
-								</p>
-							</div>
-							<div class="col-xs-3">
-								<i class="fa fa-calendar" aria-hidden="true"></i><font> 2016-10-11</font>
-							</div>
-							<div class="col-xs-1">
-								<a href="#"><button class="btn btn-info">Read</button></a>
-							</div>
-						</div>
-						<div class="row center-branch-message-li">
-							<div class="col-xs-8">
-								<p class="hide-p">
-								[Active] <a href="#">We well have a party in the 2016-11-23，welcome to join us!</a>
-								</p>
-							</div>
-							<div class="col-xs-3">
-								<i class="fa fa-calendar" aria-hidden="true"></i><font> 2016-10-11</font>
-							</div>
-							<div class="col-xs-1">
-								<a href="#"><button class="btn btn-info">Read</button></a>
-							</div>
-						</div>
-						<div class="row center-branch-message-li">
-							<div class="col-xs-8">
-								<p class="hide-p">
-								[Active] <a href="#">We well have a party in the 2016-11-23，welcome to join us!</a>
-								</p>
-							</div>
-							<div class="col-xs-3">
-								<i class="fa fa-calendar" aria-hidden="true"></i><font> 2016-10-11</font>
-							</div>
-							<div class="col-xs-1">
-								<a href="#"><button class="btn btn-info">Read</button></a>
-							</div>
-						</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>

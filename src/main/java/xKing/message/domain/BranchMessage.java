@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
+import xKing.utils.Utils;
 
 /**
  * 组织信息实体类
@@ -108,5 +109,9 @@ public class BranchMessage {
 		this.title = title;
 		this.messageContent = messageContent;
 		this.createTime = System.currentTimeMillis();
+	}
+	
+	public String getFormatTime() {
+		return Utils.getFormatData(this.createTime);
 	}
 }

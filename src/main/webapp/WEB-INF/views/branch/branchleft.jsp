@@ -22,7 +22,7 @@
 			class="active"
 			</c:if>
 		 >
-			<a id="branches" href="<c:url value="/branch/${currentBranch.branchName}/message" />">Message</a>
+			<a id="branches" href="<c:url value="/branch/${currentBranch.branchName}/message?page=0&size=10" />">Message</a>
 		</li>
 		<li id="tasks"  <c:if test="${tab == 'member'}">
 			class="active"

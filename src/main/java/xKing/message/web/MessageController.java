@@ -5,6 +5,8 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -48,7 +50,7 @@ public class MessageController {
 	// Branch Message 页面
 	@GetMapping(path="")
 	public String getBranchMessage(@PathVariable("branchName") String branchName, Principal principal, 
-			Model model, RedirectAttributes reModel) {
+			Model model, RedirectAttributes reModel, Pageable pageable) {
 		
 		try {
 			Branch currentBranch = branchService.findBranchByBranchName(branchName);
@@ -57,8 +59,11 @@ public class MessageController {
 			
 			// 判断用户是否由权限
 			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowSeeMessage());
+			
+			Page<BranchMessage> branchMessages = messageService.getBranchMessages(currentBranch, pageable);
 		
 			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("page", branchMessages);
 			model.addAttribute("tab", "message");
 			return "/branch/branchMessage";
 		} catch (Exception e) {
