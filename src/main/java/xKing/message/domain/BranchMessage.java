@@ -20,21 +20,19 @@ import xKing.branch.domain.BranchMember;
 
 @Entity
 @Table(name="branch_message")
-public class Message {
+public class BranchMessage {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@NotNull
+	@NotNull(message="标题不能为空")
 	@Size(min=1, message="标题不能为空")
 	private String title;
 	
-	@NotNull
+	@NotNull(message="内容不能为空")
 	@Size(min=1, message="内容不能为空")
 	private String messageContent;
-	
-	private String tag;
 	
 	@ManyToOne(targetEntity=Branch.class)
 	private Branch branch;
@@ -71,14 +69,6 @@ public class Message {
 		this.messageContent = messageContent;
 	}
 
-	public String getTag() {
-		return tag;
-	}
-
-	public void setTag(String tag) {
-		this.tag = tag;
-	}
-
 	public Branch getBranch() {
 		return branch;
 	}
@@ -109,5 +99,14 @@ public class Message {
 
 	public void setMessageTag(MessageTag messageTag) {
 		this.messageTag = messageTag;
+	}
+	
+	public void init(Branch currentBranch, BranchMember currentMember, MessageTag messageTag, String title, String messageContent) {
+		this.branch = currentBranch;
+		this.branchMember = currentMember;
+		this.messageTag = messageTag;
+		this.title = title;
+		this.messageContent = messageContent;
+		this.createTime = System.currentTimeMillis();
 	}
 }

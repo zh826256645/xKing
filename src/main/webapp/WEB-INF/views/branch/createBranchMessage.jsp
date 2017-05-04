@@ -36,7 +36,7 @@
 							<div class="col-xs-3">
 								<div class="input-group">
 								<div class="input-group-addon">Type:</div>
-								<select class="form-control" name="messageTag">
+								<select class="form-control" name="tagName">
 									<option value="" selected="selected">All</option>
 								<c:forEach items="${ messageTags }" var="tag">
 									<option value="${ tag.tagName }">${ tag.tagName }</option>

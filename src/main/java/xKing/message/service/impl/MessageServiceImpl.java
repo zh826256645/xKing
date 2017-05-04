@@ -12,6 +12,7 @@ import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
 import xKing.message.dao.MessageRepository;
 import xKing.message.dao.MessageTagRepository;
+import xKing.message.domain.BranchMessage;
 import xKing.message.domain.MessageTag;
 import xKing.message.service.MessageService;
 
@@ -31,7 +32,7 @@ public class MessageServiceImpl implements MessageService {
 		if(tagName.trim().isEmpty()) {
 			throw new FaultyOperationException("标签名不能为空！");
 		}
-		MessageTag tag = messageTagRepository.findByTagNameAndBranch_id(tagName, currentBranch.getId());
+		MessageTag tag = this.getMessageTagByBranchAndTagName(currentBranch, tagName);
 		if(tag != null) {
 			throw new ExistedException("该标签已被创建请不要重复创建！");
 		}
@@ -46,4 +47,19 @@ public class MessageServiceImpl implements MessageService {
 		return messageTagRepository.findByBranch_id(currentBranch.getId());
 	}
 
+	// 创建组织信息
+	@Override
+	public BranchMessage createMessage(Branch currentBranch, BranchMember currentMember, BranchMessage message,
+			MessageTag messageTag) {
+		BranchMessage newMessage = new BranchMessage();
+		newMessage.init(currentBranch, currentMember, messageTag, message.getTitle(), message.getMessageContent());
+		return messageRepository.save(newMessage);
+	}
+
+	// 获取信息标签
+	@Override
+	public MessageTag getMessageTagByBranchAndTagName(Branch currentBranch, String tagName) {
+		return messageTagRepository.findByTagNameAndBranch_id(tagName, currentBranch.getId());
+	}
+	
 }

@@ -23,7 +23,7 @@ import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchService;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
-import xKing.message.domain.Message;
+import xKing.message.domain.BranchMessage;
 import xKing.message.domain.MessageTag;
 import xKing.message.service.MessageService;
 import xKing.user.domain.User;
@@ -86,7 +86,7 @@ public class MessageController {
 			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("messageTags", messageTags);
 			model.addAttribute("tab", "message");
-			model.addAttribute("branchMessage", new Message());
+			model.addAttribute("branchMessage", new BranchMessage());
 		return "/branch/createBranchMessage";
 		} catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
@@ -121,7 +121,8 @@ public class MessageController {
 	
 	@PostMapping(path="/new")
 	public String createMessage(@PathVariable("branchName") String branchName, Principal principal,
-			@Validated Message branchMessage, Errors errors,
+			@Validated BranchMessage branchMessage, Errors errors, 
+			@RequestParam(name="tagName", required=false) String tagName,
 			Model model, RedirectAttributes reModel) throws UnsupportedEncodingException {
 		try{
 			Branch currentBranch = branchService.findBranchByBranchName(branchName);
@@ -132,12 +133,19 @@ public class MessageController {
 			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowCreateMessage());
 			
 			if(errors.hasErrors()) {
-				model.addAttribute("errors", true);
+				List<MessageTag> messageTags = messageService.getMessageTags(currentBranch);
 				model.addAttribute("currentBranch", currentBranch);
+				model.addAttribute("messageTags", messageTags);
 				model.addAttribute("tab", "message");
+				model.addAttribute("error", "文章标题或者内容不能为空！");
 				return "/branch/createBranchMessage";
 			}
-
+			MessageTag messageTag = null;
+			if(tagName != null && ! tagName.trim().isEmpty()) {
+				messageTag = messageService.getMessageTagByBranchAndTagName(currentBranch, tagName);
+			}
+			messageService.createMessage(currentBranch, branchMember, branchMessage, messageTag);
+			
 			reModel.addFlashAttribute("message", "添加信息成功");
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message/new";
 		}catch (ExistedException|FaultyOperationException e) {
