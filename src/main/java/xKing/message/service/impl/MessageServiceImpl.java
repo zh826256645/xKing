@@ -67,7 +67,7 @@ public class MessageServiceImpl implements MessageService {
 	// 获取组织的公告
 	@Override
 	public Page<BranchMessage> getBranchMessages(Branch currentBranch, Pageable pageable) {
-		return messageRepository.findByBranch_idOrderByCreateTime(currentBranch.getId(), pageable);
+		return messageRepository.findByBranch_idOrderByCreateTimeDesc(currentBranch.getId(), pageable);
 	}
 	
 }

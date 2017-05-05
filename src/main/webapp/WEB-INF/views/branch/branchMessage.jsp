@@ -15,6 +15,7 @@
 				<%@ include file="branchleft.jsp" %>
 				<div class="col-xs-7">
 					<div class="center-branche-panel">
+						<%@ include file="../message.jsp" %>
 						<label>Message Center</label>
 						<hr />
 						<div class="row center-myBranches-up">

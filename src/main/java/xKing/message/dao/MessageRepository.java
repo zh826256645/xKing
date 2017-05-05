@@ -8,5 +8,5 @@ import xKing.utils.CrudRepository;
 
 public interface MessageRepository extends CrudRepository<BranchMessage, Long> {
 
-	Page<BranchMessage> findByBranch_idOrderByCreateTime(long branch_id, Pageable pageable);
+	Page<BranchMessage> findByBranch_idOrderByCreateTimeDesc(long branch_id, Pageable pageable);
 }

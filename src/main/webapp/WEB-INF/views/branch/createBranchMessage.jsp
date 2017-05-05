@@ -31,7 +31,7 @@
 						<sf:form action="" method="post" commandName="branchMessage">
 						<div class="row center-myBranches-up" style="border-bottom: 0px !important;">
 							<div class="col-xs-6">
-								<input type="text"  class="form-control" placeholder="Message Title" name="title"/>
+								<input type="text"  class="form-control" placeholder="Message Title" name="title" value="${ branchMessage.title }"/>
 							</div>
 							<div class="col-xs-3">
 								<div class="input-group">
@@ -64,7 +64,7 @@
 								<div id="myTabContent" class="tab-content tab-control">
 								   <div class="tab-pane fade in active" id="home">
 									  <br />
-								      <textarea id="text-input" rows="13" class="form-control messge-textarea" name="messageContent"></textarea>
+								      <textarea id="text-input" rows="13" class="form-control messge-textarea" name="messageContent">${ branchMessage.messageContent }</textarea>
 								   </div>
 								   <div  class="tab-pane fade" id="ios">
 								     <div >
@@ -89,7 +89,7 @@
 					<div class="row add-role">
 						<sf:form action="/branch/${ currentBranch.branchName }/message/tag/new" method="post">
 							<div class="col-xs-9" style="padding-left: 22px;">
-								<input type="text"  class="form-control" placeholder="Tag name" name="tagName"/>
+								<input type="text"  class="form-control" placeholder="Tag name" name="tagName" />
 							</div>
 							<div class="col-xs-2">
 								<input type="submit" class="btn btn-success" value="Add"/>

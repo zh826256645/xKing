@@ -151,8 +151,8 @@ public class MessageController {
 			}
 			messageService.createMessage(currentBranch, branchMember, branchMessage, messageTag);
 			
-			reModel.addFlashAttribute("message", "添加信息成功");
-			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message/new";
+			reModel.addFlashAttribute("message", "添加公告成功");
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message";
 		}catch (ExistedException|FaultyOperationException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message/new";
