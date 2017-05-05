@@ -15,7 +15,7 @@
 				<!-- left -->
 				<%@ include file="branchleft.jsp" %>
 				<!-- center -->
-				<div class="col-xs-7">
+				<div class="col-xs-7 col-xs-offset-2">
 					<div class="row">
 						<div class="center-branche-panel">
 							<div class="panel panel-default">

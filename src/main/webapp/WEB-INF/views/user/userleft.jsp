@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 	<!-- left -->
-	<div class="col-xs-2 left-sidebar">
+	<div class="left-sidebar" style="width: 310px;">
 		<ul class="nav nav-sidebar">
 			<li id="overview" <c:if test="${tab == 'profile'}"> class="active" </c:if>>
 				<a id="overview" href="<c:url value="/user/me"/>"><i class="fa fa-cloud fa-3x" aria-hidden="true"></i><br/><s:message code="left.menu.overview"/></a>

@@ -14,7 +14,7 @@
 			<div class="row">
 				<%@ include file="userleft.jsp" %>
 				<!-- center -->
-				<div class="col-xs-7 center">
+				<div class="col-xs-7 center col-xs-offset-2">
 					<%@ include file="../message.jsp" %>
 					<div class="row">
 						<div class="col-xs-12">

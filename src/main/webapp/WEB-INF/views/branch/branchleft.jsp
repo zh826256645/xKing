@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="col-xs-2 left-sidebar" id="branchLeft">
+<div class="left-sidebar" id="branchLeft" style="width: 310px;">
 	<div class="left-branch-message" align="center">
 		<img src="<c:url value="/picture/branch/${currentBranch.branchName}?pid=${currentBranch.picture}"/>" class="branch-img" /><br />
 		<p class="h1 hide-p">${currentBranch.branchName}</p>

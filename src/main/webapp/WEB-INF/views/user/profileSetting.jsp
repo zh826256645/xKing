@@ -18,7 +18,7 @@
 				<!-- left -->
 				<%@ include file="userleft.jsp" %>
 				<!-- center -->
-				<div class="col-xs-7 center-myBranches">
+				<div class="col-xs-7 center-myBranches col-xs-offset-2">
 					<%@ include file="../message.jsp" %>
 					<label><s:message code="profileSetting.setting"/></label>
 					<hr />

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>createBranchMessage</title>
+		<link rel="stylesheet" type="text/css" href="css/application.css"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/github-markdown.css"/>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
+		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="js/profile.js" ></script>
+		<script type="text/javascript" src="js/marked.min.js" ></script>
+		<script type="text/javascript" src="js/utils.js" ></script>
+		<style>
+		    .markdown-body {
+		        box-sizing: border-box;
+		        min-width: 200px;
+		        max-width: 980px;
+		        margin: 0 auto;
+		        padding: 45px;
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<nav class="navbar navbar-default navbar-fixed-top heard" role="navigation" style="float: left;">
+				<div class="row">
+					<div class="col-xs-8 col-xs-offset-2">
+						<div class="navbar-header">
+							<!--
+		             			xKing
+		                 -->
+							<a class="navbar-brand" href="#" style="font-size: 25px;">xKing</a>
+						</div>
+						<!--
+		              		左导航栏
+		                -->
+		                <div id="navbar" class="navbar-collapse collapse" >
+		                	<ul class="nav navbar-nav">
+		                		<li class="active">
+		                			<a href="#">Home</a>
+		                		</li>
+		                	</ul>
+		                  	<form class="navbar-form navbar-left" role="search">
+		        		   		<div class="form-group">
+		                			<input type="text" class="form-control" placeholder="Search">
+		            			</div>
+		        			</form>
+		        			<ul class="nav navbar-nav navbar-right">
+		        				<li> 
+									<img src="img/profile.jpg" class="img-circle heard-profile-picture">
+		        				</li>
+		        				<li class="dropdown">
+		        					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+		        						zhonghao <span class="caret"></span>		
+		        					</a>
+									<ul class="dropdown-menu" role="menu">
+						                <li><a href="profile.html">Profile</a></li>
+						                <li><a href="#">Message</a></li>
+						                <li><a href="#">Setting</a></li>
+						                <li class="divider"></li>
+						                <li class="dropdown-header">System</li>
+						                <li><a href="#">Help</a></li>
+						                <li><a href="#">Logout</a></li>
+		              				</ul>
+		        				</li>
+		        			</ul>
+		        		</div>
+					</div>
+				</div>
+			</nav>
+		
+			<div class="row">
+				<!-- left -->
+				<div class="left-sidebar" id="branchLeft" style="width: 310px;">
+					<div class="left-branch-message" align="center">
+						<img src="img/branche.jpeg" class="branch-img"/><br />
+						<p class="h1 hide-p">LongMaoShe</p>
+						<p class="hide-p">Intro：This is a branch have some people!！！！！</p>
+						<p><i class="fa fa-user" aria-hidden="true"></i>&nbsp;100&nbsp;&nbsp;&nbsp;&nbsp;
+							<i class="fa fa-level-up" aria-hidden="true"></i>&nbsp;13</p>
+					</div>
+					<ul class="nav nav-sidebar left-branch-ul">
+						<li id="overview" >
+							<a id="overview" href="BranchIndex.html">Index</a>
+						</li>
+						<li id="branches" >
+							<a id="branches" href="BranchMessage.html">Message</a>
+						</li>
+						<li id="tasks" class="active">
+							<a id="tasks" href="BranchMember.html">Members</a>
+						</li>
+						<li id="tasks">
+							<a id="tasks" href="#">Tasks</a>
+						</li>
+					</ul>
+				</div>
+				<!-- center -->
+	
+				<!-- Right -->
+	
+			
+			<!-- Center -->
+				<div class="col-xs-7 col-xs-offset-2">
+					<div class="center-branche-panel">
+						<label>Message</label>
+						<hr />
+						<div class="row">
+							<div class="col-xs-10">
+								<div class="row">
+									<div class="col-xs-9 col-xs-offset-1">
+										<h2 style="font-weight: 800; font-size: 35px;">龙猫啥成立，人员招募！！小伙伴快来吧~</h2>
+									</div>
+								</div>
+								<br />
+								<div class="row">
+									<div class="col-xs-9 col-xs-offset-1">
+										<div class="row">
+											<div class="col-xs-1">
+												<img src="img/profile.jpg" class="img-circle heard-profile-picture">
+											</div>
+											<div class="col-xs-3" style="padding-top: 5px;">
+												by: <a>ZhongHao</a>
+												<br />
+												<small style="font-size: 14px;color: #888888;">2017-05-05 &nbsp;&nbsp;评论: 10</small>
+											</div>
+										</div>
+									</div>
+								</div>
+								<br />
+								<br />
+								<div class="row">
+									<div class="col-xs-9 col-xs-offset-1">
+										<textarea style="display: none;" id="branch-message">## <a name="ch2">第 2 章 <b>REST API<b/> 设计</a></textarea>
+										<div id="preview"></div>
+									</div>
+								</div>
+								<br />
+								<br />
+								<div class="row" >
+									<div class="col-xs-9 col-xs-offset-1" style="border-top: 1px solid #EBEBEB;">
+										<br />
+										<label>评论</label>
+										<form>
+										<div class="row">
+											<div class="col-xs-1">
+												<img src="img/profile.jpg" class="img-circle heard-profile-picture" style="margin: 0px;">
+											</div>
+											<div class="col-xs-11">
+												<textarea class="form-control" rows="3"></textarea>
+											</div>
+										</div>
+										<br />
+										<div class="row">
+											<div class="col-xs-2 col-xs-offset-10">
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-info" value="评论" />
+											</div>
+										</div>
+										</form>
+										<br />
+										<br />
+										<p style="font-size: 18px;font-weight: 600;">22 条评论</p>
+									</div>
+								</div>
+								<div class="row" >
+									<div class="col-xs-9 col-xs-offset-1" style="border-top: 1px solid #EBEBEB;">
+										
+										<div class="row">
+											<br />
+											<div class="col-xs-1">
+												<img src="img/profile.jpg" class="img-circle heard-profile-picture" style="margin: 0px;">
+											</div>
+											<div class="col-xs-4">
+												ZhongHao
+												<br />
+												<small style="font-size: 14px;color: #888888;"> 1 楼 &nbsp;&nbsp;2017-05-05 </small>
+											</div>
+										</div>
+										<br />
+										<div class="row" style="border-bottom: 1px solid #EBEBEB;">
+											<div class="col-xs-11">
+												<p style="font-size: 16px;font-weight: 500;">位置有限，先到先得，快来吧，小伙伴们！！！</p>
+											</div>
+											<br />
+										</div>
+										<div class="row">
+											<br />
+											<div class="col-xs-1">
+												<img src="img/profile.jpg" class="img-circle heard-profile-picture" style="margin: 0px;">
+											</div>
+											<div class="col-xs-4">
+												ZhongHao
+												<br />
+												<small style="font-size: 14px;color: #888888;"> 1 楼 &nbsp;&nbsp;2017-05-05 </small>
+											</div>
+										</div>
+										<br />
+										<div class="row" style="border-bottom: 1px solid #EBEBEB;">
+											<div class="col-xs-11">
+												<p style="font-size: 16px;font-weight: 500;">位置有限，先到先得，快来吧，小伙伴们！！！</p>
+											</div>
+											<br />
+										</div>
+										<div class="row">
+											<br />
+											<div class="col-xs-1">
+												<img src="img/profile.jpg" class="img-circle heard-profile-picture" style="margin: 0px;">
+											</div>
+											<div class="col-xs-4">
+												ZhongHao
+												<br />
+												<small style="font-size: 14px;color: #888888;"> 1 楼 &nbsp;&nbsp;2017-05-05 </small>
+											</div>
+										</div>
+										<br />
+										<div class="row" style="border-bottom: 1px solid #EBEBEB;">
+											<div class="col-xs-11">
+												<p style="font-size: 16px;font-weight: 500;">位置有限，先到先得，快来吧，小伙伴们！！！</p>
+											</div>
+											<br />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+		      	document.getElementById('preview').innerHTML = "";
+				var text = $("#branch-message").val();
+				document.getElementById('preview').innerHTML = (marked(text));
+	    </script>
+	</body>
+</html>

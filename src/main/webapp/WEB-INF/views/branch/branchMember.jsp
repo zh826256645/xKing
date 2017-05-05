@@ -16,7 +16,7 @@
 				<!-- left -->
 				<%@ include file="branchleft.jsp" %>
 				<!-- center -->
-				<div class="col-xs-10 ">
+				<div class="col-xs-10 col-xs-offset-2 ">
 					<div class="center-branche-panel">
 					<%@ include file="../message.jsp" %>
 						<label>Member</label>

@@ -6,7 +6,7 @@
 	position: relative;
 }
 .container {
-	min-width: 1600px;
+	min-width: 1900px;
 	width: 100% !important;
 }
 .flag {
@@ -164,8 +164,11 @@ a.forget {
 	margin-top: 5px;
 }
 .left-sidebar {
+	position:fixed !important;
+	z-index: 1000;
 	top: 51px;
-	padding-bottom: 900px;
+	bottom: 0px;
+	padding-bottom: 300px;
 	padding-left: 0px !important;
 	padding-right: 0px !important;
 	background-color: #333333;
