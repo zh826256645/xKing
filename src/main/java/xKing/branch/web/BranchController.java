@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,8 @@ import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchRoleSerivce;
 import xKing.branch.service.BranchService;
 import xKing.exception.FaultyOperationException;
+import xKing.message.domain.BranchMessage;
+import xKing.message.service.MessageService;
 import xKing.user.domain.User;
 import xKing.user.exception.UserNotExistException;
 import xKing.user.service.UserService;
@@ -61,6 +64,9 @@ public class BranchController {
 	
 	@Autowired
 	private BranchRoleSerivce branchRoleService;
+	
+	@Autowired
+	private MessageService messageService;
 
 	// Branch 主页
 	@GetMapping(path="/{branchName}")
@@ -75,6 +81,10 @@ public class BranchController {
 			
 			// 判断用户是否有权限
 			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowInto());
+			
+			Pageable pageable = new PageRequest(0, 5);
+			Page<BranchMessage> messages = messageService.getBranchMessages(currentBranch, pageable);
+			model.addAttribute("branchMessages", messages);
 			
 			if(branchMember != null) {
 				model.addAttribute("currentBranchMember", branchMember);

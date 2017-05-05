@@ -13,7 +13,7 @@
 		<%@ include file="../header.jsp" %>
 			<div class="row">
 				<%@ include file="branchleft.jsp" %>
-				<div class="col-xs-10">
+				<div class="col-xs-7">
 					<div class="center-branche-panel">
 						<label>Message Center</label>
 						<hr />

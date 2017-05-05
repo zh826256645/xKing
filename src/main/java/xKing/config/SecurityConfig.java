@@ -28,11 +28,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private DataSource dataSource;
 	
-	// 设置 URL 的访问权限
+// Spring Security 设置
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.authorizeRequests()
+			.authorizeRequests()  // 设置路由的访问权限`
 				.antMatchers("/**/**.**").permitAll()
 				.antMatchers("/").permitAll()
 				.antMatchers(HttpMethod.GET, "/user").permitAll()
@@ -43,9 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.anyRequest().authenticated()
 			.and()
 			.formLogin()
-				.loginPage("/user")
-				.defaultSuccessUrl("/user/me")
-				.usernameParameter("username").passwordParameter("password")
+				.loginPage("/user") // 登录页面路由
+				.defaultSuccessUrl("/user/me")  // 登录成功后跳转的要么
+				.usernameParameter("username").passwordParameter("password")  // 字段名
 				.successHandler(new UserSucceedLoginHander())
 			.and()
 			.logout()

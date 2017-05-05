@@ -27,26 +27,12 @@
 						        	</div>
 						        	<div class="col-xs-6 branch-left">
 						        		<label class="label label-color">Message</label><br />
+						        		<c:forEach items="${ branchMessages.content }" var="branchMessage">
 						        		<p class="hide-p branch-message-p">
 											<i class="fa fa-tags" aria-hidden="true"></i> 
-											<a href="#">We well have a party in the 2016-11-23，welcome to join us!</a>
+											<a href="#">${ branchMessage.title }</a>
 										</p>
-										<p class="hide-p branch-message-p">
-											<i class="fa fa-tags" aria-hidden="true"></i> 
-											<a href="#">We well have a party in the 2016-11-23，welcome to join us!</a>
-										</p>
-										<p class="hide-p branch-message-p">
-											<i class="fa fa-tags" aria-hidden="true"></i> 
-											<a href="#">We well have a party in the 2016-11-23，welcome to join us!</a>
-										</p>
-										<p class="hide-p branch-message-p">
-											<i class="fa fa-tags" aria-hidden="true"></i> 
-											<a href="#">We well have a party in the 2016-11-23，welcome to join us!</a>
-										</p>
-										<p class="hide-p branch-message-p">
-											<i class="fa fa-tags" aria-hidden="true"></i> 
-											<a href="#">We well have a party in the 2016-11-23，welcome to join us!</a>
-										</p>
+										</c:forEach>
 						        	</div>
 						        	<div class="col-xs-3 branch-user-id">
 						        		<c:if test="${currentBranchMember != null}">
