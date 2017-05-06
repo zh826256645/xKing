@@ -16,7 +16,7 @@ public class Utils {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		return format.format(new Date());
 	}
-	
+
 	// 截取文件名后缀
 	public static String getExtensionName(String fileName) {
 		int i = fileName.lastIndexOf(".");
@@ -29,6 +29,13 @@ public class Utils {
 	// 格式化时间
 	public static String getFormatData(long time) {
 		SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" );
+		String date = format.format(new Date(time));
+		return date;
+	}
+	
+	// 获取格式化日期
+	public static String getFormatDataTime(long time) {
+		SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 		String date = format.format(new Date(time));
 		return date;
 	}

@@ -114,4 +114,8 @@ public class BranchMessage {
 	public String getFormatTime() {
 		return Utils.getFormatData(this.createTime);
 	}
+	
+	public String getFormatTime2() {
+		return Utils.getFormatDataTime(this.createTime);
+	}
 }

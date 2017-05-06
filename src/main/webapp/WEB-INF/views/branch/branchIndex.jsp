@@ -30,7 +30,7 @@
 						        		<c:forEach items="${ branchMessages.content }" var="branchMessage">
 						        		<p class="hide-p branch-message-p">
 											<i class="fa fa-tags" aria-hidden="true"></i> 
-											<a href="#">${ branchMessage.title }</a>
+											<a href="<c:url value="/branch/${ currentBranch.branchName }/message/${ branchMessage.id }" />">${ branchMessage.title }</a>
 										</p>
 										</c:forEach>
 						        	</div>

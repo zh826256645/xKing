@@ -23,13 +23,21 @@ import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchService;
+import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
 import xKing.message.domain.BranchMessage;
+import xKing.message.domain.BranchMessageComment;
 import xKing.message.domain.MessageTag;
 import xKing.message.service.MessageService;
 import xKing.user.domain.User;
 import xKing.user.service.UserService;
+
+/**
+ * 组织公告控制器
+ * @author zhonghao
+ *
+ */
 
 @Controller
 @RequestMapping("/branch/{branchName}/message")
@@ -156,6 +164,67 @@ public class MessageController {
 		}catch (ExistedException|FaultyOperationException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message/new";
+		} catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	@GetMapping(path="/{messageId}")
+	public String getMessagePage(@PathVariable("branchName") String branchName,
+			@PathVariable("messageId") long messageId, Principal principal, RedirectAttributes reModel, Model model) throws UnsupportedEncodingException{
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			// 判断用户是否由权限
+			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowSeeMessage());
+			
+			BranchMessage branchMessage = messageService.getBranchMessage(currentBranch, messageId);
+			List<BranchMessageComment> comments = messageService.getMessageComments(currentBranch, branchMessage);
+			Long commentNum = messageService.getMessageCommentNum(currentBranch, branchMessage);
+			
+			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("branchMessage", branchMessage);
+			model.addAttribute("comments", comments);
+			model.addAttribute("commentNum", commentNum);
+			model.addAttribute("tab", "message");
+			return "/branch/branchMessagePage";
+		}catch (AbsentException e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message";
+		} catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	@PostMapping(path="/{messageId}/comment")
+	public String publishedComment(@PathVariable("branchName") String branchName,
+			@PathVariable("messageId") long messageId,
+			@RequestParam(name="comment", required=false) String comment,
+			Principal principal, RedirectAttributes reModel, Model model) throws UnsupportedEncodingException {
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			// 判断用户是否有权限
+			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowSeeMessage());
+			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowPublishComment());
+			
+			BranchMessage branchMessage = messageService.getBranchMessage(currentBranch, messageId);
+			messageService.publishedComment(currentUser, currentBranch, branchMessage, comment);
+			
+			reModel.addFlashAttribute("message", "评论发表成功！");
+			return  "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message/" + messageId;
+		}catch(FaultyOperationException e){
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message/" + messageId;
+		}catch (AbsentException e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message";
 		} catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/user/me";

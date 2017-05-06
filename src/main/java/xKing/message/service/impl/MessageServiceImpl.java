@@ -10,13 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
+import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
+import xKing.message.dao.CommentRepository;
 import xKing.message.dao.MessageRepository;
 import xKing.message.dao.MessageTagRepository;
 import xKing.message.domain.BranchMessage;
+import xKing.message.domain.BranchMessageComment;
 import xKing.message.domain.MessageTag;
 import xKing.message.service.MessageService;
+import xKing.user.domain.User;
 
 @Service
 @Transactional
@@ -27,6 +31,9 @@ public class MessageServiceImpl implements MessageService {
 	
 	@Autowired
 	private MessageTagRepository messageTagRepository;
+	
+	@Autowired
+	private CommentRepository commentRepository;
 
 	// 添加信息的标签
 	@Override
@@ -69,5 +76,40 @@ public class MessageServiceImpl implements MessageService {
 	public Page<BranchMessage> getBranchMessages(Branch currentBranch, Pageable pageable) {
 		return messageRepository.findByBranch_idOrderByCreateTimeDesc(currentBranch.getId(), pageable);
 	}
-	
+
+	// 获取组织公告
+	@Override
+	public BranchMessage getBranchMessage(Branch currentBranch, long messageId) {
+		BranchMessage branchMessage = messageRepository.findByBranch_idAndId(currentBranch.getId(), messageId);
+		if(branchMessage == null) {
+			throw new AbsentException("该公告不存在！");
+		}
+		return branchMessage;
+	}
+
+	// 发表评论
+	@Override
+	public BranchMessageComment publishedComment(User currentUser, Branch currentBranch, BranchMessage currentBranchMessage, String comment) {
+		if(comment.trim().isEmpty()) {
+			throw new FaultyOperationException("评论内容不能为空！");
+		}
+		if(comment.length() > 120) {
+			throw new FaultyOperationException("评论不能大于 120 字符！");
+		} 
+		BranchMessageComment branchMessagecomment = new BranchMessageComment();
+		branchMessagecomment.init(currentUser, currentBranch, currentBranchMessage, comment);
+		return commentRepository.save(branchMessagecomment);
+	}
+
+	// 获取文章的评论
+	@Override
+	public List<BranchMessageComment> getMessageComments(Branch currentBranch, BranchMessage currentBranchMessage) {
+		return commentRepository.findByBranch_idAndBranchMessage_idOrderByCreateTime(currentBranch.getId(), currentBranchMessage.getId());
+	}
+
+	// 获取文章评论数量
+	@Override
+	public Long getMessageCommentNum(Branch currentBranch, BranchMessage currentBranchMessage) {
+		return commentRepository.countByBranch_idAndBranchMessage_id(currentBranch.getId(), currentBranchMessage.getId());
+	}
 }

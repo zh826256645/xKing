@@ -36,14 +36,14 @@
 						<div class="row center-branch-message-li">
 							<div class="col-xs-8">
 								<p class="hide-p">
-								 <c:if test="${ branchMessage.messageTag != null }">[${ branchMessage.messageTag.tagName }]</c:if><c:if test="${ branchMessage.messageTag == null }">[All]</c:if><a href="#">${ branchMessage.title }</a>
+								 <c:if test="${ branchMessage.messageTag != null }">[${ branchMessage.messageTag.tagName }]</c:if><c:if test="${ branchMessage.messageTag == null }">[All]</c:if><a href="<c:url value="/branch/${ currentBranch.branchName }/message/${ branchMessage.id }"/>">${ branchMessage.title }</a>
 								</p>
 							</div>
 							<div class="col-xs-3">
 								<i class="fa fa-calendar" aria-hidden="true"></i><font> ${ branchMessage.getFormatTime() }</font>
 							</div>
 							<div class="col-xs-1">
-								<a href="#"><button class="btn btn-info">Read</button></a>
+								<a href="<c:url value="/branch/${ currentBranch.branchName }/message/${ branchMessage.id }"/>"><button class="btn btn-info">Read</button></a>
 							</div>
 						</div>
 						</c:forEach>
