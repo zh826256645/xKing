@@ -35,4 +35,19 @@
 			<a id="tasks" href="<c:url value="/branch/${currentBranch.branchName}/project?page=0&size=10" />">Project</a>
 		</li>
 	</ul>
+	<c:if test="${ currentProject != null }">
+	<div style="background-color: #428bca;margin-top: 7px; padding-top: 1px; padding-bottom: 10px;">
+		<div class="left-branch-message" align="center">
+			<p class="h3 hide-p">${ currentProject.projectName }</p>
+		</div>
+		<ul class="nav nav-sidebar">
+			<li id="overview" <c:if test="${ tag == 'projectMember' }">class="project-active"</c:if>>
+				<a id="overview" href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/member"/>" class="left-branch-ul-li">Project Member</a>
+			</li>
+			<li id="branches" >
+				<a id="branches" href="BranchMessage.html" class="left-branch-ul-li">Project Task</a>
+			</li>
+		</ul>
+	</div>
+	</c:if>
 </div>

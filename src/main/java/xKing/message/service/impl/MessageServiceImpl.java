@@ -80,6 +80,9 @@ public class MessageServiceImpl implements MessageService {
 	// 获取组织公告
 	@Override
 	public BranchMessage getBranchMessage(Branch currentBranch, long messageId) {
+		if(messageId == 0) {
+			throw new AbsentException("错误操作！");
+		}
 		BranchMessage branchMessage = messageRepository.findByBranch_idAndId(currentBranch.getId(), messageId);
 		if(branchMessage == null) {
 			throw new AbsentException("该公告不存在！");
@@ -111,5 +114,17 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public Long getMessageCommentNum(Branch currentBranch, BranchMessage currentBranchMessage) {
 		return commentRepository.countByBranch_idAndBranchMessage_id(currentBranch.getId(), currentBranchMessage.getId());
+	}
+
+	// 修改组织公告
+	@Override
+	public BranchMessage changBranchMessage(Branch currentBrnach, BranchMessage oldBranchMessage,
+			BranchMessage newBranchMessage, String tagName) {
+		MessageTag newMessageTag = null;
+		if(!tagName.trim().isEmpty()) {
+			newMessageTag = messageTagRepository.findByTagNameAndBranch_id(tagName, currentBrnach.getId());
+		}
+		oldBranchMessage.change(newBranchMessage, newMessageTag);
+		return messageRepository.save(oldBranchMessage);
 	}
 }

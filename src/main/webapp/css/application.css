@@ -831,3 +831,12 @@ a.forget {
 	height: 35px;
 	margin-top: 5px;
 }
+.left-branch-ul-li {
+	text-align: center;
+	font-size: 17px;
+}
+.project-active a {
+	color: white;
+	background-color: #888888;
+	
+}

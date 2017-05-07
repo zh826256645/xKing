@@ -89,4 +89,56 @@ public class ProjectController {
 			return "redirect:/user/me";
 		}
 	}
+	
+	// 获取项目成员信息
+	@RequestMapping(path="/{projectName}/member", method=RequestMethod.GET)
+	public String getProjectMember(@PathVariable(name="branchName") String branchName,
+			@PathVariable(name="projectName") String projectName,
+			Principal principal, Model model, RedirectAttributes reModel) {
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowTakeTask());
+			
+			Project currentProject = projectService.getProject(currentBranch, projectName);
+			model.addAttribute("currentProject", currentProject);
+			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("currentUser", currentUser);
+			model.addAttribute("tag", "projectMember");
+			
+			return "/branch/projectMember";
+		}catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	// 获取项目成员信息
+	@RequestMapping(path="/{projectName}/member", method=RequestMethod.POST)
+	public String addProjectMember(@PathVariable(name="branchName") String branchName,
+			@PathVariable(name="projectName") String projectName,
+			@RequestParam(name="username") String username,
+			Principal principal, RedirectAttributes reModel){
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			Project currentProject = projectService.getProject(currentBranch, projectName);
+			if(currentProject.getBranchMember().getId() != branchMember.getId()){
+				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
+			}
+			
+			User user = userService.getUserByUsername(username);
+			projectService.addProjectMember(currentBranch, currentProject, user);
+			
+			reModel.addFlashAttribute("message", "成员添加成功！");
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/member";
+		}catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
 }

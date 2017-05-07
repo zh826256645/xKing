@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
 import xKing.project.domain.Project;
+import xKing.user.domain.User;
 
 public interface ProjectService {
 
@@ -15,5 +16,5 @@ public interface ProjectService {
 	
 	Page<Project> getProjects(Branch currentBranch, Pageable pageable);
 	
-
+	Project addProjectMember(Branch currentBranch, Project project, User user);
 }

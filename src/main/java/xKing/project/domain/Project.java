@@ -31,7 +31,7 @@ public class Project {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long Id;
+	private long id;
 	
 	private String projectName;
 	
@@ -89,11 +89,11 @@ public class Project {
 	}
 
 	public long getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(long id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public BranchMember getBranchMember() {

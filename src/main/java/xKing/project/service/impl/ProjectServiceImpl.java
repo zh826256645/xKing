@@ -8,12 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
+import xKing.branch.service.BranchMemberSerivce;
 import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
 import xKing.project.dao.ProjectRepository;
 import xKing.project.domain.Project;
 import xKing.project.service.ProjectService;
+import xKing.user.domain.User;
 
 @Service
 @Transactional
@@ -21,6 +23,9 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired
 	private ProjectRepository projectRepository;
+	
+	@Autowired
+	private BranchMemberSerivce branchMemberService;
 
 	
 	// 获取组织的项目
@@ -52,6 +57,21 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Page<Project> getProjects(Branch currentBranch, Pageable pageable) {
 		return projectRepository.findByBranch_idOrderByCreateTimeDesc(currentBranch.getId(), pageable);
+	}
+
+	// 添加组织成员
+	@Override
+	public Project addProjectMember(Branch currentBranch, Project project, User user) {
+		BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, user);
+		if(branchMember == null) {
+			throw new FaultyOperationException("组织里没有该成员！");
+		}
+		Project this_project = projectRepository.findByProjectMemberAndId(branchMember, project.getId());
+		if(this_project != null) {
+			throw new FaultyOperationException("该成员已经是项目组成员了，请不要重复添加");
+		}
+		project.getProjectMember().add(branchMember);
+		return projectRepository.save(project);
 	}
 
 }

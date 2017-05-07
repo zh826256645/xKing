@@ -111,6 +111,16 @@ public class BranchMessage {
 		this.createTime = System.currentTimeMillis();
 	}
 	
+	public void change(BranchMessage newBranchMessage, MessageTag messageTag) {
+		this.messageContent = newBranchMessage.getMessageContent();
+		this.title = newBranchMessage.getTitle();
+		if(this.messageTag == null && messageTag != null) {
+			this.messageTag = messageTag;
+		} else if(this.messageTag != null && messageTag != null && !this.messageTag.getTagName().equals(messageTag.getTagName())) {
+			this.messageTag = messageTag;
+		}
+	}
+	
 	public String getFormatTime() {
 		return Utils.getFormatData(this.createTime);
 	}
