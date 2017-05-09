@@ -16,35 +16,24 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="center-myBranches center-myTasks">
-								<label>Friends</label>
+								<label>我的好友</label>
 								<hr />
 								<div class="row center-myBranches-up">
 									<form action="#">
 										<div class="col-xs-4">
-											<input type="text"  class="form-control" id="friendUsername" placeholder="friend's name"/>
-										</div>
-										<div class="col-xs-3">
-											<div class="input-group">
-											<div class="input-group-addon">Type:</div>
-											<select class="form-control">
-												<option>All</option>
-												<option>School</option>
-												<option>Association</option>
-												<option>Company</option>
-											</select>
-											</div>
+											<input type="text"  class="form-control" id="friendUsername" placeholder="用户名"/>
 										</div>
 										<div class="col-xs-1" style="padding-left: 20px">
-											<input type="submit" class="btn btn-default" value="Search"/>
+											<input type="submit" class="btn btn-default" value="搜索"/>
 										</div>
 									</form>
 										<div class="col-xs-1" style="padding-left: 0px">
-											<button class="btn btn-success" style="height: 32px;margin-top: -15px" id="addFriend">Add Friend</button>
+											<button class="btn btn-success" style="height: 32px;margin-top: -15px" id="addFriend">添加好友</button>
 										</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-8">
-										<label>All Friends</label>
+										<label>所有好友</label>
 										<c:forEach items="${page.content}" var="userFriend">
 										<c:if test="${userFriend.user.username != currentUser.username }">
 											<c:set value="${userFriend.user }" var="friend"/>
@@ -66,9 +55,14 @@
 											</div>
 										</div>
 										</c:forEach>
+										<c:if test="${ page.content == null || page.content.size() == 0 }">
+											<div class="empty">
+												没有添加任何好友
+											</div>
+										</c:if>
 									</div>
 									<div class="col-xs-3 col-xs-offset-1 friend-request">
-										<label>Friend Request</label>
+										<label>好友请求</label>
 										<c:forEach  items="${reuqestPage.content}" var="userFriend">
 											<c:set value="${userFriend.user }" var="friend"/>
 											<div class="row center-friends-li friend-request-li">
@@ -82,6 +76,9 @@
 											</div>
 										</div>
 										</c:forEach>
+										<c:if test="${ reuqestPage.content == null || reuqestPage.content.size() == 0 }">
+										<div class="right-empty">没有好友请求</div>
+										</c:if>
 									</div>
 								</div>
 							</div>

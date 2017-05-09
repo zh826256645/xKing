@@ -23,18 +23,18 @@
 								<hr />
 								<div class="row center-myBranches-up">
 								<sf:form method="post" action="/user/branch/request">
-										<div class="col-xs-4">
+										<div class="col-xs-2">
 											<input type="text"  class="form-control" placeholder="组织名" name="branchName"/>
 										</div>
 										<div class="col-xs-3">
 											<input type="text"  class="form-control" placeholder="请求加入的理由" name="message"/>
 										</div>
-										<div class="col-xs-2">
+										<div class="col-xs-1">
 											<input type="submit" class="btn btn-default" value="请求加入"/>
 										</div>
 									</sf:form>
 									<div class="col-xs-2">
-										<a href="<c:url value="/branch/new"/>"><button class="btn btn-success">Create New Branche</button></a>
+										<a href="<c:url value="/branch/new"/>"><button class="btn btn-success">创建新的组织</button></a>
 									</div>
 								</div>
 								<div class="row">
@@ -67,11 +67,17 @@
 											</div>
 										</div>
 										</c:forEach>
+										<c:if test="${ page.content == null || page.content.size() == 0 }">
+											<div class="empty">
+												没有进入任何组织
+											</div>
+										</c:if>
 									</div>
 									<div class="col-xs-3 friend-request">
 										<div class="row">
-										<label><s:message code="myBranches.inviteRequest"/></label><br/><br/>
+										<label><s:message code="myBranches.inviteRequest"/></label><br/>
 										<c:forEach items="${ invitePage.content }" var="memberRequest">
+										<br/>
 										<div class="row invite-request-li">
 											<div class="col-xs-4">
 												<img src="<c:url value="/picture/branch/${memberRequest.branch.branchName}?pid=${memberRequest.branch.picture}"/>"  class="branch-img-small-small"/>
@@ -100,10 +106,14 @@
 											</div>
 										</div>
 										</c:forEach>
+										<c:if test="${ invitePage.content == null || invitePage.content.size() == 0 }">
+										<div class="right-empty">没有收到邀请</div>
+										</c:if>
 									</div>
 										<div class="row">
-										<label><s:message code="myBranches.requestJoin"/></label><br/><br/>
+										<label><s:message code="myBranches.requestJoin"/></label><br/>
 										<c:forEach items="${ requestJoinPage.content }" var="memberRequest">
+										<br/>
 										<div class="row invite-request-li">
 											<div class="col-xs-4">
 												<img src="<c:url value="/picture/branch/${memberRequest.branch.branchName}?pid=${memberRequest.branch.picture}"/>"  class="branch-img-small-small"/>
@@ -116,6 +126,9 @@
 											</div>
 										</div>
 										</c:forEach>
+										<c:if test="${ invitePage.content == null || invitePage.content.size() == 0 }">
+										<div class="right-empty">没有进行申请</div>
+										</c:if>
 									</div>
 									</div>
 								</div>

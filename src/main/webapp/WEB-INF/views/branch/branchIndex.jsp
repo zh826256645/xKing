@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Branch</title>
+	<title>${ currentBranch.branchName }</title>
 	<%@ include file="../head.jsp" %>
 </head>
 	<body>
@@ -20,13 +20,13 @@
 						<div class="center-branche-panel">
 							<div class="panel panel-default">
 							    <div class="panel-body panel-nopadding" style="padding-right: 0px;">
-						        	<div class="col-xs-3 text-center branch-left">
+						        	<div class="col-xs-4 text-center branch-left">
 						        		<br/>
 						        		<img src="<c:url value="/picture/branch/${currentBranch.branchName}?pid=${currentBranch.picture}"/>"  class="branch-img-small"/><br />
 						        		<p class="h3 hide-p" style="padding-top: 10px"><a href="<c:url value="/branch/${currentBranch.branchName}/setting"/>">${currentBranch.branchName}</a></p>
 						        	</div>
-						        	<div class="col-xs-6 branch-left">
-						        		<label class="label label-color">Message</label><br />
+						        	<div class="col-xs-8 branch-left">
+						        		<label class="label label-color">公告</label><br />
 						        		<c:if test="${ branchMessages.content != null && branchMessages.content.size() != 0 }">
 						        		<c:forEach items="${ branchMessages.content }" var="branchMessage">
 						        		<p class="hide-p branch-message-p">
@@ -41,21 +41,6 @@
 										</div>
 										</c:if>
 						        	</div>
-						        	<div class="col-xs-3 branch-user-id">
-						        		<c:if test="${currentBranchMember != null}">
-						        		<label class="label label-color">Your Id</label>
-						        		<img class="img-circle center-person-picture center-block" src="<c:url value='/picture/user/${username}'/>?pid=${userPicture}"/>
-						        		<br />
-					        			<div class="row">
-					        				<div class="col-xs-offset-1 col-xs-10 user-id hide-p">
-					        					<p><i class="fa fa-user" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;<a>${currentBranchMember.memberName}</a></p>
-					        					<p><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<font>${currentBranchMember.email}</font></p>
-					        					<p><i class="fa fa-shield" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;<font>${currentBranchMember.branchRole.roleName}</font></p>
-					        					<p class="hide-p"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<font>${currentUser.introduction}</font></p></p>
-					        				</div>
-					        			</div>
-					        			</c:if>
-						        	</div>
 						        </div>
 						    </div>
 						</div>
@@ -64,7 +49,7 @@
 						<div class="center-branche-panel" style="margin-top: 0px;">
 							<div class="panel panel-default">
 							    <div class="panel-body panel-nopadding">
-							    	<label class="label label-color">Forum</label>
+							    	<label class="label label-color">讨论</label>
 							    	<form>
 							    	<div class="row">
 							    		<div class="col-xs-9">
@@ -144,6 +129,56 @@
 					</div>
 				</div>
 				<!-- Right -->
+				<div class="col-xs-2">
+					<div class="row">
+						<div class="center-branche-panel">
+							<div class="panel-body panel-nopadding">
+								<div class="panel panel-default">
+								    <div class="panel-body panel-nopadding" style="padding-left: 0px;padding-right: 0px;">
+										<div class="col-xs-12 branch-user-id" style="padding-bottom: 5px;">
+							        		<c:if test="${currentBranchMember != null}">
+							        		<label class="label label-color">你的信息</label>
+							        		<img class="img-circle center-person-picture center-block" src="<c:url value='/picture/user/${username}'/>?pid=${userPicture}" style="margin-bottom: 5px"/>
+						        			<div class="row">
+						        				<div class="col-xs-offset-1 col-xs-10 user-id hide-p">
+						        					<p><i class="fa fa-user" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;<a>${currentBranchMember.memberName}</a></p>
+						        					<p><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<font>${currentBranchMember.email}</font></p>
+						        					<p><i class="fa fa-shield" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;<font>${currentBranchMember.branchRole.roleName}</font></p>
+						        					<p class="hide-p"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<font>${currentUser.introduction}</font></p></p>
+						        				</div>
+						        			</div>
+						        			</c:if>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>					
+					</div>
+				</div>
+				<div class="col-xs-2" style="padding-left: 24px">
+					<div class="row">
+						<div class="panel-body panel-nopadding">
+							<div class="panel panel-default">
+							    <div class="panel-body panel-nopadding" style="padding-left: 0px;padding-right: 0px;">
+									<div class="col-xs-12 branch-user-id" style="padding-bottom: 5px; margin-right: 20px">
+						        		<c:if test="${currentBranchMember != null}">
+						        		<label class="label label-color">你的信息</label>
+						        		<img class="img-circle center-person-picture center-block" src="<c:url value='/picture/user/${username}'/>?pid=${userPicture}" style="margin-bottom: 5px"/>
+					        			<div class="row">
+					        				<div class="col-xs-offset-1 col-xs-10 user-id hide-p">
+					        					<p><i class="fa fa-user" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;<a>${currentBranchMember.memberName}</a></p>
+					        					<p><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<font>${currentBranchMember.email}</font></p>
+					        					<p><i class="fa fa-shield" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;<font>${currentBranchMember.branchRole.roleName}</font></p>
+					        					<p class="hide-p"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<font>${currentUser.introduction}</font></p></p>
+					        				</div>
+					        			</div>
+					        			</c:if>
+									</div>
+								</div>
+							</div>
+						</div>					
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>

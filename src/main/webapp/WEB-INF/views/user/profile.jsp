@@ -72,6 +72,11 @@
 											</div>
 											</c:forEach>
 										</c:if>
+										<c:if test="${branches != null && branches.size() == 0}">
+											<div style="font-size: 28px;font-weight: 600; color: #888888;padding-top: 54px;padding-left: 422px;padding-bottom: 63px">
+											未加入任何组织
+											</div>
+										</c:if>
 										</div>
 									</div>
 								</div>

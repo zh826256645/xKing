@@ -115,7 +115,7 @@ public class ProjectController {
 		}
 	}
 	
-	// 获取项目成员信息
+	// 项目成员添加
 	@RequestMapping(path="/{projectName}/member", method=RequestMethod.POST)
 	public String addProjectMember(@PathVariable(name="branchName") String branchName,
 			@PathVariable(name="projectName") String projectName,
