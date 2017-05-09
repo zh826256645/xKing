@@ -341,4 +341,10 @@ public class UserSeviceImpl implements UserService {
 		branchMemberRequestService.addNewBranchMemberRequest(branch, currentUser, message, 2);
 		return true;
 	}
+
+	// 获取好友数量
+	@Override
+	public long getFriendNum(User currentUser) {
+		return userFriendRepository.countByUser_idOrFriend_idAndState(currentUser.getId(), currentUser.getId(), 1);
+	}
 }

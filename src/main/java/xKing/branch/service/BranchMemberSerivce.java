@@ -25,4 +25,6 @@ public interface BranchMemberSerivce {
 	Page<BranchMember> findByBranch(Branch branch, Pageable pageable);
 	
 	BranchMember update(BranchMember branchMember);
+	
+	void getMemberNum(Branch currentBranch);
 }

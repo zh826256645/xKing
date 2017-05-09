@@ -51,7 +51,7 @@
 									<div class="panel panel-default">
 										<div class="panel-heading" style="border-bottom: 0px; background-color: #f9fafc;">
 											<h3 class="panel-title" style="font-weight: bold;color: black;">
-											<a href="<c:url value="/user/me?tab=branches&page=0&size=3" />"><s:message code="profile.yourBranches"/></a> <a href="<c:url value="/user/me?tab=branches&page=0&size=3" />" class="more">more branches</a>
+											<a href="<c:url value="/user/me?tab=branches&page=0&size=3" />"><s:message code="profile.yourBranches"/></a> <a href="<c:url value="/user/me?tab=branches&page=0&size=3" />" class="more">更多的组织</a>
 											</h3>
 										</div>
 										<div class="panel-body">
@@ -60,11 +60,12 @@
 											<div class="center-branches col-xs-6">
 												<div>
 													<img class="branch-picture branch-img-small" src="<c:url value="/picture/branch/${branch.branchName}?pid=${branch.picture}"/>" />
-													<a href="<c:url value="/branch/${branch.branchName}"/>">${branch.branchName}</a><br />
+													<a href="<c:url value="/branch/${branch.branchName}"/>"><p class="hide-p">${branch.branchName}</p></a>
 													<small>${branch.intro}</small>
-													<p class="center-branches-time"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;创建于 ${branch.createTime}</p>
-													<p class="center-branches-information">
-														<i class="fa fa-user" aria-hidden="true"></i>&nbsp;100&nbsp;&nbsp;&nbsp;&nbsp;
+													<br/>
+													<p class="center-branches-information hide-p" style="padding-top: 5px">
+														<i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; ${branch.getFormatTime() }&nbsp;
+														<i class="fa fa-user" aria-hidden="true"></i>&nbsp;${branch.memberNum }&nbsp;
 														<i class="fa fa-level-up" aria-hidden="true"></i>&nbsp;13
 													</p>
 												</div>
@@ -81,7 +82,7 @@
 									<div class="panel panel-default">
 										<div class="panel-heading" style="border-bottom: 0px; background-color: #f9fafc;">
 											<h3 class="panel-title" style="font-weight: bold;color: black;">
-											<a href="#"><s:message code="profile.yourTasks"/></a> <a href="#" class="more">more tasks</a>
+											<a href="#"><s:message code="profile.yourTasks"/></a> <a href="#" class="more">更多的任务</a>
 											</h3>
 										</div>
 										<div class="panel-body">
@@ -152,7 +153,7 @@
 									<div class="panel panel-default">
 										<div class="panel-heading" style="border-bottom: 0px; background-color: #f9fafc;">
 											<h3 class="panel-title" style="font-weight: bold;color: black;">
-											<a href="#"><s:message code="profile.yourActivity"/></a> <a href="#" class="more">more activity</a>
+											<a href="#"><s:message code="profile.yourActivity"/></a> <a href="#" class="more">更多的活动</a>
 											</h3>
 										</div>
 										<div class="panel-body">
@@ -219,7 +220,7 @@
 						<div class="panel panel-default col-xs-10 right-messge">
 							<div class="row">
 								<div class="col-xs-6 right-messge-friends">
-									<p><i class="fa fa-users fa-3x" aria-hidden="true"></i><a href="#">28</a></p>
+									<p><i class="fa fa-users fa-3x" aria-hidden="true"></i><a href="<c:url value="/user/me?tab=friends&page=0&size=8"/>">${ firendNum }</a></p>
 								</div>
 								<div class="col-xs-6 right-messge-message">
 									<p><i class="fa fa-commenting fa-3x" aria-hidden="true" style="color: red"></i><a href="#" >2</a></p>

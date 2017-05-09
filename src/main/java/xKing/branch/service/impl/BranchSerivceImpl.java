@@ -2,9 +2,7 @@ package xKing.branch.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +74,7 @@ public class BranchSerivceImpl implements BranchService {
 	@Override
 	public Branch findBranchByBranchId(long branchId) {
 		Branch branch = branchRepository.findOne(branchId);
+		branchMemberService.getMemberNum(branch);
 		if(branch == null) {
 			throw new AbsentException("Branch 不存在");
 		}
@@ -86,6 +85,7 @@ public class BranchSerivceImpl implements BranchService {
 	@Override
 	public Branch findBranchByBranchName(String branchName) {
 		Branch branch = branchRepository.findByBranchName(branchName);
+		branchMemberService.getMemberNum(branch);
 		if(branch == null) {
 			throw new AbsentException("Branch 不存在");
 		}
@@ -103,7 +103,7 @@ public class BranchSerivceImpl implements BranchService {
 		}
 		User currentUser = userService.getUserByUsername(username);
 		branch.setUser(currentUser);
-		branch.setCreateTime(new Timestamp(new Date().getTime()));
+		branch.setCreateTime(System.currentTimeMillis());
 		Branch currentBranch = branchRepository.save(branch);
 		
 		// 创建 branch admin 身份,level 为 1
@@ -145,7 +145,9 @@ public class BranchSerivceImpl implements BranchService {
 		List<Branch> branches = new ArrayList<Branch>();
 		List<BranchMember> BranchMembers = page.getContent();
 		for (BranchMember branchMember : BranchMembers) {
-			branches.add(branchMember.getBranch());
+			Branch branch = branchMember.getBranch();
+			branchMemberService.getMemberNum(branch);
+			branches.add(branch);
 		} 
 		return branches;
 	}

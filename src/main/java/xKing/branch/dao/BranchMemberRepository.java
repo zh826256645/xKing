@@ -19,4 +19,6 @@ public interface BranchMemberRepository extends CrudRepository<BranchMember, Lon
 	Page<BranchMember> findByUser_idOrderByJoinTimeDesc(long User_id,Pageable pageable);
 	
 	Page<BranchMember> findByBranch_id(long branch_id,Pageable pageable);
+	
+	long countByBranch_id(long branch_id);
 }

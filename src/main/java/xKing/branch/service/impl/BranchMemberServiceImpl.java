@@ -64,6 +64,11 @@ public class BranchMemberServiceImpl implements BranchMemberSerivce{
 	@Override
 	public Page<BranchMember> findByUserId(User user, Pageable pageable) {
 		Page<BranchMember> page = branchMemberRepository.findByUser_id(user.getId(), pageable);
+		if(page != null && page.getContent() != null && page.getContent().size() > 0) {
+			for(BranchMember branchMember: page.getContent()) {
+				this.getMemberNum(branchMember.getBranch());
+			}
+		}
 		return page;
 	}
 
@@ -84,5 +89,10 @@ public class BranchMemberServiceImpl implements BranchMemberSerivce{
 	public BranchMember update(BranchMember branchMember) {
 		return branchMemberRepository.save(branchMember);
 	}
-	
+
+	// 获取成员数量
+	@Override
+	public void getMemberNum(Branch currentBranch) {
+			currentBranch.setMemberNum(branchMemberRepository.countByBranch_id(currentBranch.getId()));
+	}
 }

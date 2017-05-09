@@ -36,4 +36,6 @@ public interface UserService {
 	boolean handelMemberRequest(User currentUser, String branchName, int state);
 	
 	boolean requestJoin(User currentUser, String branchName, String message);
+	
+	long getFriendNum(User currentUser);
 }

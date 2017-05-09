@@ -131,6 +131,7 @@ public class UserController {
 		case "profile" :
 			model.addAttribute("branches", branchService.getBranchByUserId(
 					currentUser, new PageRequest(0, 2)));
+			model.addAttribute("firendNum", userService.getFriendNum(currentUser));
 			model.addAttribute("tab", "profile");
 			return "/user/profile";
 			
@@ -151,6 +152,9 @@ public class UserController {
 			model.addAttribute("tab", "friends");
 			return "/user/myFriends";
 		default :
+			model.addAttribute("branches", branchService.getBranchByUserId(
+					currentUser, new PageRequest(0, 2)));
+			model.addAttribute("firendNum", userService.getFriendNum(currentUser));
 			model.addAttribute("tab", "profile");
 			return "/user/profile";
 		}

@@ -7,7 +7,7 @@
 		<img src="<c:url value="/picture/branch/${currentBranch.branchName}?pid=${currentBranch.picture}"/>" class="branch-img" /><br />
 		<p class="h1 hide-p">${currentBranch.branchName}</p>
 		<p class="hide-p">${currentBranch.intro}</p>
-		<p><i class="fa fa-user" aria-hidden="true"></i>&nbsp;100&nbsp;&nbsp;&nbsp;&nbsp;
+		<p><i class="fa fa-user" aria-hidden="true"></i>&nbsp;${currentBranch.memberNum }&nbsp;&nbsp;&nbsp;&nbsp;
 			<i class="fa fa-level-up" aria-hidden="true"></i>&nbsp;13</p>
 	</div>
 	<ul class="nav nav-sidebar left-branch-ul">

@@ -23,16 +23,23 @@
 						        	<div class="col-xs-3 text-center branch-left">
 						        		<br/>
 						        		<img src="<c:url value="/picture/branch/${currentBranch.branchName}?pid=${currentBranch.picture}"/>"  class="branch-img-small"/><br />
-						        		<p class="h3">Welcome to<br/><a href="<c:url value="/branch/${currentBranch.branchName}/setting"/>">${currentBranch.branchName}</a></p>
+						        		<p class="h3 hide-p" style="padding-top: 10px"><a href="<c:url value="/branch/${currentBranch.branchName}/setting"/>">${currentBranch.branchName}</a></p>
 						        	</div>
 						        	<div class="col-xs-6 branch-left">
 						        		<label class="label label-color">Message</label><br />
+						        		<c:if test="${ branchMessages.content != null && branchMessages.content.size() != 0 }">
 						        		<c:forEach items="${ branchMessages.content }" var="branchMessage">
 						        		<p class="hide-p branch-message-p">
 											<i class="fa fa-tags" aria-hidden="true"></i> 
 											<a href="<c:url value="/branch/${ currentBranch.branchName }/message/${ branchMessage.id }" />">${ branchMessage.title }</a>
 										</p>
 										</c:forEach>
+										</c:if>
+										<c:if test="${ branchMessages.content == null || branchMessages.content.size() == 0 }">
+										<div >
+										<p style="font-size: 28px;padding-left: 168px;padding-top: 50px;color: #888888">暂无公告信息</p>
+										</div>
+										</c:if>
 						        	</div>
 						        	<div class="col-xs-3 branch-user-id">
 						        		<c:if test="${currentBranchMember != null}">

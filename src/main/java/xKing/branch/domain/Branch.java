@@ -1,6 +1,5 @@
 package xKing.branch.domain;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +14,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import xKing.project.domain.Project;
 import xKing.user.domain.User;
+import xKing.utils.Utils;
 
 /**
  * Branch 领域对象
@@ -39,12 +40,14 @@ public class Branch {
 	private String email;
 	private String intro;
 	private String picture;
-	private Timestamp createTime;
+	private long createTime;
 	private String country;
 	private String homePage;
 	private String type;
 	@OneToOne
 	private BranchRole newMemberRole ;
+	@Transient
+	private long memberNum;
 	
 	@ManyToOne(targetEntity=User.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
@@ -105,13 +108,20 @@ public class Branch {
 		this.picture = picture;
 	}
 	
-
-	public Timestamp getCreateTime() {
+	public long getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Timestamp createTime) {
+	public void setCreateTime(long createTime) {
 		this.createTime = createTime;
+	}
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
 	}
 
 	public User getUser() {
@@ -185,11 +195,22 @@ public class Branch {
 		this.newMemberRole = newMemberRole;
 	}
 
+	public long getMemberNum() {
+		return memberNum;
+	}
+
+	public void setMemberNum(long memberNum) {
+		this.memberNum = memberNum;
+	}
+
 	@Override
 	public String toString() {
 		return "Branch [id=" + id + ", branchName=" + branchName + ", email=" + email + ", intro=" + intro
 				+ ", picture=" + picture + ", user=" + user + ", branchRoles=" + branchRoles.size() + ", branchMembers="
 				+ branchMembers.size() + "]";
 	}
-
+	
+	public String getFormatTime() {
+		return Utils.getFormatData(this.createTime);
+	}
 }
