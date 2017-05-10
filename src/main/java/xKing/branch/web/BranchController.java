@@ -34,6 +34,8 @@ import xKing.branch.service.BranchService;
 import xKing.exception.FaultyOperationException;
 import xKing.message.domain.BranchMessage;
 import xKing.message.service.MessageService;
+import xKing.project.domain.Project;
+import xKing.project.service.ProjectService;
 import xKing.user.domain.User;
 import xKing.user.exception.UserNotExistException;
 import xKing.user.service.UserService;
@@ -67,6 +69,9 @@ public class BranchController {
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private ProjectService projectService;
 
 	// Branch 主页
 	@GetMapping(path="/{branchName}")
@@ -84,8 +89,11 @@ public class BranchController {
 			
 			Pageable pageable = new PageRequest(0, 5);
 			Page<BranchMessage> messages = messageService.getBranchMessages(currentBranch, pageable);
+			Page<Project> projects = projectService.getProjects(currentBranch, new PageRequest(0, 4)); 
 			model.addAttribute("branchMessages", messages);
-			
+			model.addAttribute("messageNum", messageService.getMessageNum(currentBranch));
+			model.addAttribute("projectNum", projectService.getProjectNum(currentBranch));
+			model.addAttribute("projects", projects);
 			if(branchMember != null) {
 				model.addAttribute("currentBranchMember", branchMember);
 			} else {

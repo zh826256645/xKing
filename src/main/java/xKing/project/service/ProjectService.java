@@ -17,4 +17,6 @@ public interface ProjectService {
 	Page<Project> getProjects(Branch currentBranch, Pageable pageable);
 	
 	Project addProjectMember(Branch currentBranch, Project project, User user);
+	
+	Long getProjectNum(Branch currentBranch);
 }

@@ -90,7 +90,7 @@ public class BranchMemberServiceImpl implements BranchMemberSerivce{
 		return branchMemberRepository.save(branchMember);
 	}
 
-	// 获取成员数量
+	// 设置组织的成员数量
 	@Override
 	public void getMemberNum(Branch currentBranch) {
 			currentBranch.setMemberNum(branchMemberRepository.countByBranch_id(currentBranch.getId()));

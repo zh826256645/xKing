@@ -14,4 +14,6 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
 	Page<Project> findByBranch_idOrderByCreateTimeDesc(long branch_id, Pageable pageable);
 	
 	Project findByProjectMemberAndId(BranchMember branchMember, long id);
+	
+	Long countByBranch_id(long branch_id);
 }

@@ -48,6 +48,43 @@
 					<div class="row">
 						<div class="center-branche-panel" style="margin-top: 0px;">
 							<div class="panel panel-default">
+							    <div class="panel-body panel-nopadding" style="height: 250px">
+							    	<label class="label label-color">最新项目</label>
+							    	<c:forEach items="${ projects.content }" var="project">
+							    	<div class="row" style="padding-top: 5px">
+										<div class="col-xs-3">
+											 <p class="hide-p" style="font-size: 18px;padding-top: 8px">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-pie-chart" aria-hidden="true" style="color:#555555;">&nbsp;&nbsp;&nbsp;</i><a  href="<c:url value="/branch/${ currentBranch.branchName }/project/${ project.projectName }/member"/>">${ project.projectName }</a></p>
+										</div>
+										<div class="col-xs-5">
+											<div class="row">
+													<div class="col-xs-3" style="padding-left: 30px;padding-top: 13px;">
+													<span style="color:#555555;font-weight: 400;">项目成员</span>
+													</div>
+													<div class="col-xs-9">
+													<c:forEach items="${ project.projectMember }" var="member" end="6">
+														<img src="<c:url value='/picture/user/${member.user.username}'/>?pid=${member.user.picture}" class="img-circle project-picture">
+													</c:forEach>
+													</div>
+											</div>
+										</div>
+										<div class="col-xs-2" style="padding-top: 15px">
+											<i class="fa fa-calendar" aria-hidden="true"></i><font> ${ project.getFormatTime() }</font>
+										</div>
+										<div class="col-xs-1" style="padding-top: 6px">
+											<a  href="<c:url value="/branch/${ currentBranch.branchName }/project/${ project.projectName }/member"/>"><button class="btn btn-info">进入</button></a>
+										</div>
+							    	</div>	
+							    	</c:forEach>
+							    	<c:if test="${ projects.content == null || projects.content.size() == 0 }">
+							    		<div style="font-size: 28px;padding-left: 416px;padding-top: 50px;color: #888888">暂无项目信息</div>
+							    	</c:if>
+						        </div>
+						    </div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="center-branche-panel" style="margin-top: 0px;">
+							<div class="panel panel-default">
 							    <div class="panel-body panel-nopadding">
 							    	<label class="label label-color">讨论</label>
 							    	<form>
@@ -61,7 +98,7 @@
 							    	</div>
 							    	</form>
 							    	<br/>
-							    	<div style="position:relative; height:200px; overflow-x:auto">
+							    	<div style="position:relative; height:250px; overflow-x:auto">
 								    	<div class="row forum-li" >
 								    		<div class="col-xs-1 text-center" >
 								    			<img class="img-circle heard-profile-picture" src="img/profile.jpg" /><br />
@@ -154,29 +191,29 @@
 							</div>
 						</div>					
 					</div>
-				</div>
-				<div class="col-xs-2" style="padding-left: 24px">
-					<div class="row">
-						<div class="panel-body panel-nopadding">
-							<div class="panel panel-default">
-							    <div class="panel-body panel-nopadding" style="padding-left: 0px;padding-right: 0px;">
-									<div class="col-xs-12 branch-user-id" style="padding-bottom: 5px; margin-right: 20px">
-						        		<c:if test="${currentBranchMember != null}">
-						        		<label class="label label-color">你的信息</label>
-						        		<img class="img-circle center-person-picture center-block" src="<c:url value='/picture/user/${username}'/>?pid=${userPicture}" style="margin-bottom: 5px"/>
-					        			<div class="row">
-					        				<div class="col-xs-offset-1 col-xs-10 user-id hide-p">
-					        					<p><i class="fa fa-user" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;<a>${currentBranchMember.memberName}</a></p>
-					        					<p><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<font>${currentBranchMember.email}</font></p>
-					        					<p><i class="fa fa-shield" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;<font>${currentBranchMember.branchRole.roleName}</font></p>
-					        					<p class="hide-p"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<font>${currentUser.introduction}</font></p></p>
-					        				</div>
-					        			</div>
-					        			</c:if>
+					<div class="row" style="padding-left: 9px">
+						<div class="center-branche-panel" style="margin-top: 0px;padding-left: 0px;">
+							<div class="panel-body panel-nopadding">
+								<div class="panel panel-default">
+								    <div class="panel-body panel-nopadding" style="padding-left: 0px;padding-right: 0px;">
+										<div class="col-xs-12" style="padding-bottom: 5px; margin-right: 20px">
+							        		<label class="label label-color">组织简介</label>
+						        			<div class="row">
+						        				<div class="col-xs-offset-1 col-xs-10 user-id hide-p" style="font-size: 36px;">
+						        					<div class="row">
+						        					<div class="col-xs-10" style="padding-top: 10px">
+							        					<div class="container"><p ><i class="fa fa-users" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>${ currentBranch.memberNum }</a></p></div>
+							        					<div class="container" style="padding-left: 18px;"><p ><i class="fa fa-volume-up" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>${ messageNum }</a></p></div>
+							        					<div class="container"><p ><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>${ projectNum }</a></p></div>
+						        					</div>
+						        					 </div>
+						        				</div>
+						        			</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>					
+							</div>					
+						</div>
 					</div>
 				</div>
 			</div>

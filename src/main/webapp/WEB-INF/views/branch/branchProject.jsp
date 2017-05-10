@@ -47,7 +47,7 @@
 								<i class="fa fa-calendar" aria-hidden="true"></i><font> ${ project.getFormatTime() }</font>
 							</div>
 							<div class="col-xs-2" style="padding-top: 6px">
-								<button class="btn btn-info">Into</button>
+								<a  href="<c:url value="/branch/${ currentBranch.branchName }/project/${ project.projectName }/member"/>"><button class="btn btn-info">Into</button></a>
 							</div>
 						</div>
 						</c:forEach>

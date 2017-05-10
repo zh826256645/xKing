@@ -23,4 +23,5 @@ public interface MessageService {
 	List<BranchMessageComment> getMessageComments(Branch currentBranch, BranchMessage currentBranchMessage);
 	Long getMessageCommentNum(Branch currentBranch, BranchMessage currentBranchMessage);
 	BranchMessage changBranchMessage(Branch currentBranch, BranchMessage oldBranchMessage, BranchMessage newBranchMessage, String tagName);
+	Long getMessageNum(Branch currentBranch);
 }

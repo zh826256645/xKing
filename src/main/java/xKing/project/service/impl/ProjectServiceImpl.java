@@ -74,4 +74,9 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectRepository.save(project);
 	}
 
+	@Override
+	public Long getProjectNum(Branch currentBranch) {
+		return projectRepository.countByBranch_id(currentBranch.getId());
+	}
+
 }

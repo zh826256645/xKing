@@ -127,4 +127,10 @@ public class MessageServiceImpl implements MessageService {
 		oldBranchMessage.change(newBranchMessage, newMessageTag);
 		return messageRepository.save(oldBranchMessage);
 	}
+
+	// 获取组织公告数量
+	@Override
+	public Long getMessageNum(Branch currentBranch) {
+		return messageRepository.countByBranch_id(currentBranch.getId());
+	}
 }

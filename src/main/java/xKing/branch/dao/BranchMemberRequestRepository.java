@@ -15,4 +15,6 @@ public interface BranchMemberRequestRepository extends CrudRepository<BranchMemb
 	Page<BranchMemberRequest> findByBranch_idAndStateOrderByRequestTimeDesc(long branch_id, int state, Pageable pageable);
 	
 	Page<BranchMemberRequest> findByUser_idAndStateOrderByRequestTimeDesc(long User_id, int state, Pageable pageable);
+	
+	long countByBranch_id(long branch_id);
 }
