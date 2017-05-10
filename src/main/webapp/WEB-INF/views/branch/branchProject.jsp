@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Branch Project</title>
+		<title>${ currentBranch.branchName }-项目</title>
 		<%@ include file="../head.jsp" %>
 	</head>
 	<body>
@@ -31,6 +31,7 @@
 							</sf:form>
 						</div>
 						<label>Branch Project</label>
+						<div style="height: 750px">
 						<c:forEach items="${ page.content }" var="project">
 						<div class="row project-li">
 							<div class="col-xs-3">
@@ -51,7 +52,53 @@
 							</div>
 						</div>
 						</c:forEach>
+						<c:if test="${ page.content == null || page.content.size() == 0 }">
+						<div class="empty">暂无项目信息</div>
+						</c:if>
+						</div>
 					</div>
+					<c:if test="${page.totalPages >= 1}">
+						<div class="row">
+							<div class="col-xs-12">
+								<div style="float: right;">
+									<ul class="pagination" >
+										<li><a href="<c:url value="/branch/${currentBranch.branchName}/project?page=0&size=10"/>">&laquo;</a></li>
+										<c:if test="${page.totalPages <= 5}">
+											<c:forEach begin="1" end="${page.totalPages}" var="p">
+												<li 
+												<c:if test="${page.number == p-1}">class="active"</c:if>
+												><a href="<c:url value="/branch/${currentBranch.branchName}/project?page=${p-1}&size=12"/>">${p}</a></li>
+											</c:forEach>
+										</c:if>
+										<c:if test="${page.totalPages > 5}">
+											<c:if test="${page.number - 2 <= 0}">
+												<c:forEach begin="1" end="5" var="p">
+												<li 
+												<c:if test="${page.number == p-1}">class="active"</c:if>
+												><a href="<c:url value="/branch/${currentBranch.branchName}/project?page=${p-1}&size=12"/>">${p}</a></li>
+												</c:forEach>
+											</c:if>c:if test="${ page.content == null || page.content.size() == 0 }">
+											<c:if test="${page.number -2 > 0 && page.totalPages - page.number > 3}">
+												<c:forEach begin="${page.number - 1}" end="${page.number + 3}" var="p">
+												<li 
+												<c:if test="${page.number == p-1}">class="active"</c:if>
+												><a href="<c:url value="/branch/${currentBranch.branchName}/project?page=${p-1}&size=12"/>">${p}</a></li>
+												</c:forEach>
+											</c:if>
+											<c:if test="${page.totalPages - page.number <= 3}">
+												<c:forEach begin="${page.number - 3}" end="${page.totalPages}" var="p">
+												<li 
+												<c:if test="${page.number == p-1}">class="active"</c:if>
+												><a href="<c:url value="/branch/${currentBranch.branchName}/project?page=${p-1}&size=12"/>">${p}</a></li>
+												</c:forEach>
+											</c:if>
+										</c:if>
+										<li><a href="<c:url value="/branch/${currentBranch.branchName}/project?page=${page.totalPages-1}&size=12"/>">&raquo;</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>

@@ -26,11 +26,11 @@
 						        		<p class="h3 hide-p" style="padding-top: 10px"><a href="<c:url value="/branch/${currentBranch.branchName}/setting"/>">${currentBranch.branchName}</a></p>
 						        	</div>
 						        	<div class="col-xs-8 branch-left">
-						        		<label class="label label-color">公告</label><br />
+						        		<label class="label label-color">公告</label>
 						        		<c:if test="${ branchMessages.content != null && branchMessages.content.size() != 0 }">
 						        		<c:forEach items="${ branchMessages.content }" var="branchMessage">
 						        		<p class="hide-p branch-message-p">
-											<i class="fa fa-tags" aria-hidden="true"></i> 
+											<i class="fa fa-tags" aria-hidden="true"></i> <c:if test="${ branchMessage.messageTag != null }">[${ branchMessage.messageTag.tagName }]</c:if><c:if test="${ branchMessage.messageTag == null }">[所有]</c:if>
 											<a href="<c:url value="/branch/${ currentBranch.branchName }/message/${ branchMessage.id }" />">${ branchMessage.title }</a>
 										</p>
 										</c:forEach>

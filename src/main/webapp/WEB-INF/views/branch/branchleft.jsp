@@ -23,12 +23,12 @@
 			class="active"
 			</c:if>
 		 >
-			<a id="branches" href="<c:url value="/branch/${currentBranch.branchName}/message?page=0&size=10" />"><s:message code="branchLeft.message"/></a>
+			<a id="branches" href="<c:url value="/branch/${currentBranch.branchName}/message?page=0&size=16" />"><s:message code="branchLeft.message"/></a>
 		</li>
 		<li id="tasks"  <c:if test="${tab == 'member'}">
 			class="active"
 			</c:if>>
-			<a id="tasks" href="<c:url value="/branch/${currentBranch.branchName}/member?page=0&size=10" />"><s:message code="branchLeft.member"/></a>
+			<a id="tasks" href="<c:url value="/branch/${currentBranch.branchName}/member?page=0&size=12" />"><s:message code="branchLeft.member"/></a>
 		</li>
 		<li id="tasks" <c:if test="${tab == 'project'}">
 					class="active"
