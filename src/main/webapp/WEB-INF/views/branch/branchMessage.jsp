@@ -32,7 +32,7 @@
 							</div>
 						</div>
 						<label>官方公告</label>
-						<div style="height: 750px">
+						<div style="height: 600px">
 						<c:forEach items="${ page.content }" var="branchMessage">
 						<div class="row center-branch-message-li">
 							<div class="col-xs-8" style="padding-top:6px;">

@@ -42,11 +42,11 @@
 			<p class="h3 hide-p">${ currentProject.projectName }</p>
 		</div>
 		<ul class="nav nav-sidebar">
-			<li id="overview" <c:if test="${ tag == 'projectMember' }">class="project-active"</c:if>>
+			<li id="overview" <c:if test="${ tab == 'projectMember' }">class="project-active"</c:if>>
 				<a id="overview" href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/member"/>" class="left-branch-ul-li"><s:message code="branchLeft.projectMember"/></a>
 			</li>
-			<li id="branches" >
-				<a id="branches" href="BranchMessage.html" class="left-branch-ul-li"><s:message code="branchLeft.task"/></a>
+			<li id="branches" <c:if test="${ tab == 'projectTask' }">class="project-active"</c:if>>
+				<a id="branches" href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task"/>" class="left-branch-ul-li"><s:message code="branchLeft.task"/></a>
 			</li>
 		</ul>
 	</div>

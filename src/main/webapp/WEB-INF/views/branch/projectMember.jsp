@@ -19,22 +19,22 @@
 				<div class="col-xs-10 col-xs-offset-2 ">
 					<div class="center-branche-panel">
 					<%@ include file="../message.jsp" %>
-						<label>Project Member</label>
+						<label>项目成员</label>
 						<hr />
 						<div class="row center-myBranches-up">
 							<sf:form method="post" action="">
 								<div class="col-xs-4">
-									<input type="text"  class="form-control" placeholder="ID Name" name="username"/>
+									<input type="text"  class="form-control" placeholder="用户名" name="username"/>
 								</div>
 								<div class="col-xs-2">
-									<input type="submit" class="btn btn-default" value="Invite"/>
+									<input type="submit" class="btn btn-default" value="邀请"/>
 								</div>
 							</sf:form>
 						</div>
 						
 						<div class="row">
 						<div class="col-xs-8">
-							<label>All Member</label>
+							<label>所有项目成员</label>
 							<div class="row">
 								<c:forEach items="${ currentProject.projectMember }" var="member">
 									<div class="col-xs-6 branchMember-li">

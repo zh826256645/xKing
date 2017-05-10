@@ -25,6 +25,7 @@ import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
 import xKing.project.domain.Project;
+import xKing.project.domain.Task;
 import xKing.project.service.ProjectService;
 import xKing.user.domain.User;
 import xKing.user.service.UserService;
@@ -106,7 +107,7 @@ public class ProjectController {
 			model.addAttribute("currentProject", currentProject);
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("currentUser", currentUser);
-			model.addAttribute("tag", "projectMember");
+			model.addAttribute("tab", "projectMember");
 			
 			return "/branch/projectMember";
 		}catch (Exception e) {
@@ -136,6 +137,32 @@ public class ProjectController {
 			
 			reModel.addFlashAttribute("message", "成员添加成功！");
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/member";
+		}catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	// 项目任务页面
+	@RequestMapping(path="/{projectName}/task", method=RequestMethod.GET)
+	public String projectTasks(@PathVariable(name="branchName") String branchName,
+			@PathVariable(name="projectName") String projectName,
+			Principal principal, Model model, RedirectAttributes reModel) {
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			Project currentProject = projectService.getProject(currentBranch, projectName);
+			if(currentProject.getBranchMember().getId() != branchMember.getId()){
+				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
+			}
+			
+			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("currentUser", currentUser);
+			model.addAttribute("currentProject", currentProject);
+			model.addAttribute("tab", "projectTask");
+			return "/branch/projectTasks";
 		}catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/user/me";

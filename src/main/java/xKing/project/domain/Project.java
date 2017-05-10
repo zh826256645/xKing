@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +30,7 @@ import xKing.utils.Utils;
 @Entity
 @Table(name="project")
 public class Project {
+	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -122,6 +125,10 @@ public class Project {
 
 	public String getFormatTime() {
 		return Utils.getFormatData(this.createTime);
+	}
+
+	public void setFormatTime(String formatTime) {
+		this.formatTime = formatTime;
 	}
 
 }

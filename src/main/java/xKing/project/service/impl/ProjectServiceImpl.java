@@ -13,7 +13,10 @@ import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
 import xKing.project.dao.ProjectRepository;
+import xKing.project.dao.TaskRepository;
 import xKing.project.domain.Project;
+import xKing.project.domain.Task;
+import xKing.project.domain.TaskLevel;
 import xKing.project.service.ProjectService;
 import xKing.user.domain.User;
 
@@ -26,6 +29,9 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired
 	private BranchMemberSerivce branchMemberService;
+	
+	@Autowired
+	private TaskRepository taskRepository;
 
 	
 	// 获取组织的项目
@@ -77,6 +83,11 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Long getProjectNum(Branch currentBranch) {
 		return projectRepository.countByBranch_id(currentBranch.getId());
+	}
+
+	@Override
+	public Task createTask(Branch currentBranch, Task task) {
+		return null;
 	}
 
 }

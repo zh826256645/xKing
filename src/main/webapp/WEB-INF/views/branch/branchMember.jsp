@@ -38,7 +38,7 @@
 						<div class="row">
 						<div class="col-xs-8">
 							<label>所有成员</label>
-							<div class="row" style="height: 750px">
+							<div class="row" style="height: 600px">
 								<c:forEach items="${ page.content }" var="member">
 									<div class="col-xs-6 branchMember-li">
 										<div class="row" style="padding-bottom: 5px;">

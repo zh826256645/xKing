@@ -18,20 +18,20 @@
 				<div class="col-xs-7 col-xs-offset-2">
 					<div class="center-branche-panel">
 						<%@ include file="../message.jsp" %>
-						<label>Project</label>
+						<label>项目</label>
 						<hr />
 						<div class="row center-myBranches-up">
 							<sf:form action="" method="post">
 								<div class="col-xs-4">
-									<input type="text"  class="form-control" placeholder="Project Name" name="projectName"/>
+									<input type="text"  class="form-control" placeholder="项目名" name="projectName"/>
 								</div>
 								<div class="col-xs-2">
-									<input type="submit" class="btn btn-default" value="Add"/>
+									<input type="submit" class="btn btn-default" value="添加"/>
 								</div>
 							</sf:form>
 						</div>
-						<label>Branch Project</label>
-						<div style="height: 750px">
+						<label>所有项目</label>
+						<div style="height: 600px">
 						<c:forEach items="${ page.content }" var="project">
 						<div class="row project-li">
 							<div class="col-xs-3">

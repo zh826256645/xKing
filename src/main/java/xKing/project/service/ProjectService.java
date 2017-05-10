@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import xKing.branch.domain.Branch;
 import xKing.branch.domain.BranchMember;
 import xKing.project.domain.Project;
+import xKing.project.domain.Task;
 import xKing.user.domain.User;
 
 public interface ProjectService {
@@ -19,4 +20,6 @@ public interface ProjectService {
 	Project addProjectMember(Branch currentBranch, Project project, User user);
 	
 	Long getProjectNum(Branch currentBranch);
+	
+	Task createTask(Branch currentBranch, Task task);
 }
