@@ -1,5 +1,8 @@
 package xKing.project.dao;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import xKing.project.domain.Task;
 import xKing.utils.CrudRepository;
 /**
@@ -9,5 +12,5 @@ import xKing.utils.CrudRepository;
  */
 
 public interface TaskRepository extends CrudRepository<Task, Long> {
-
+	Page<Task> findByProject_id(long project_id, Pageable pageable);
 }

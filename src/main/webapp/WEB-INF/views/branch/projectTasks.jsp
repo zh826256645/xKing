@@ -16,6 +16,7 @@
 				<%@ include file="branchleft.jsp" %>
 				<div class="col-xs-7 col-xs-offset-2">
 					<div class="center-myBranches center-myTasks">
+						<%@ include file="../message.jsp" %>
 						<label>项目任务</label>
 						<hr />
 						<div class="row center-myTasks-up">
@@ -32,58 +33,34 @@
 							</div>
 						</div>
 						<label>所有任务</label>
+						<c:forEach items="${ page.content }" var="task">
 						<div class="row center-tasks-li">
 							<div class="col-xs-8 hide-p">
-								<a><i class="fa fa-link" aria-hidden="true"></i></a>&nbsp;<a href="#">Go to buy something use to decorate party!</a>
-								<p class="hide-p">You have to go to the shopping mall and buy someting use to decorate party!</p>
-								<div class="center-tasks-li-message">
-									<p><font>Branche:</font><a href="#">LongMaoShe</a> <font>Publisher:</font><a href="#">ZhongHao</a><font>Start:</font><mark>2016-10-1</mark><font>End:</font><mark>2016-10-30</mark></p>
+								<div class="row">
+									<div class="col-xs-6">
+										<a href="#" style="font-size: 20px; "><i class="fa fa-link" aria-hidden="true"></i>&nbsp; ${ task.title }</a>
+									</div>
+								</div>
+								<div class="row" style="padding-left: 20px; font-size: 14px; border-left: 2px soild #888888;'"'>
+									<div class="col-xs-3">
+									 	发布人: <a href="#">${ task.publishMember.memberName }</a>
+									</div>
+									<div class="col-xs-3">
+										<font>发布时间:</font><mark>${ task.getFormatPublishTime() }</mark>
+									</div>
+									<div class="col-xs-3">
+										<font>开始时间:</font><mark>${ task.getFormatStartTime() }</mark>
+									</div>
+									<div class="col-xs-3">
+										<font>结束时间:</font><mark>${ task.getFormatEndTime() }</mark>
+									</div>
 								</div>
 							</div>
 							<div class="col-xs-2 col-xs-offset-2">
 								<button class="btn btn-success">Finish</button>
-								<button class="btn more-message" >More</button>
 							</div>
 						</div>
-						<div class="row center-tasks-li">
-							<div class="col-xs-8 hide-p">
-								<a><i class="fa fa-link" aria-hidden="true"></i></a>&nbsp;<a href="#">Go to buy something use to decorate party!</a>
-								<p class="hide-p">You have to go to the shopping mall and buy someting use to decorate party!</p>
-								<div class="center-tasks-li-message">
-									<p><font>Branche:</font><a href="#">LongMaoShe</a> <font>Publisher:</font><a href="#">ZhongHao</a><font>Start:</font><mark>2016-10-1</mark><font>End:</font><mark>2016-10-30</mark></p>
-								</div>
-							</div>
-							<div class="col-xs-2 col-xs-offset-2">
-								<button class="btn btn-success">Finish</button>
-								<button class="btn more-message">More</button>
-							</div>
-						</div>
-						<div class="row center-tasks-li">
-							<div class="col-xs-8 hide-p">
-								<a><i class="fa fa-link" aria-hidden="true"></i></a>&nbsp;<a href="#">Go to buy something use to decorate party!</a>
-								<p class="hide-p">You have to go to the shopping mall and buy someting use to decorate party!</p>
-								<div class="center-tasks-li-message">
-									<p><font>Branche:</font><a href="#">LongMaoShe</a> <font>Publisher:</font><a href="#">ZhongHao</a><font>Start:</font><mark>2016-10-1</mark><font>End:</font><mark>2016-10-30</mark></p>
-								</div>
-							</div>
-							<div class="col-xs-2 col-xs-offset-2">
-								<button class="btn btn-success">Finish</button>
-								<button class="btn more-message">More</button>
-							</div>
-						</div>
-						<div class="row center-tasks-li">
-							<div class="col-xs-8 hide-p">
-								<a><i class="fa fa-link" aria-hidden="true"></i></a>&nbsp;<a href="#">Go to buy something use to decorate party!</a>
-								<p class="hide-p">You have to go to the shopping mall and buy someting use to decorate party!</p>
-								<div class="center-tasks-li-message">
-									<p><font>Branche:</font><a href="#">LongMaoShe</a> <font>Publisher:</font><a href="#">ZhongHao</a><font>Start:</font><mark>2016-10-1</mark><font>End:</font><mark>2016-10-30</mark></p>
-								</div>
-							</div>
-							<div class="col-xs-2 col-xs-offset-2">
-								<button class="btn btn-success">Finish</button>
-								<button class="btn more-message">More</button>
-							</div>
-						</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>

@@ -14,6 +14,8 @@ public interface BranchMemberSerivce {
 	
 	BranchMember findByBranchidAndUserId(Branch branch, User user);
 	
+	BranchMember findByBranchAndMember(Branch branch, long member_id);
+	
 	BranchMember addBranchMember(String memberName, String email,Branch branch, BranchRole branchRole, User user);
 	
 	List<BranchMember> findByUserId(User user);

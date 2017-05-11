@@ -1,5 +1,6 @@
 package xKing.project.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import xKing.branch.domain.BranchMember;
+import xKing.utils.Utils;
 
 /**
  * 项目任务实体类
@@ -28,9 +30,6 @@ import xKing.branch.domain.BranchMember;
 @Entity
 @Table(name="branch_project_task")
 public class Task {
-
-	enum State {New, Take, Doding, FrontendFinish, RearendFinish, Finish, Refuse}
-	
 	enum Type {Task, Test, Debugging, Features, Bug}
 	
 	@Id
@@ -71,10 +70,10 @@ public class Task {
 	@ManyToMany
 	@JoinTable(name="project_take_members", joinColumns=@JoinColumn(name="task_id"),
 			inverseJoinColumns=@JoinColumn(name="branch_member_id"))
-	private List<BranchMember> takeMembers;
+	private List<BranchMember> takeMembers = new ArrayList<BranchMember>();
 	
 	// 发布时间
-	private int publishTime;
+	private long publishTime;
 	
 	// 子任务
 	@OneToMany(mappedBy="ftask")
@@ -123,11 +122,11 @@ public class Task {
 		this.takeMembers = takeMembers;
 	}
 
-	public int getPublishTime() {
+	public long getPublishTime() {
 		return publishTime;
 	}
 
-	public void setPublishTime(int publishTime) {
+	public void setPublishTime(long publishTime) {
 		this.publishTime = publishTime;
 	}
 
@@ -201,5 +200,17 @@ public class Task {
 				+ ", endTime=" + endTime + ", state=" + state + ", type=" + type + ", taskLevel=" + taskLevel
 				+ ", project=" + project + ", publishMember=" + publishMember + ", takeMembers=" + takeMembers
 				+ ", publishTime=" + publishTime + ", subtasks=" + subtasks + ", ftask=" + ftask + "]";
+	}
+	
+	public String getFormatPublishTime() {
+		return Utils.getFormatData(this.publishTime);
+	}
+	
+	public String getFormatStartTime() {
+		return Utils.getFormatData(this.startTime);
+	}
+	
+	public String getFormatEndTime() {
+		return Utils.getFormatData(this.endTime);
 	}
 }

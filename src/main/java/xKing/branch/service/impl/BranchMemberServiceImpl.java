@@ -95,4 +95,10 @@ public class BranchMemberServiceImpl implements BranchMemberSerivce{
 	public void getMemberNum(Branch currentBranch) {
 			currentBranch.setMemberNum(branchMemberRepository.countByBranch_id(currentBranch.getId()));
 	}
+
+	// 查找成员
+	@Override
+	public BranchMember findByBranchAndMember(Branch branch, long member_id) {
+		return branchMemberRepository.findByBranch_idAndId(branch.getId(), member_id);
+	}
 }

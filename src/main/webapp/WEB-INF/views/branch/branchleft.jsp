@@ -43,10 +43,10 @@
 		</div>
 		<ul class="nav nav-sidebar">
 			<li id="overview" <c:if test="${ tab == 'projectMember' }">class="project-active"</c:if>>
-				<a id="overview" href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/member"/>" class="left-branch-ul-li"><s:message code="branchLeft.projectMember"/></a>
+				<a id="overview" href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/member?page=0&size=12"/>" class="left-branch-ul-li"><s:message code="branchLeft.projectMember"/></a>
 			</li>
 			<li id="branches" <c:if test="${ tab == 'projectTask' }">class="project-active"</c:if>>
-				<a id="branches" href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task"/>" class="left-branch-ul-li"><s:message code="branchLeft.task"/></a>
+				<a id="branches" href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task?page=0&size=10"/>" class="left-branch-ul-li"><s:message code="branchLeft.task"/></a>
 			</li>
 		</ul>
 	</div>

@@ -21,7 +21,9 @@ public interface ProjectService {
 	
 	Long getProjectNum(Branch currentBranch);
 	
-	Task createTask(Branch currentBranch, Task task, String startTimeStr, String endTimeStr, long MemberId);
+	Task createTask(Branch currentBranch,Project currentProject, BranchMember currentBranchMember, Task task, String startTimeStr, String endTimeStr, long memberId);
+	
+	Page<Task> getTasksByProject(Project project, Pageable pageable);
 	
 	Project getProjectByMember(BranchMember currentMember, Project currentProject);
 }

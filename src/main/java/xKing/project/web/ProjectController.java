@@ -151,7 +151,7 @@ public class ProjectController {
 	@RequestMapping(path="/{projectName}/task", method=RequestMethod.GET)
 	public String projectTasks(@PathVariable(name="branchName") String branchName,
 			@PathVariable(name="projectName") String projectName,
-			Principal principal, Model model, RedirectAttributes reModel) {
+			Principal principal, Model model, RedirectAttributes reModel, Pageable pageable) {
 		try{
 			Branch currentBranch = branchService.findBranchByBranchName(branchName);
 			User currentUser = userService.getUserByUsername(principal.getName());
@@ -162,10 +162,13 @@ public class ProjectController {
 				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
 			}
 			
+			Page<Task> page = projectService.getTasksByProject(currentProject, pageable);
+			
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("currentProject", currentProject);
 			model.addAttribute("tab", "projectTask");
+			model.addAttribute("page", page);
 			return "/branch/projectTasks";
 		}catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
@@ -243,6 +246,8 @@ public class ProjectController {
 				model.addAttribute("memberId", memberId);
 				return "/branch/createProjectTask";
 			}
+			
+			projectService.createTask(currentBranch, currentProject, branchMember, task, startTimeStr, endTimeStr, memberId);
 			
 			reModel.addFlashAttribute("message", "任务发布成功！");
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task";

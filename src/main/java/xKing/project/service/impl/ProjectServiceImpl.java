@@ -15,8 +15,8 @@ import xKing.exception.FaultyOperationException;
 import xKing.project.dao.ProjectRepository;
 import xKing.project.dao.TaskRepository;
 import xKing.project.domain.Project;
+import xKing.project.domain.State;
 import xKing.project.domain.Task;
-import xKing.project.domain.TaskLevel;
 import xKing.project.service.ProjectService;
 import xKing.user.domain.User;
 
@@ -93,11 +93,27 @@ public class ProjectServiceImpl implements ProjectService {
 		return this_project;
 	}
 
-	// 创建任务
 	@Override
-	public Task createTask(Branch currentBranch, Task task, String startTimeStr, String endTimeStr, long MemberId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Task createTask(Branch currentBranch, Project currentProject, BranchMember currentBranchMember, Task task,
+			String startTimeStr, String endTimeStr, long memberId) {
+		task.setEndTime(xKing.utils.Utils.timeStrToLong(endTimeStr));
+		task.setProject(currentProject);
+		task.setPublishMember(currentBranchMember);
+		task.setStartTime(xKing.utils.Utils.timeStrToLong(startTimeStr));
+		task.setState(State.New);
+		task.setPublishTime(System.currentTimeMillis());
+		BranchMember member = branchMemberService.findByBranchAndMember(currentBranch, memberId);
+		if(member == null) {
+			throw new FaultyOperationException("没有改成员");
+		}
+		task.getTakeMembers().add(member);
+		
+		return taskRepository.save(task);
 	}
 
+	// 获取项目的任务
+	@Override
+	public Page<Task> getTasksByProject(Project project, Pageable pageable) {
+		return taskRepository.findByProject_id(project.getId(), pageable);
+	}
 }
