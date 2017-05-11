@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    $('#startTIme').datepicker({
+        format: 'yyyy-mm-dd'
+    });
+    $('#endTIme').datepicker({
+        format: 'yyyy-mm-dd'
+    });
 	$("#addFriend").click(function(){
 		var username = $("#friendUsername").val();
 		if(!username || typeof(username) == "undefined"){

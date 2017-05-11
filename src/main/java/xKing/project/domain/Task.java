@@ -27,6 +27,10 @@ import xKing.branch.domain.BranchMember;
 @Table(name="branch_project_task")
 public class Task {
 
+	enum State {New, Take, Doding, FrontendFinish, RearendFinish, Finish, Refuse}
+	
+	enum Type {Task, Test, Debugging, Features, Bug}
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
@@ -35,7 +39,15 @@ public class Task {
 	
 	private String content;
 	
-	private int state;
+	private long startTime;
+	
+	private long endTime;
+	
+	@Enumerated(EnumType.STRING)
+	private State state;
+
+	@Enumerated(EnumType.STRING)
+	private Type type;
 	
 	@Enumerated(EnumType.STRING)
 	private TaskLevel taskLevel;
@@ -127,11 +139,7 @@ public class Task {
 		this.ftask = ftask;
 	}
 
-	public int getState() {
-		return state;
-	}
-
-	public void setState(int state) {
+	public void setState(State state) {
 		this.state = state;
 	}
 
@@ -150,5 +158,32 @@ public class Task {
 	public void setTaskLevel(TaskLevel taskLevel) {
 		this.taskLevel = taskLevel;
 	}
-	
+
+	public State getState() {
+		return state;
+	}
+
+	public long getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(long startTime) {
+		this.startTime = startTime;
+	}
+
+	public long getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(long endTime) {
+		this.endTime = endTime;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
 }

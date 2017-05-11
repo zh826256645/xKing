@@ -127,6 +127,7 @@ public class ProjectController {
 			User currentUser = userService.getUserByUsername(principal.getName());
 			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
 			
+			
 			Project currentProject = projectService.getProject(currentBranch, projectName);
 			if(currentProject.getBranchMember().getId() != branchMember.getId()){
 				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
@@ -163,6 +164,33 @@ public class ProjectController {
 			model.addAttribute("currentProject", currentProject);
 			model.addAttribute("tab", "projectTask");
 			return "/branch/projectTasks";
+		}catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	@RequestMapping(path="/{projectName}/task/new", method=RequestMethod.GET)
+	public String createProjectTaskPage(@PathVariable(name="branchName") String branchName,
+			@PathVariable(name="projectName") String projectName,
+			Principal principal, Model model, RedirectAttributes reModel) {
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			Project currentProject = projectService.getProject(currentBranch, projectName);
+			Project thisProject = projectService.getProjectByMember(branchMember, currentProject );
+			if(thisProject == null){
+				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowCreateTask());
+			}
+			
+			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("currentUser", currentUser);
+			model.addAttribute("currentProject", currentProject);
+			model.addAttribute(new Task());
+			model.addAttribute("tab", "projectTask");
+			return "/branch/createProjectTask";
 		}catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/user/me";

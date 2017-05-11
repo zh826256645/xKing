@@ -22,4 +22,6 @@ public interface ProjectService {
 	Long getProjectNum(Branch currentBranch);
 	
 	Task createTask(Branch currentBranch, Task task);
+	
+	Project getProjectByMember(BranchMember currentMember, Project currentProject);
 }

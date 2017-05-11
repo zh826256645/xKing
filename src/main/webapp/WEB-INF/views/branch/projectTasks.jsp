@@ -7,6 +7,7 @@
 		<meta charset="UTF-8">
 		<title>Profile</title>
 		<%@ include file="../head.jsp" %>
+		<script ref="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
 	</head>
 	<body>
 		<div class="container">
@@ -27,7 +28,7 @@
 								</ul>
 							</div>
 							<div class="col-xs-7" style="padding-top: 5px">
-								<button class="btn btn-success">创建新任务</button>
+								<a href="<c:url value="/branch/${currentBranch.branchName }/project/${currentProject.projectName }/task/new"/>"><button class="btn btn-success">创建新任务</button></a>
 							</div>
 						</div>
 						<label>所有任务</label>
