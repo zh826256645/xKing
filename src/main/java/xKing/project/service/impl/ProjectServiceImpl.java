@@ -85,17 +85,19 @@ public class ProjectServiceImpl implements ProjectService {
 	public Long getProjectNum(Branch currentBranch) {
 		return projectRepository.countByBranch_id(currentBranch.getId());
 	}
-	
-	@Override
-	public Task createTask(Branch currentBranch, Task task) {
-		return null;
-	}
 
 	// 判断用户是否是组织成员
 	@Override
 	public Project getProjectByMember(BranchMember currentMember, Project project) {
 		Project this_project = projectRepository.findByProjectMemberAndId(currentMember, project.getId());
 		return this_project;
+	}
+
+	// 创建任务
+	@Override
+	public Task createTask(Branch currentBranch, Task task, String startTimeStr, String endTimeStr, long MemberId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

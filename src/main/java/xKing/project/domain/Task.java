@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import xKing.branch.domain.BranchMember;
 
@@ -35,8 +37,12 @@ public class Task {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
+	@NotNull(message="任务标题不能为空")
+	@Size(min=1, message="任务标题不能为空")
 	private String title;
 	
+	@NotNull(message="任务内容不能为空")
+	@Size(min=1, message="任务内容不能为空")
 	private String content;
 	
 	private long startTime;
@@ -46,9 +52,11 @@ public class Task {
 	@Enumerated(EnumType.STRING)
 	private State state;
 
+	@NotNull(message="任务类型不能为空")
 	@Enumerated(EnumType.STRING)
 	private Type type;
 	
+	@NotNull(message="任务等级不能为空")
 	@Enumerated(EnumType.STRING)
 	private TaskLevel taskLevel;
 	
@@ -185,5 +193,13 @@ public class Task {
 
 	public void setType(Type type) {
 		this.type = type;
+	}
+
+	@Override
+	public String toString() {
+		return "Task [id=" + id + ", title=" + title + ", content=" + content + ", startTime=" + startTime
+				+ ", endTime=" + endTime + ", state=" + state + ", type=" + type + ", taskLevel=" + taskLevel
+				+ ", project=" + project + ", publishMember=" + publishMember + ", takeMembers=" + takeMembers
+				+ ", publishTime=" + publishTime + ", subtasks=" + subtasks + ", ftask=" + ftask + "]";
 	}
 }

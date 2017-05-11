@@ -1,5 +1,6 @@
 package xKing.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -38,5 +39,26 @@ public class Utils {
 		SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 		String date = format.format(new Date(time));
 		return date;
+	}
+	
+	// 时间字符串转时间戳
+	public static long timeStrToLong(String timeStr) {
+		SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" );
+		try{
+			Date date = format.parse(timeStr);
+			return date.getTime();
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	
+	public static long getTodayTimeLong() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String timeStr =  format.format(new Date());
+		try {
+			return format.parse(timeStr).getTime();
+		} catch (ParseException e) {
+			return 0;
+		}
 	}
 }

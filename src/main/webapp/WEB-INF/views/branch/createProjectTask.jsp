@@ -39,11 +39,12 @@
 									<div class="col-xs-10">
 										<div class="input-group">
 										<div class="input-group-addon">类型:</div>
-										<select class="form-control">
-											<option>任务</option>
-											<option>故障</option>
-											<option>调试</option>
-											<option>测试</option>
+										<select class="form-control" name="type">
+											<option value="Task" <c:if test="${ task.type != null && task.type == 'Task'}">selected="selected"</c:if>>任务</option>
+											<option value="Test" <c:if test="${ task.type != null && task.type == 'Test'}">selected="selected"</c:if>>测试</option>
+											<option value="Debugging" <c:if test="${ task.type != null && task.type == 'Debugging'}">selected="selected"</c:if>>调试</option>
+											<option value="Features" <c:if test="${ task.type != null && task.type == 'Features'}">selected="selected"</c:if>>功能</option>
+											<option value="Bug" <c:if test="${ task.type != null && task.type == 'Bug'}">selected="selected"</c:if>>漏洞</option>
 										</select>
 										</div>
 									</div>
@@ -59,10 +60,10 @@
 									<div class="col-xs-10">
 										<div class="input-group">
 										<div class="input-group-addon">优先级:</div>
-										<select class="form-control">
-											<option>普通</option>
-											<option>优先</option>
-											<option>紧急</option>
+										<select class="form-control" name="taskLevel">
+											<option value="Common" <c:if test="${ task.taskLevel != null && task.taskLevel == 'Common'}">selected="selected"</c:if>>普通</option>
+											<option value="Preference"  <c:if test="${ task.taskLevel != null && task.taskLevel == 'Preference'}">selected="selected"</c:if>>优先</option>
+											<option value="Emergency" <c:if test="${ task.taskLevel != null && task.taskLevel == 'Emergency'}">selected="selected"</c:if>>紧急</option>
 										</select>
 										</div>
 									</div>
@@ -81,13 +82,13 @@
 									<div class="col-xs-4">
 											<div class="input-group">
 												<div class="input-group-addon">开始时间</div>
-													<input class="form-control" id="startTIme"/>
+													<input class="form-control" id="startTIme" name="startTimeStr" value="${ startTimeStr }"/>
 											</div>
 										</div>
 									<div class="col-xs-4">
 											<div class="input-group">
 												<div class="input-group-addon">结束时间</div>
-													<input class="form-control" id="endTIme"/>
+													<input class="form-control" id="endTIme" name="endTimeStr" value="${ endTimeStr }"/>
 											</div>
 										</div>
 								</div>
@@ -103,7 +104,7 @@
 								</div>
 								<div class="row center-myBranches-up" style="border-bottom: 0px !important;">
 									<div class="col-xs-12">
-										<input type="text"  class="form-control" placeholder="标题" name="title" value="${ branchMessage.title }"/>
+										<input type="text"  class="form-control" placeholder="标题" name="title" value="${ task.title }"/>
 									</div>
 								</div>
 							</div>
@@ -117,11 +118,10 @@
 										<div class="col-xs-12">
 											<div class="input-group">
 												<div class="input-group-addon">指派给:</div>
-												<select class="form-control">
-													<option>ZhongHao</option>
-													<option>ZhongHao1</option>
-													<option>ZhongHao2</option>
-													<option>ZhongHao</option>
+												<select class="form-control" name="memberId">
+													<c:forEach items="${ currentProject.projectMember }" var="member">
+														<option value="${ member.id }" <c:if test="${ memberId != null && member.id == memberId }">selected="selected"</c:if>><c:if test="${ member.user.id == currentUser.id }">我自己</c:if ><c:if test="${ member.user.id != currentUser.id }">${ member.memberName }</c:if>
+													</c:forEach>
 												</select>
 											</div>
 										</div>
@@ -153,7 +153,7 @@
 											<div id="myTabContent" class="tab-content tab-control">
 											   <div class="tab-pane fade in active" id="home">
 												  <br />
-											      <textarea id="text-input" rows="13" class="form-control messge-textarea" name="messageContent">${ branchMessage.messageContent }</textarea>
+											      <textarea id="text-input" rows="13" class="form-control messge-textarea" name="content">${ task.content }</textarea>
 											   </div>
 											   <div  class="tab-pane fade" id="ios">
 											     <div >

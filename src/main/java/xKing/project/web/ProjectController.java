@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +31,7 @@ import xKing.project.domain.Task;
 import xKing.project.service.ProjectService;
 import xKing.user.domain.User;
 import xKing.user.service.UserService;
+import xKing.utils.Utils;
 
 /**
  * 组织信息控制器
@@ -188,9 +191,61 @@ public class ProjectController {
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("currentProject", currentProject);
-			model.addAttribute(new Task());
+			model.addAttribute("task", new Task());
 			model.addAttribute("tab", "projectTask");
 			return "/branch/createProjectTask";
+		}catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	@RequestMapping(path="/{projectName}/task/new", method=RequestMethod.POST)
+	public String createProjectTask(@PathVariable(name="branchName") String branchName,
+			@PathVariable(name="projectName") String projectName,
+			@RequestParam(name="startTimeStr", required=false) String startTimeStr,
+			@RequestParam(name="endTimeStr", required=false) String endTimeStr,
+			@RequestParam(name="memberId", required=false, defaultValue="0") long memberId,
+			@Validated Task task, Errors errors,
+			Principal principal, Model model, RedirectAttributes reModel) {
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			Project currentProject = projectService.getProject(currentBranch, projectName);
+			Project thisProject = projectService.getProjectByMember(branchMember, currentProject );
+			if(thisProject == null){
+				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowCreateTask());
+			}
+			
+			if(errors.hasErrors() || startTimeStr == null || startTimeStr.trim().isEmpty() || endTimeStr == null || endTimeStr.trim().isEmpty() || memberId == 0 || 
+					Utils.timeStrToLong(startTimeStr) == 0 || Utils.timeStrToLong(endTimeStr) == 0 ||
+					Utils.timeStrToLong(startTimeStr) > Utils.timeStrToLong(endTimeStr) || Utils.getTodayTimeLong() > Utils.timeStrToLong(startTimeStr)  ){
+				if(startTimeStr == null || startTimeStr.trim().isEmpty()  || endTimeStr == null || endTimeStr.trim().isEmpty()) {
+					model.addAttribute("error", "任务时间不能为空！");
+				} else if(Utils.timeStrToLong(startTimeStr) == 0 || Utils.timeStrToLong(endTimeStr) == 0 ) {
+					model.addAttribute("error", "任务格式错误！");
+				} else if(Utils.timeStrToLong(startTimeStr) > Utils.timeStrToLong(endTimeStr)) {
+					model.addAttribute("error", "任务开始时间不能大于结束时间");
+				} else if(Utils.getTodayTimeLong() > Utils.timeStrToLong(startTimeStr)) {
+					model.addAttribute("error", "任务开始时间不能小于今天");
+				}
+					else {
+					model.addAttribute("error", "任务标题、内容、时间、优先级、类型、指派人员均不能空！");
+				}
+				model.addAttribute("currentBranch", currentBranch);
+				model.addAttribute("currentUser", currentUser);
+				model.addAttribute("currentProject", currentProject);
+				model.addAttribute("task", task);
+				model.addAttribute("tab", "projectTask");
+				model.addAttribute("startTimeStr", startTimeStr);
+				model.addAttribute("endTimeStr", endTimeStr);
+				model.addAttribute("memberId", memberId);
+				return "/branch/createProjectTask";
+			}
+			
+			reModel.addFlashAttribute("message", "任务发布成功！");
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task";
 		}catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/user/me";
