@@ -202,6 +202,7 @@ public class ProjectController {
 			return "redirect:/user/me";
 		}
 	}
+	
 	@RequestMapping(path="/{projectName}/task/new", method=RequestMethod.POST)
 	public String createProjectTask(@PathVariable(name="branchName") String branchName,
 			@PathVariable(name="projectName") String projectName,
@@ -256,4 +257,120 @@ public class ProjectController {
 			return "redirect:/user/me";
 		}
 	}
+	
+	@RequestMapping(path="/{projectName}/task/{taskId}", method=RequestMethod.GET)
+	public String getTask(@PathVariable(name="branchName") String branchName,
+			@PathVariable(name="projectName") String projectName,
+			@PathVariable(name="taskId") long taskId,
+			Principal principal, Model model, RedirectAttributes reModel) {
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			Project currentProject = projectService.getProject(currentBranch, projectName);
+			Project thisProject = projectService.getProjectByMember(branchMember, currentProject );
+			
+			if(thisProject == null){
+				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowTakeTask());
+			}
+			
+			Task currentTask = projectService.getTaskByProject(currentProject, taskId);
+			
+			if(currentTask == null) {
+				reModel.addFlashAttribute("error", "没有这个任务");
+				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task";
+			}
+			model.addAttribute("tab", "projectTask");
+			model.addAttribute("currentTask", currentTask);
+			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("currentUser", currentUser);
+			model.addAttribute("currentProject", currentProject);
+			return "/branch/projectTaskPage";
+		}catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	@RequestMapping(path="/{projectName}/task/{taskId}/subTask", method=RequestMethod.GET)
+	public String addSubTaskPage(@PathVariable(name="branchName") String branchName,
+			@PathVariable(name="projectName") String projectName,
+			@PathVariable(name="taskId") long taskId,
+			Principal principal, Model model, RedirectAttributes reModel) {
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			Project currentProject = projectService.getProject(currentBranch, projectName);
+			
+			Task currentTask = projectService.getTaskByProject(currentProject, taskId);
+			
+			if(currentTask == null) {
+				reModel.addFlashAttribute("error", "没有这个任务");
+				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task";
+			}
+			
+			if(currentTask.getPublishMember().getId() != branchMember.getId()){
+				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowCreateTask());
+			}
+			
+			model.addAttribute("tab", "projectTask");
+			model.addAttribute("task", currentTask);
+			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("currentUser", currentUser);
+			model.addAttribute("currentProject", currentProject);
+			return "/branch/createProjectSubTask";
+		}catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
+	@RequestMapping(path="/{projectName}/task/{taskId}/subTask", method=RequestMethod.POST)
+	public String addSubTask(@PathVariable(name="branchName") String branchName,
+			@PathVariable(name="projectName") String projectName,
+			@PathVariable(name="taskId") long taskId,
+			@RequestParam(name="content", required=false) String content,
+			Principal principal, Model model, RedirectAttributes reModel) {
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			Project currentProject = projectService.getProject(currentBranch, projectName);
+			
+			Task currentTask = projectService.getTaskByProject(currentProject, taskId);
+			
+			if(currentTask == null) {
+				reModel.addFlashAttribute("error", "没有这个任务");
+				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task";
+			}
+		
+			
+			if(currentTask.getPublishMember().getId() != branchMember.getId()){
+				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowCreateTask());
+			}
+			
+			if(content == null || content.trim().isEmpty()) {
+				model.addAttribute("error", "子任务内容不能为空");
+				model.addAttribute("tab", "projectTask");
+				model.addAttribute("task", currentTask);
+				model.addAttribute("currentBranch", currentBranch);
+				model.addAttribute("currentUser", currentUser);
+				model.addAttribute("currentProject", currentProject);
+				return "/branch/createProjectSubTask";
+			}
+			
+			projectService.addSubTask(currentProject, currentTask, branchMember, content);
+			
+			reModel.addFlashAttribute("message", "子任务添加成功!");
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task/" + taskId;
+		}catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
 }

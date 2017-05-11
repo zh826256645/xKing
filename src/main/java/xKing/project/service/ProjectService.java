@@ -26,4 +26,8 @@ public interface ProjectService {
 	Page<Task> getTasksByProject(Project project, Pageable pageable);
 	
 	Project getProjectByMember(BranchMember currentMember, Project currentProject);
+	
+	Task getTaskByProject(Project currentProject, long taskId);
+	
+	Task addSubTask(Project currentProject, Task currentTask, BranchMember currentMember, String content);
 }

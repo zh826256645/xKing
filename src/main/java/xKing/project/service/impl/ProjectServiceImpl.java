@@ -114,6 +114,30 @@ public class ProjectServiceImpl implements ProjectService {
 	// 获取项目的任务
 	@Override
 	public Page<Task> getTasksByProject(Project project, Pageable pageable) {
-		return taskRepository.findByProject_id(project.getId(), pageable);
+		return taskRepository.findByProject_idAndFtask(project.getId(),null, pageable);
+	}
+
+	// 获取任务信息
+	@Override
+	public Task getTaskByProject(Project currentProject, long taskId) {
+		return taskRepository.findByProject_idAndIdAndFtask(currentProject.getId(), taskId, null);
+	}
+
+	// 添加子任务
+	@Override
+	public Task addSubTask(Project currentProject, Task currentTask, BranchMember currentMember, String content) {
+		Task task = new Task();
+		task.setContent(content);
+		task.setTitle(currentTask.getTitle());
+		task.setStartTime(currentTask.getStartTime());
+		task.setEndTime(currentTask.getEndTime());
+		task.setPublishTime(System.currentTimeMillis());
+		task.setType(currentTask.getType());
+		task.setState(State.New);
+		task.setProject(currentProject);
+		task.setFtask(currentTask);
+		task.setPublishMember(currentMember);
+		task.setTaskLevel(currentTask.getTaskLevel());
+		return taskRepository.save(task);
 	}
 }

@@ -13,4 +13,10 @@ import xKing.utils.CrudRepository;
 
 public interface TaskRepository extends CrudRepository<Task, Long> {
 	Page<Task> findByProject_id(long project_id, Pageable pageable);
+	
+	Page<Task> findByProject_idAndFtask(long project_id, Task Ftask, Pageable pageable);
+	
+	Task findByProject_idAndId(long project_id, long id);
+	
+	Task findByProject_idAndIdAndFtask(long project_id, long id, Task Ftask);
 }

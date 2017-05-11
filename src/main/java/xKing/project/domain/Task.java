@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -67,7 +68,7 @@ public class Task {
 	private BranchMember publishMember;
 	
 	// 指定任务接受成员
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="project_take_members", joinColumns=@JoinColumn(name="task_id"),
 			inverseJoinColumns=@JoinColumn(name="branch_member_id"))
 	private List<BranchMember> takeMembers = new ArrayList<BranchMember>();
@@ -76,8 +77,8 @@ public class Task {
 	private long publishTime;
 	
 	// 子任务
-	@OneToMany(mappedBy="ftask")
-	private List<Task> subtasks;
+	@OneToMany(mappedBy="ftask", fetch=FetchType.EAGER)
+	private List<Task> subtasks = new ArrayList<Task>();
 	
 	@ManyToOne
 	private Task ftask;

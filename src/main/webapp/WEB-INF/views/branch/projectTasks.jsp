@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Profile</title>
+		<title>${ currentProject.projectName }-任务</title>
 		<%@ include file="../head.jsp" %>
 		<script ref="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
 	</head>
@@ -37,27 +37,41 @@
 						<div class="row center-tasks-li">
 							<div class="col-xs-8 hide-p">
 								<div class="row">
-									<div class="col-xs-6">
-										<a href="#" style="font-size: 20px; "><i class="fa fa-link" aria-hidden="true"></i>&nbsp; ${ task.title }</a>
+									<div class="col-xs-7">
+										<a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task/${ task.id }"/>" style="font-size: 20px; "><i class="fa fa-link" aria-hidden="true"></i>&nbsp; [<c:choose>
+										<c:when test="${ task.type == 'Task' }">任务</c:when>
+										<c:when test="${ task.type == 'Test' }">测试</c:when>
+										<c:when test="${ task.type == 'Bug' }">漏洞</c:when>
+										<c:when test="${ task.type == 'Debugging' }">调试</c:when>
+										<c:when test="${ task.type == 'Features' }">功能</c:when>
+										</c:choose>] ${ task.title }</a>
+									</div>
+									<div class="col-xs-3" style="padding-top: 5px">
+										<small>状态：<c:choose>
+										<c:when test="${ task.state == 'New' }"><span style="color: red;">新建</span></c:when>
+										<c:when test="${ task.state == 'Take' }"><span style="color: blue;">已接受</span></c:when>
+										<c:when test="${ task.state == 'Doding' }">进行中</c:when>
+										<c:when test="${ task.state == 'FrontendFinish' }">前段完成</c:when>
+										<c:when test="${ task.state == 'RearendFinish' }">后端完成</c:when>
+										<c:when test="${ task.state == 'Finish' }">完成</c:when>
+										<c:when test="${ task.state == 'Refuse' }">拒绝</c:when>
+										</c:choose></small>
 									</div>
 								</div>
-								<div class="row" style="padding-left: 20px; font-size: 14px; border-left: 2px soild #888888;'"'>
+								<div class="row" style="margin-left: 20px;margin-top:4px;margin-bottom: 4	px; font-size: 14px; border-left: 3px solid #888888;">
 									<div class="col-xs-3">
 									 	发布人: <a href="#">${ task.publishMember.memberName }</a>
 									</div>
 									<div class="col-xs-3">
-										<font>发布时间:</font><mark>${ task.getFormatPublishTime() }</mark>
+										<font>发布时间: </font>${ task.getFormatPublishTime() }
 									</div>
-									<div class="col-xs-3">
-										<font>开始时间:</font><mark>${ task.getFormatStartTime() }</mark>
-									</div>
-									<div class="col-xs-3">
-										<font>结束时间:</font><mark>${ task.getFormatEndTime() }</mark>
+									<div class="col-xs-5">
+										<font>时限: </font>${ task.getFormatStartTime() } - ${ task.getFormatEndTime() }
 									</div>
 								</div>
 							</div>
 							<div class="col-xs-2 col-xs-offset-2">
-								<button class="btn btn-success">Finish</button>
+								<button class="btn btn-success">查看</button>
 							</div>
 						</div>
 						</c:forEach>
