@@ -21,9 +21,9 @@ $(document).ready(function() {
 			var i = $(this).parent().parent().find(".center-tasks-li-message").eq(0);
 			if(i.css("display") == "none") {
 				i.slideDown();
-				$(this).html("Hide");
+				$(this).html("隐藏");
 			} else {
-				$(this).html("More");
+				$(this).html("更多信息");
 				i.slideUp();
 			}
 		});

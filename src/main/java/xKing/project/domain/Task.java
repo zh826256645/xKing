@@ -229,4 +229,25 @@ public class Task {
 		this.users = users;
 	}
 	
+	public int getLastDay(){
+		long today = Utils.getTodayTimeLong();
+		long lastTime = this.endTime - today;
+		if(lastTime < 0) {
+			return 0;
+		} else if(lastTime == 0) {
+			return 1;
+		} else {
+			return (int) (lastTime / 24 / 60 / 60/1000);
+		}
+	}
+	
+	public int getStartState() {
+		long today = Utils.getTodayTimeLong();
+		long startTime = today - this.startTime;
+		if(startTime < 0) {
+			return 0;
+		}else {
+			return 1;
+		}
+	}
 }

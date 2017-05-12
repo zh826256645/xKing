@@ -26,6 +26,9 @@ import xKing.branch.service.BranchService;
 import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
+import xKing.history.domain.BranchHisotryType;
+import xKing.history.domain.BranchHistory;
+import xKing.history.service.HistoryService;
 import xKing.project.domain.Project;
 import xKing.project.domain.State;
 import xKing.project.domain.Task;
@@ -55,6 +58,9 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private HistoryService historyService;
 	
 	@RequestMapping(path="", method={RequestMethod.GET, RequestMethod.POST})
 	public String branchProject(@PathVariable(name="branchName") String branchName,
@@ -251,7 +257,11 @@ public class ProjectController {
 				return "/branch/createProjectTask";
 			}
 			
-			projectService.createTask(currentBranch, currentProject, branchMember, task, startTimeStr, endTimeStr, memberId);
+			Task newTask = projectService.createTask(currentBranch, currentProject, branchMember, task, startTimeStr, endTimeStr, memberId);
+			
+			// 记录动作
+			BranchHistory history = new BranchHistory(currentBranch, branchMember, BranchHisotryType.Task, currentProject, newTask, "发布了新任务");
+			historyService.createBranchHisotry(history);
 			
 			reModel.addFlashAttribute("message", "任务发布成功！");
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task";
@@ -292,6 +302,7 @@ public class ProjectController {
 			model.addAttribute("currentProject", currentProject);
 			model.addAttribute("problemNum", projectService.getTaskProblemNum(currentTask));
 			model.addAttribute("problems", projectService.getTaskProblems(currentTask));
+			model.addAttribute("histories", historyService.findBranchHistoryByTask(currentTask));
 			return "/branch/projectTaskPage";
 		}catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
@@ -373,6 +384,10 @@ public class ProjectController {
 			
 			projectService.addSubTask(currentProject, currentTask, branchMember, content);
 			
+			// 记录动作
+			BranchHistory history = new BranchHistory(currentBranch, branchMember, BranchHisotryType.SubTask, currentProject, currentTask, "发布了子任务");
+			historyService.createBranchHisotry(history);
+			
 			reModel.addFlashAttribute("message", "子任务添加成功!");
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task/" + taskId;
 		}catch (Exception e) {
@@ -381,6 +396,7 @@ public class ProjectController {
 		}
 	}
 	
+	// 更改任务状态
 	@RequestMapping(path="/{projectName}/task/{taskId}/state", method=RequestMethod.POST)
 	public String changeTaskState(@PathVariable(name="branchName") String branchName,
 			@PathVariable(name="projectName") String projectName,
@@ -405,6 +421,12 @@ public class ProjectController {
 			}
 			
 			projectService.changeTaskState(currentTask, state, subTaskId);
+			
+			// 记录动作
+			BranchHistory history = new BranchHistory(currentBranch, branchMember, BranchHisotryType.TaskState, currentProject, currentTask, "修改了任务状态为");
+			history.setActionMessage(state.toString());
+			historyService.createBranchHisotry(history);
+			
 			reModel.addFlashAttribute("message", "任务状态修改成功");
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task/" + taskId;
 		}catch (FaultyOperationException e) {
@@ -416,6 +438,7 @@ public class ProjectController {
 		}
 	}
 		
+	// 发表提问
 		@RequestMapping(path="/{projectName}/task/{taskId}/problem", method=RequestMethod.POST)
 		public String publishProblem(@PathVariable(name="branchName") String branchName,
 				@PathVariable(name="projectName") String projectName,
@@ -439,6 +462,11 @@ public class ProjectController {
 				}
 				
 				projectService.publishProblem(branchMember, currentTask, content);
+				
+				// 记录动作
+				BranchHistory history = new BranchHistory(currentBranch, branchMember, BranchHisotryType.Problem, currentProject, currentTask, "提出了新问题");
+				historyService.createBranchHisotry(history);
+				
 				reModel.addFlashAttribute("message", "问题发表成功");
 				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task/" + taskId;
 			}catch (FaultyOperationException e) {

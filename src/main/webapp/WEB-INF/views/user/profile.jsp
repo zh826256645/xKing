@@ -87,66 +87,35 @@
 									<div class="panel panel-default">
 										<div class="panel-heading" style="border-bottom: 0px; background-color: #f9fafc;">
 											<h3 class="panel-title" style="font-weight: bold;color: black;">
-											<a href="#"><s:message code="profile.yourTasks"/></a> <a href="#" class="more">更多的任务</a>
+											<a href="#"><s:message code="profile.yourTasks"/></a> <a href="<c:url value="/user/me?tab=branches&page=0&size=10" />" class="more">更多的任务</a>
 											</h3>
 										</div>
 										<div class="panel-body">
+											<div style="height: 108px;">
+											<c:forEach items="${ tasks.content }" var="task">
 											<div class="row center-task">
 												<div class="col-xs-4 center-task-li">
-													<a><i class="fa fa-link" aria-hidden="true"></i></a>&nbsp;<a href="#">Go to buy something use to decorate party!</a>
+													<a href="<c:url value="/branch/${ task.project.branch.branchName }/project/${ task.project.projectName }/task/${  task.id }"/>"><i class="fa fa-link" aria-hidden="true"></i>&nbsp;${ task.title }</a>
 												</div>
-												<div class="col-xs-5 center-task-li">
-													<small>start&nbsp;</small>
-													<mark>2016-11-01</mark>
-													<small>end&nbsp;</small>
-													<mark>206-12-01</mark>
+												<div class="col-xs-5 center-task-li" style="font-size: 14px">
+													<small style="color: #888888">开始&nbsp;&nbsp;</small>
+													<span style="font-size: 16px">${ task.getFormatStartTime() }</span>&nbsp;&nbsp;
+													<small style="color: #888888">最后期限&nbsp;&nbsp;</small>
+													<span style="font-size: 16px">${ task.getFormatEndTime() }</span>
 													&nbsp;&nbsp;&nbsp;
-													<small style="color: #BFBFBF;">you have 30 day to do</small>
+													<small style="color: #BFBFBF;"><c:choose>
+													<c:when test="${ task.state != 'Finish' }"><c:if test="${ task.getStartState() == 0 }"><span style="color:#89C4F4;">任务还未开始，请耐心等待</span></c:if><c:if test="${ task.getStartState() != 0 && task.getLastDay() != 0 }">你还有${ task.getLastDay() } 天可以完成</c:if><c:if test="${  task.getStartState() != 0 && task.getLastDay() == 0 }"><span style="color:red">任务已到期！</span></c:if></c:when>
+													<c:when test="${ task.state == 'Finish' }"><span style="color:green">你已经成了该任务</span></c:when>
+													</c:choose></small>
 												</div>
 												<div class="col-xs-2 center-task-li">
-													in <a href="#">LongMaoShe</a>
+													组织 <a href="<c:url value="/branch/${ task.project.branch.branchName }"/>">${ task.project.branch.branchName }</a>
 												</div>
 												<div class="col-xs-1">
-													<button class="btn btn-success center-task-btn">finish</button>
+													<a href="<c:url value="/branch/${ task.project.branch.branchName }/project/${ task.project.projectName }/task/${  task.id }"/>"><button class="btn btn-success center-task-btn">查看</button></a>
 												</div>
 											</div>
-											<div class="row center-task">
-												<div class="col-xs-4 center-task-li">
-													<a><i class="fa fa-link" aria-hidden="true"></i></a>&nbsp;<a href="#">Go to buy something use to decorate party!</a>
-												</div>
-												<div class="col-xs-5 center-task-li">
-													<small>start&nbsp;</small>
-													<mark>2016-11-01</mark>
-													<small>end&nbsp;</small>
-													<mark>206-12-01</mark>
-													&nbsp;&nbsp;&nbsp;
-													<small style="color: #BFBFBF;">you have 30 day to do</small>
-												</div>
-												<div class="col-xs-2 center-task-li">
-													in <a href="#">LongMaoShe</a>
-												</div>
-												<div class="col-xs-1">
-													<button class="btn btn-success center-task-btn">finish</button>
-												</div>
-											</div>
-											<div class="row center-task">
-												<div class="col-xs-4 center-task-li">
-													<a><i class="fa fa-link" aria-hidden="true"></i></a>&nbsp;<a href="#">Go to buy something use to decorate party!</a>
-												</div>
-												<div class="col-xs-5 center-task-li">
-													<small>start&nbsp;</small>
-													<mark>2016-11-01</mark>
-													<small>end&nbsp;</small>
-													<mark>206-12-01</mark>
-													&nbsp;&nbsp;&nbsp;
-													<small style="color: #BFBFBF;">you have 30 day to do</small>
-												</div>
-												<div class="col-xs-2 center-task-li">
-													in <a href="#">LongMaoShe</a>
-												</div>
-												<div class="col-xs-1">
-													<button class="btn btn-success center-task-btn">finish</button>
-												</div>
+											</c:forEach>
 											</div>
 										</div>
 									</div>

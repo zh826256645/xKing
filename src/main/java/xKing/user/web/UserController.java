@@ -136,6 +136,7 @@ public class UserController {
 			model.addAttribute("branches", branchService.getBranchByUserId(
 					currentUser, new PageRequest(0, 2)));
 			model.addAttribute("firendNum", userService.getFriendNum(currentUser));
+			model.addAttribute("tasks", projectService.getUserTasks(currentUser, null, new PageRequest(0, 3)));
 			model.addAttribute("tab", "profile");
 			return "/user/profile";
 			

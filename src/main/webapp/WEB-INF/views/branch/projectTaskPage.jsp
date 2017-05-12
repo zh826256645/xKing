@@ -29,7 +29,7 @@
 				<!-- Right -->
 
 			<!-- Center -->
-				<div class="col-xs-8 col-xs-offset-2">
+				<div class="col-xs-7 col-xs-offset-2">
 					<div class="center-branche-panel">
 						<%@ include file="../message.jsp" %>
 						<label>任务页面</label>
@@ -209,6 +209,53 @@
 								</div>
 							</div>
 						<br/>
+					</div>
+				</div>
+				<div class="col-xs-3">
+					<div class="center-branche-panel">
+					<label>历史记录</label>
+							<div class="panel-body left-panel-history">
+							<c:forEach items="${ histories }" var="history">
+								<c:if test="${ history.type == 'Task' }">
+								<p class="left-panel-history-li">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<a href="#" class="history-source">${ history.initiateMember.memberName }</a>
+									<font class="history-event">${ history.action }</font>
+									<a href=""><i class="fa fa-link" aria-hidden="true"></i>${ history.task.title }</a>
+								</p>
+								</c:if>
+								<c:if test="${ history.type == 'SubTask' }">
+								<p class="left-panel-history-li">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<a href="#" class="history-source">${ history.initiateMember.memberName }</a>
+									<font class="history-event">${ history.action }</font>
+								</p>
+								</c:if>
+								<c:if test="${ history.type == 'Problem' }">
+								<p class="left-panel-history-li">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<a href="#" class="history-source">${ history.initiateMember.memberName }</a>
+									<font class="history-event">${ history.action }</font>
+								</p>
+								</c:if>
+								<c:if test="${ history.type == 'TaskState' }">
+								<p class="left-panel-history-li">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<a href="#" class="history-source">${ history.initiateMember.memberName }</a>
+									<font class="history-event">${ history.action }</font>
+									<font class="history-event"><c:choose>
+										<c:when test="${ history.actionMessage == 'New' }"><span style="color: red;">新建</span></c:when>
+										<c:when test="${ history.actionMessage == 'Take' }"><span style="color: blue;">已接受</span></c:when>
+										<c:when test="${ history.actionMessage == 'Doding' }"><span style="color: green;">进行中</span></c:when>
+										<c:when test="${ history.actionMessage == 'FrontendFinish' }"><span style="color: purple;"> 前端完成</span></c:when>
+										<c:when test="${ history.actionMessage == 'RearendFinish' }"><span style="color: purple;">后端完成</span></c:when>
+										<c:when test="${ history.actionMessage == 'Finish' }"><span style="color: orange; ;">完成</span></c:when>
+										<c:when test="${ history.actionMessage == 'Refuse' }"><span style="color: red;">拒绝</span></c:when>
+										</c:choose></font>
+								</p>
+								</c:if>
+							</c:forEach>
+							</div>
 					</div>
 				</div>
 			</div>

@@ -53,7 +53,13 @@
 						<c:forEach items="${ page.content }" var="task">
 						<div class="row center-tasks-li">
 							<div class="col-xs-8 hide-p">
-								<a><i class="fa fa-link" aria-hidden="true"></i></a>&nbsp;<a href="#">${ task.title }</a>&nbsp;&nbsp;&nbsp;等级: <small><c:choose>
+								<a><i class="fa fa-link" aria-hidden="true"></i></a>&nbsp;<a href="<c:url value="/branch/${ task.project.branch.branchName }/project/${ task.project.projectName }/task/${  task.id }"/>">${ task.title }</a>&nbsp;&nbsp;&nbsp;类型: <small><c:choose>
+										<c:when test="${ task.type == 'Task' }">任务</c:when>
+										<c:when test="${ task.type == 'Test' }">测试</c:when>
+										<c:when test="${ task.type == 'Bug' }">漏洞</c:when>
+										<c:when test="${ task.type == 'Debugging' }">调试</c:when>
+										<c:when test="${ task.type == 'Features' }">功能</c:when>
+										</c:choose></small>&nbsp;&nbsp;&nbsp;等级: <small><c:choose>
 										<c:when test="${ task.taskLevel == 'Common' }"><span style="color: blue;">普通</span></c:when>
 										<c:when test="${ task.taskLevel == 'Preference' }"><span style="color: green;">优先</span></c:when>
 										<c:when test="${ task.taskLevel == 'Emergency' }"><span style="color: red;">紧急</span></c:when>
@@ -68,12 +74,12 @@
 										</c:choose></small>
 								<p class="hide-p">${ task.content }</p>
 								<div class="center-tasks-li-message">
-									<p><font>所属组织:</font><a href="#">${ task.project.branch.branchName }</a> <font>发布人:</font><a href="#">${ task.publishMember.memberName }</a><font>开始时间:</font><mark>${ task.getFormatStartTime() }</mark><font>结束时间:</font><mark>${ task.getFormatEndTime() }</mark></p>
+									<p><font>所属组织:</font><a href="#">${ task.project.branch.branchName }</a> <font>所属项目:</font><a href="#">${ task.project.projectName }</a> <font>发布人:</font><a href="#">${ task.publishMember.memberName }</a><font>开始时间:</font><mark>${ task.getFormatStartTime() }</mark><font>结束时间:</font><mark>${ task.getFormatEndTime() }</mark></p>
 								</div>
 							</div>
 							<div class="col-xs-2 col-xs-offset-2">
-								<button class="btn btn-success">Finish</button>
-								<button class="btn more-message" >More</button>
+								<a href="<c:url value="/branch/${ task.project.branch.branchName }/project/${ task.project.projectName }/task/${  task.id }"/>"><button class="btn btn-success">查看</button></a>
+								<button class="btn more-message" >更多信息</button>
 							</div>
 						</div>
 						</c:forEach>
