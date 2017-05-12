@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import xKing.branch.domain.BranchMember;
+import xKing.user.domain.User;
 import xKing.utils.Utils;
 
 /**
@@ -72,6 +73,12 @@ public class Task {
 	@JoinTable(name="project_take_members", joinColumns=@JoinColumn(name="task_id"),
 			inverseJoinColumns=@JoinColumn(name="branch_member_id"))
 	private List<BranchMember> takeMembers = new ArrayList<BranchMember>();
+	
+	// 指定任务接受成员
+	@ManyToMany()
+	@JoinTable(name="project_take_users", joinColumns=@JoinColumn(name="task_id"),
+			inverseJoinColumns=@JoinColumn(name="user_id"))
+	private List<User> users = new ArrayList<User>();
 	
 	// 发布时间
 	private long publishTime;
@@ -214,4 +221,12 @@ public class Task {
 	public String getFormatEndTime() {
 		return Utils.getFormatData(this.endTime);
 	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+	
 }

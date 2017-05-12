@@ -87,27 +87,28 @@
 								<div class="col-xs-12">
 									<p style="font-size: 20px;font-weight: 600;">主任务</p>
 									<br/>
-									<form>
 										<div class="row">
+										<sf:form action="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task/${ currentTask.id }/state" method="post">
 											<div class="col-xs-3">
 												<div class="input-group">
 													<div class="input-group-addon">任务状态</div>
-													<select class="form-control">
-														<option <c:if test="${ currentTask.state == 'New' }">selected="selected"</c:if>>新建</option>
-														<option <c:if test="${ currentTask.state == 'Take' }">selected="selected"</c:if>>接受</optiton>
-														<option <c:if test="${ currentTask.state == 'Doding' }">selected="selected"</c:if>>进行中</option>
-														<option <c:if test="${ currentTask.state == 'FrontendFinish' }">selected="selected"</c:if>>前段完成</option>
-														<option <c:if test="${ currentTask.state == 'RearendFinish' }">selected="selected"</c:if>>后端完成</option>
-														<option <c:if test="${ currentTask.state == 'Finish' }">selected="selected"</c:if>>完成</option>
-														<option <c:if test="${ currentTask.state == 'Refuse' }">selected="selected"</c:if>>拒绝</option>
+													<select class="form-control" name="state">
+														<option <c:if test="${ currentTask.state == 'New' }">selected="selected"</c:if> value="New">新建</option>
+														<option <c:if test="${ currentTask.state == 'Take' }">selected="selected"</c:if> value="Take">接受</option>
+														<option <c:if test="${ currentTask.state == 'Doding' }">selected="selected"</c:if> value="Doding">进行中</option>
+														<option <c:if test="${ currentTask.state == 'FrontendFinish' }">selected="selected"</c:if> value="FrontendFinish">前端完成</option>
+														<option <c:if test="${ currentTask.state == 'RearendFinish' }">selected="selected"</c:if> value="RearendFinish">后端完成</option>
+														<option <c:if test="${ currentTask.state == 'Finish' }">selected="selected"</c:if> value="Finish">完成</option>
+														<option <c:if test="${ currentTask.state == 'Refuse' }">selected="selected"</c:if> value="Refuse">拒绝</option>
 													</select>
+													
 												</div>
 											</div>
 											<div class="col-xs-2">
 												<input type="submit" class="btn btn-info" value="修改" />
 											</div>
+											</sf:form>
 										</div>
-									</form>
 									<br/>
 									<textarea style="display: none;" id="branch-message">${ currentTask.content }</textarea>
 									<div id="preview" style="border: 2px solid #F2F2F2;background-color: #E1EDF7;padding-left: 10px;padding-top:10px; "></div>
@@ -117,27 +118,28 @@
 								<div class="col-xs-12" style="margin-left: 30px!important;border-left: 5px solid #CCCCCC;">
 									<p style="font-size: 20px;font-weight: 600;">子任务</p>
 									<br/>
-									<form>
 										<div class="row">
+										<sf:form action="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task/${ currentTask.id }/state" method="post">
+											<input type="hidden" value="${ task.id }" name="subTaskId">
 											<div class="col-xs-3">
 												<div class="input-group">
 													<div class="input-group-addon">任务状态</div>
-													<select class="form-control">
-														<option <c:if test="${ task.state == 'New' }">selected="selected"</c:if>>新建</option>
-														<option <c:if test="${ task.state == 'Take' }">selected="selected"</c:if>>接受</optiton>
-														<option <c:if test="${ task.state == 'Doding' }">selected="selected"</c:if>>进行中</option>
-														<option <c:if test="${ task.state == 'FrontendFinish' }">selected="selected"</c:if>>前段完成</option>
-														<option <c:if test="${ task.state == 'RearendFinish' }">selected="selected"</c:if>>后端完成</option>
-														<option <c:if test="${ task.state == 'Finish' }">selected="selected"</c:if>>完成</option>
-														<option <c:if test="${ task.state == 'Refuse' }">selected="selected"</c:if>>拒绝</option>
+													<select class="form-control" name="state">
+														<option <c:if test="${ task.state == 'New' }">selected="selected"</c:if> value="New">新建</option>
+														<option <c:if test="${ task.state == 'Take' }">selected="selected"</c:if> value="Take">接受</option>
+														<option <c:if test="${ task.state == 'Doding' }">selected="selected"</c:if> value="Doding">进行中</option>
+														<option <c:if test="${ task.state == 'FrontendFinish' }">selected="selected"</c:if> value="FrontendFinish">前端完成</option>
+														<option <c:if test="${ task.state == 'RearendFinish' }">selected="selected"</c:if> value="RearendFinish">后端完成</option>
+														<option <c:if test="${ task.state == 'Finish' }">selected="selected"</c:if> value="Finish">完成</option>
+														<option <c:if test="${ task.state == 'Refuse' }">selected="selected"</c:if> value="Refuse">拒绝</option>
 													</select>
 												</div>
 											</div>
 											<div class="col-xs-2">
 												<input type="submit" class="btn btn-info" value="修改" />
 											</div>
+											</sf:form>
 										</div>
-									</form>
 									<br/>
 									<textarea style="display: none;" id="branch-message${ num.index }">${ task.content }</textarea>
 									<div id="preview${ num.index }" style="border: 2px solid #F2F2F2;background-color: #FAF2CC;padding-left: 10px;"></div>
@@ -149,6 +151,63 @@
 							<a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task/${ currentTask.id }/subTask" />"><button class="btn btn-success" style="float: right;">添加子任务</button></a>
 							</div>
 						</div>
+						<br/>
+						<br/>
+						<div class="row" >
+								<div class="col-xs-9" style="border-top: 1px solid #EBEBEB;margin-left: 25px;">
+									<br />
+									<label>提问</label>
+									<sf:form action="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task/${ currentTask.id }/problem" method="Post">
+									<div class="row">
+										<div class="col-xs-1">
+											<img src="<c:url value='/picture/user/${username}'/>?pid=${userPicture}" class="img-circle heard-profile-picture" style="margin: 0px;">
+										</div>
+										<div class="col-xs-11">
+											<textarea class="form-control" rows="3" name="content"></textarea>
+										</div>
+									</div>
+									<br />
+									<div class="row">
+										<div class="col-xs-2 col-xs-offset-10">
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-info" value="提问" />
+										</div>
+									</div>
+									</sf:form>
+									<br />
+									<br />
+									<p style="font-size: 18px;font-weight: 600;">${ problemNum } 个问题</p>
+								</div>
+							</div>
+							<div class="row" >
+								<div class="col-xs-9" style="border-top: 1px solid #EBEBEB;margin-left: 25px;">
+									
+									<c:forEach items="${ problems }" var="problem" varStatus="idx">
+									<div class="row">
+										<br />
+										<div class="col-xs-1">
+											<img src="<c:url value='/picture/user/${ problem.member.user.username }'/>?pid=${ problem.member.user.picture }" class="img-circle heard-profile-picture" style="margin: 0px;">
+										</div>
+										<div class="col-xs-4">
+											${ problem.member.memberName } 
+											<br />
+											<small style="font-size: 14px;color: #888888;"> ${ idx.index + 1 } 楼 &nbsp;&nbsp;${ problem.getFormatTime() } &nbsp;&nbsp;&nbsp;&nbsp;状态: <c:choose>
+												<c:when test="${ problem.problemState == 'New' }"><span style="color: red;">未解决</span></c:when>
+												<c:when test="${ problem.problemState == 'Solve' }"><span style="color: red;">已解决</span></c:when>
+											</c:choose></small>
+										</div>
+									</div>
+									<br />
+									<div class="row" style="border-bottom: 1px solid #EBEBEB;">
+										<div class="col-xs-11">
+											<p style="font-size: 16px;font-weight: 500;">${ problem.content }</p>
+										</div>
+										<br />
+									</div>
+									</c:forEach>
+									<br/>
+									<br/>
+								</div>
+							</div>
 						<br/>
 					</div>
 				</div>

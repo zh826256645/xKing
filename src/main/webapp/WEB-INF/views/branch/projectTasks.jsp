@@ -50,11 +50,18 @@
 										<small>状态：<c:choose>
 										<c:when test="${ task.state == 'New' }"><span style="color: red;">新建</span></c:when>
 										<c:when test="${ task.state == 'Take' }"><span style="color: blue;">已接受</span></c:when>
-										<c:when test="${ task.state == 'Doding' }">进行中</c:when>
-										<c:when test="${ task.state == 'FrontendFinish' }">前段完成</c:when>
-										<c:when test="${ task.state == 'RearendFinish' }">后端完成</c:when>
-										<c:when test="${ task.state == 'Finish' }">完成</c:when>
-										<c:when test="${ task.state == 'Refuse' }">拒绝</c:when>
+										<c:when test="${ task.state == 'Doding' }"><span style="color: green;">进行中</span></c:when>
+										<c:when test="${ task.state == 'FrontendFinish' }"><span style="color: purple;"> 前端完成</span></c:when>
+										<c:when test="${ task.state == 'RearendFinish' }"><span style="color: purple;">后端完成</span></c:when>
+										<c:when test="${ task.state == 'Finish' }"><span style="color: orange; ;">完成</span></c:when>
+										<c:when test="${ task.state == 'Refuse' }"><span style="color: red;">拒绝</span></c:when>
+										</c:choose></small>
+									</div>
+									<div class="col-xs-2" style="padding-top: 5px">
+										<small>等级：<c:choose>
+										<c:when test="${ task.taskLevel == 'Common' }"><span style="color: blue;">普通</span></c:when>
+										<c:when test="${ task.taskLevel == 'Preference' }"><span style="color: green;">优先</span></c:when>
+										<c:when test="${ task.taskLevel == 'Emergency' }"><span style="color: red;">紧急</span></c:when>
 										</c:choose></small>
 									</div>
 								</div>
@@ -71,7 +78,7 @@
 								</div>
 							</div>
 							<div class="col-xs-2 col-xs-offset-2">
-								<button class="btn btn-success">查看</button>
+								<a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task/${ task.id }"/>"><button class="btn btn-success">查看</button></a>
 							</div>
 						</div>
 						</c:forEach>

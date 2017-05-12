@@ -27,6 +27,7 @@ import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
 import xKing.project.domain.Project;
+import xKing.project.domain.State;
 import xKing.project.domain.Task;
 import xKing.project.service.ProjectService;
 import xKing.user.domain.User;
@@ -176,6 +177,7 @@ public class ProjectController {
 		}
 	}
 	
+	// 创建任务的页面
 	@RequestMapping(path="/{projectName}/task/new", method=RequestMethod.GET)
 	public String createProjectTaskPage(@PathVariable(name="branchName") String branchName,
 			@PathVariable(name="projectName") String projectName,
@@ -203,6 +205,7 @@ public class ProjectController {
 		}
 	}
 	
+	// 创建新任务
 	@RequestMapping(path="/{projectName}/task/new", method=RequestMethod.POST)
 	public String createProjectTask(@PathVariable(name="branchName") String branchName,
 			@PathVariable(name="projectName") String projectName,
@@ -258,6 +261,7 @@ public class ProjectController {
 		}
 	}
 	
+	// 查看任务详情
 	@RequestMapping(path="/{projectName}/task/{taskId}", method=RequestMethod.GET)
 	public String getTask(@PathVariable(name="branchName") String branchName,
 			@PathVariable(name="projectName") String projectName,
@@ -286,6 +290,8 @@ public class ProjectController {
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("currentProject", currentProject);
+			model.addAttribute("problemNum", projectService.getTaskProblemNum(currentTask));
+			model.addAttribute("problems", projectService.getTaskProblems(currentTask));
 			return "/branch/projectTaskPage";
 		}catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());
@@ -293,6 +299,7 @@ public class ProjectController {
 		}
 	}
 	
+	// 创建子任务的页面
 	@RequestMapping(path="/{projectName}/task/{taskId}/subTask", method=RequestMethod.GET)
 	public String addSubTaskPage(@PathVariable(name="branchName") String branchName,
 			@PathVariable(name="projectName") String projectName,
@@ -328,6 +335,7 @@ public class ProjectController {
 		}
 	}
 	
+	// 创建子任务
 	@RequestMapping(path="/{projectName}/task/{taskId}/subTask", method=RequestMethod.POST)
 	public String addSubTask(@PathVariable(name="branchName") String branchName,
 			@PathVariable(name="projectName") String projectName,
@@ -373,4 +381,72 @@ public class ProjectController {
 		}
 	}
 	
+	@RequestMapping(path="/{projectName}/task/{taskId}/state", method=RequestMethod.POST)
+	public String changeTaskState(@PathVariable(name="branchName") String branchName,
+			@PathVariable(name="projectName") String projectName,
+			@PathVariable(name="taskId") long taskId,
+			@RequestParam(name="subTaskId", required=false, defaultValue="0") long subTaskId,
+			@RequestParam(name="state", required=false, defaultValue="New") State state,
+			Principal principal, Model model, RedirectAttributes reModel) throws UnsupportedEncodingException {
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			Project currentProject = projectService.getProject(currentBranch, projectName);
+			Task currentTask = projectService.getTaskByProject(currentProject, taskId);
+			if(currentTask == null) {
+				reModel.addFlashAttribute("error", "没有这个任务");
+				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task";
+			}
+			
+			if(currentTask.getPublishMember().getId() != branchMember.getId() || projectService.getTaskByTaskMember(currentTask, branchMember) == null){
+				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
+			}
+			
+			projectService.changeTaskState(currentTask, state, subTaskId);
+			reModel.addFlashAttribute("message", "任务状态修改成功");
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task/" + taskId;
+		}catch (FaultyOperationException e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task/" + taskId;
+		}catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+		
+		@RequestMapping(path="/{projectName}/task/{taskId}/problem", method=RequestMethod.POST)
+		public String publishProblem(@PathVariable(name="branchName") String branchName,
+				@PathVariable(name="projectName") String projectName,
+				@PathVariable(name="taskId") long taskId,
+				@RequestParam(name="content", required=false) String content,
+				Principal principal, Model model, RedirectAttributes reModel) throws UnsupportedEncodingException {
+			try{
+				Branch currentBranch = branchService.findBranchByBranchName(branchName);
+				User currentUser = userService.getUserByUsername(principal.getName());
+				BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+				
+				Project currentProject = projectService.getProject(currentBranch, projectName);
+				Task currentTask = projectService.getTaskByProject(currentProject, taskId);
+				if(currentTask == null) {
+					reModel.addFlashAttribute("error", "没有这个任务");
+					return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task";
+				}
+				
+				if(currentTask.getPublishMember().getId() != branchMember.getId() || projectService.getTaskByTaskMember(currentTask, branchMember) == null){
+					branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
+				}
+				
+				projectService.publishProblem(branchMember, currentTask, content);
+				reModel.addFlashAttribute("message", "问题发表成功");
+				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task/" + taskId;
+			}catch (FaultyOperationException e) {
+				reModel.addFlashAttribute("error", e.getMessage());
+				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task/" + taskId;
+			}catch (Exception e) {
+				reModel.addFlashAttribute("error", e.getMessage());
+				return "redirect:/user/me";
+			}
+	}
 }

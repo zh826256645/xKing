@@ -26,6 +26,7 @@ import xKing.branch.service.BranchService;
 import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
+import xKing.project.service.ProjectService;
 import xKing.user.domain.User;
 import xKing.user.exception.SameUsernameException;
 import xKing.user.exception.UserNotExistException;
@@ -50,6 +51,9 @@ public class UserController {
 	
 	@Autowired
 	private BranchMemberRequestService branchMemberRequestService;
+	
+	@Autowired
+	private ProjectService projectService;
 	
 	// 登录页面
 	@RequestMapping(method=RequestMethod.GET)
@@ -143,6 +147,7 @@ public class UserController {
 			return "/user/myBranches";
 			
 		case "tasks" :
+			model.addAttribute("page", projectService.getUserTasks(currentUser, null, pageable));
 			model.addAttribute("tab", "tasks");
 			return "/user/myTasks";
 			
