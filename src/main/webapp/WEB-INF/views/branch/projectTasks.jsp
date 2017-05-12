@@ -82,6 +82,11 @@
 							</div>
 						</div>
 						</c:forEach>
+						<c:if test="${ page.content == null || page.content.size() == 0 }">
+							<div class="empty">
+								还没有发布任务！
+							</div>
+						</c:if>
 					</div>
 				</div>
 			</div>

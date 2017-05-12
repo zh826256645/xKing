@@ -116,6 +116,11 @@
 												</div>
 											</div>
 											</c:forEach>
+											<c:if test="${tasks != null && tasks.content.size() == 0}">
+												<div style="font-size: 28px;font-weight: 600; color: #888888;padding-top: 44px;padding-left: 422px;padding-bottom: 63px">
+												还有没收到任务
+												</div>
+											</c:if>
 											</div>
 										</div>
 									</div>

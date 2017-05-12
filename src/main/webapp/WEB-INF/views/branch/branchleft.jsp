@@ -42,6 +42,9 @@
 			<p class="h3 hide-p">${ currentProject.projectName }</p>
 		</div>
 		<ul class="nav nav-sidebar">
+			<li id="overview" <c:if test="${ tab == 'projectIndex' }">class="project-active"</c:if>>
+				<a id="overview" href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }"/>" class="left-branch-ul-li">项目首页</a>
+			</li>
 			<li id="overview" <c:if test="${ tab == 'projectMember' }">class="project-active"</c:if>>
 				<a id="overview" href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/member?page=0&size=12"/>" class="left-branch-ul-li"><s:message code="branchLeft.projectMember"/></a>
 			</li>

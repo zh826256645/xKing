@@ -102,6 +102,7 @@ public class ProjectServiceImpl implements ProjectService {
 		return this_project;
 	}
 
+	// 创建任务
 	@Override
 	public Task createTask(Branch currentBranch, Project currentProject, BranchMember currentBranchMember, Task task,
 			String startTimeStr, String endTimeStr, long memberId) {
@@ -148,8 +149,8 @@ public class ProjectServiceImpl implements ProjectService {
 		task.setFtask(currentTask);
 		task.setPublishMember(currentMember);
 		task.setTaskLevel(currentTask.getTaskLevel());
-		task.setTakeMembers(currentTask.getTakeMembers());
-		task.setUsers(currentTask.getUsers());
+		task.getTakeMembers().addAll(currentTask.getTakeMembers());
+		task.getUsers().addAll(currentTask.getUsers());
 		return taskRepository.save(task);
 	}
 

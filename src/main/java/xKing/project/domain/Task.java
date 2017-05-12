@@ -75,7 +75,7 @@ public class Task {
 	private List<BranchMember> takeMembers = new ArrayList<BranchMember>();
 	
 	// 指定任务接受成员
-	@ManyToMany()
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="project_take_users", joinColumns=@JoinColumn(name="task_id"),
 			inverseJoinColumns=@JoinColumn(name="user_id"))
 	private List<User> users = new ArrayList<User>();

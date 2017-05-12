@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,6 +63,7 @@ public class ProjectController {
 	@Autowired
 	private HistoryService historyService;
 	
+	// 创建项目
 	@RequestMapping(path="", method={RequestMethod.GET, RequestMethod.POST})
 	public String branchProject(@PathVariable(name="branchName") String branchName,
 			@RequestParam(name="projectName", required=false) String projectName,
@@ -101,6 +103,34 @@ public class ProjectController {
 		}
 	}
 	
+	// 项目首页
+	@RequestMapping(path="/{projectName}", method=RequestMethod.GET)
+	public String projectIndex(@PathVariable(name="branchName") String branchName,
+			@PathVariable(name="projectName") String projectName,
+			Principal principal, Model model, RedirectAttributes reModel){
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			Project currentProject = projectService.getProject(currentBranch, projectName);
+			if(projectService.getProjectByMember(branchMember, currentProject) == null) {
+				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
+			}
+			
+			Page<Task> tasks = projectService.getTasksByProject(currentProject, new PageRequest(0, 5));
+				
+			model.addAttribute("tab", "projectIndex");
+			model.addAttribute("currentProject", currentProject);
+			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("tasks", tasks);
+			return "/branch/projectIndex";
+		}catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
+	}
+	
 	// 获取项目成员信息
 	@RequestMapping(path="/{projectName}/member", method=RequestMethod.GET)
 	public String getProjectMember(@PathVariable(name="branchName") String branchName,
@@ -111,9 +141,12 @@ public class ProjectController {
 			User currentUser = userService.getUserByUsername(principal.getName());
 			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
 			
-			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowTakeTask());
-			
 			Project currentProject = projectService.getProject(currentBranch, projectName);
+			
+			if(projectService.getProjectByMember(branchMember, currentProject) == null) {
+				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
+			}
+			
 			model.addAttribute("currentProject", currentProject);
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("currentUser", currentUser);
@@ -165,7 +198,7 @@ public class ProjectController {
 			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
 			
 			Project currentProject = projectService.getProject(currentBranch, projectName);
-			if(currentProject.getBranchMember().getId() != branchMember.getId()){
+			if(projectService.getProjectByMember(branchMember, currentProject) == null){
 				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
 			}
 			
@@ -416,7 +449,7 @@ public class ProjectController {
 				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task";
 			}
 			
-			if(currentTask.getPublishMember().getId() != branchMember.getId() || projectService.getTaskByTaskMember(currentTask, branchMember) == null){
+			if(currentTask.getPublishMember().getId() != branchMember.getId() && projectService.getTaskByTaskMember(currentTask, branchMember) == null){
 				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
 			}
 			
@@ -439,42 +472,42 @@ public class ProjectController {
 	}
 		
 	// 发表提问
-		@RequestMapping(path="/{projectName}/task/{taskId}/problem", method=RequestMethod.POST)
-		public String publishProblem(@PathVariable(name="branchName") String branchName,
-				@PathVariable(name="projectName") String projectName,
-				@PathVariable(name="taskId") long taskId,
-				@RequestParam(name="content", required=false) String content,
-				Principal principal, Model model, RedirectAttributes reModel) throws UnsupportedEncodingException {
-			try{
-				Branch currentBranch = branchService.findBranchByBranchName(branchName);
-				User currentUser = userService.getUserByUsername(principal.getName());
-				BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
-				
-				Project currentProject = projectService.getProject(currentBranch, projectName);
-				Task currentTask = projectService.getTaskByProject(currentProject, taskId);
-				if(currentTask == null) {
-					reModel.addFlashAttribute("error", "没有这个任务");
-					return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task";
-				}
-				
-				if(currentTask.getPublishMember().getId() != branchMember.getId() || projectService.getTaskByTaskMember(currentTask, branchMember) == null){
-					branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
-				}
-				
-				projectService.publishProblem(branchMember, currentTask, content);
-				
-				// 记录动作
-				BranchHistory history = new BranchHistory(currentBranch, branchMember, BranchHisotryType.Problem, currentProject, currentTask, "提出了新问题");
-				historyService.createBranchHisotry(history);
-				
-				reModel.addFlashAttribute("message", "问题发表成功");
-				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task/" + taskId;
-			}catch (FaultyOperationException e) {
-				reModel.addFlashAttribute("error", e.getMessage());
-				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task/" + taskId;
-			}catch (Exception e) {
-				reModel.addFlashAttribute("error", e.getMessage());
-				return "redirect:/user/me";
+	@RequestMapping(path="/{projectName}/task/{taskId}/problem", method=RequestMethod.POST)
+	public String publishProblem(@PathVariable(name="branchName") String branchName,
+			@PathVariable(name="projectName") String projectName,
+			@PathVariable(name="taskId") long taskId,
+			@RequestParam(name="content", required=false) String content,
+			Principal principal, Model model, RedirectAttributes reModel) throws UnsupportedEncodingException {
+		try{
+			Branch currentBranch = branchService.findBranchByBranchName(branchName);
+			User currentUser = userService.getUserByUsername(principal.getName());
+			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
+			
+			Project currentProject = projectService.getProject(currentBranch, projectName);
+			Task currentTask = projectService.getTaskByProject(currentProject, taskId);
+			if(currentTask == null) {
+				reModel.addFlashAttribute("error", "没有这个任务");
+				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task";
 			}
+			
+			if(currentTask.getPublishMember().getId() != branchMember.getId() && projectService.getTaskByTaskMember(currentTask, branchMember) == null){
+				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
+			}
+			
+			projectService.publishProblem(branchMember, currentTask, content);
+			
+			// 记录动作
+			BranchHistory history = new BranchHistory(currentBranch, branchMember, BranchHisotryType.Problem, currentProject, currentTask, "提出了新问题");
+			historyService.createBranchHisotry(history);
+			
+			reModel.addFlashAttribute("message", "问题发表成功");
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task/" + taskId;
+		}catch (FaultyOperationException e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/task/" + taskId;
+		}catch (Exception e) {
+			reModel.addFlashAttribute("error", e.getMessage());
+			return "redirect:/user/me";
+		}
 	}
 }

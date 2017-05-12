@@ -35,7 +35,7 @@
 						<c:forEach items="${ page.content }" var="project">
 						<div class="row project-li">
 							<div class="col-xs-3">
-								<p class="hide-p project-name"><a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ project.projectName }/member"/>">${ project.projectName }</a></p>
+								<p class="hide-p project-name"><a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ project.projectName }"/>">${ project.projectName }</a></p>
 							</div>
 							<div class="col-xs-5">
 								<div class="row">
