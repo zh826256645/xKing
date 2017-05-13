@@ -53,7 +53,7 @@
 							    	<c:forEach items="${ projects.content }" var="project">
 							    	<div class="row" style="padding-top: 5px">
 										<div class="col-xs-3">
-											 <p class="hide-p" style="font-size: 18px;padding-top: 8px">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-pie-chart" aria-hidden="true" style="color:#555555;">&nbsp;&nbsp;&nbsp;</i><a  href="<c:url value="/branch/${ currentBranch.branchName }/project/${ project.projectName }/member"/>">${ project.projectName }</a></p>
+											 <p class="hide-p" style="font-size: 18px;padding-top: 8px">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-pie-chart" aria-hidden="true" style="color:#555555;">&nbsp;&nbsp;&nbsp;</i><a  href="<c:url value="/branch/${ currentBranch.branchName }/project/${ project.projectName }"/>">${ project.projectName }</a></p>
 										</div>
 										<div class="col-xs-5">
 											<div class="row">
@@ -71,7 +71,7 @@
 											<i class="fa fa-calendar" aria-hidden="true"></i><font> ${ project.getFormatTime() }</font>
 										</div>
 										<div class="col-xs-1" style="padding-top: 6px">
-											<a  href="<c:url value="/branch/${ currentBranch.branchName }/project/${ project.projectName }/member"/>"><button class="btn btn-info">进入</button></a>
+											<a  href="<c:url value="/branch/${ currentBranch.branchName }/project/${ project.projectName }"/>"><button class="btn btn-info">进入</button></a>
 										</div>
 							    	</div>	
 							    	</c:forEach>
@@ -82,86 +82,33 @@
 						    </div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="center-branche-panel" style="margin-top: 0px;">
-							<div class="panel panel-default">
-							    <div class="panel-body panel-nopadding">
-							    	<label class="label label-color">讨论</label>
-							    	<form>
-							    	<div class="row">
-							    		<div class="col-xs-9">
-							    			<input class="form-control" placeholder="Say something today!" />
-							    		</div>
-							    		<div class="col-xs-2">
-							    			<input type="submit" class="submit" style="height: 34px;" value="publish"/>
-							    		</div>
-							    	</div>
-							    	</form>
-							    	<br/>
-							    	<div style="position:relative; height:250px; overflow-x:auto">
-								    	<div class="row forum-li" >
-								    		<div class="col-xs-1 text-center" >
-								    			<img class="img-circle heard-profile-picture" src="img/profile.jpg" /><br />
-								    		</div>
-								    		<div class="col-xs-9">
-								    			<a href="#">ZhongHao</a> &nbsp;<small>2016-11-26</small>
-								    			<div style="float: right; color: #888888;">
-								    				<i class="fa fa-comment" aria-hidden="true"></i><i class="fa fa-eye" aria-hidden="true"></i><i class="fa fa-thumbs-up" aria-hidden="true"></i> 20
-								    			</div>
-								    			<p class="h4 hide-p">I'm very happy today!!!Plase give some power!!</p>
-								    		</div>
-								    	</div>
-								    	<div class="row forum-li" >
-								    		<div class="col-xs-1 text-center" >
-								    			<img class="img-circle heard-profile-picture" src="img/profile.jpg" /><br />
-								    		</div>
-								    		<div class="col-xs-9">
-								    			<a href="#">ZhongHao</a> &nbsp;<small>2016-11-26</small>
-								    			<div style="float: right; color: #888888;">
-								    				<i class="fa fa-comment" aria-hidden="true"></i><i class="fa fa-eye" aria-hidden="true"></i><i class="fa fa-thumbs-up" aria-hidden="true"></i> 20
-								    			</div>
-								    			<p class="h4 hide-p">I'm very happy today!!!Plase give some power!!</p>
-								    		</div>
-								    	</div>
-								    	<div class="row forum-li" >
-								    		<div class="col-xs-1 text-center" >
-								    			<img class="img-circle heard-profile-picture" src="img/profile.jpg" /><br />
-								    		</div>
-								    		<div class="col-xs-9">
-								    			<a href="#">ZhongHao</a> &nbsp;<small>2016-11-26</small>
-								    			<div style="float: right; color: #888888;">
-								    				<i class="fa fa-comment" aria-hidden="true"></i><i class="fa fa-eye" aria-hidden="true"></i><i class="fa fa-thumbs-up" aria-hidden="true"></i> 20
-								    			</div>
-								    			<p class="h4 hide-p">I'm very happy today!!!Plase give some power!!</p>
-								    		</div>
-								    	</div>
-								    	<div class="row forum-li" >
-								    		<div class="col-xs-1 text-center" >
-								    			<img class="img-circle heard-profile-picture" src="img/profile.jpg" /><br />
-								    		</div>
-								    		<div class="col-xs-9">
-								    			<a href="#">ZhongHao</a> &nbsp;<small>2016-11-26</small>
-								    			<div style="float: right; color: #888888;">
-								    				<i class="fa fa-comment" aria-hidden="true"></i><i class="fa fa-eye" aria-hidden="true"></i><i class="fa fa-thumbs-up" aria-hidden="true"></i> 20
-								    			</div>
-								    			<p class="h4 hide-p">I'm very happy today!!!Plase give some power!!</p>
-								    		</div>
-								    	</div>
-								    	<div class="row forum-li" >
-								    		<div class="col-xs-1 text-center" >
-								    			<img class="img-circle heard-profile-picture" src="img/profile.jpg" /><br />
-								    		</div>
-								    		<div class="col-xs-9">
-								    			<a href="#">ZhongHao</a> &nbsp;<small>2016-11-26</small>
-								    			<div style="float: right; color: #888888;">
-								    				<i class="fa fa-comment" aria-hidden="true"></i><i class="fa fa-eye" aria-hidden="true"></i><i class="fa fa-thumbs-up" aria-hidden="true"></i> 20
-								    			</div>
-								    			<p class="h4 hide-p">I'm very happy today!!!Plase give some power!!</p>
-								    		</div>
-								    	</div>
-							    	</div>
-						        </div>
-						    </div>
+					<div class="row" style="padding-left: 10px">
+						<div class="panel panel-default col-xs-12 left-panel">
+							<div class="panel-heading left-panel-label">
+								<h3 class="panel-title">
+									<s:message code="profile.history"/>
+								</h3>
+							</div>
+							<div class="panel-body left-panel-history">
+								<c:forEach items="${ histories.content }" var="history">
+										<c:if test="${ history.type == 'CreateProject' }">
+										<p class="left-panel-history-li">
+											<i class="fa fa-star" aria-hidden="true"></i>
+											<a href="#" class="history-source">${ history.initiateMember.memberName }</a>
+											<font class="history-event">${ history.action }</font>
+											<a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ history.project.projectName }"/>"><i class="fa fa-link" aria-hidden="true"></i>${ history.project.projectName }</a>
+										</p>
+										</c:if>
+										<c:if test="${ history.type == 'Message' }">
+										<p class="left-panel-history-li">
+											<i class="fa fa-star" aria-hidden="true"></i>
+											<a href="#" class="history-source">${ history.initiateMember.memberName }</a>
+											<font class="history-event">${ history.action }</font>
+											<a href="<c:url value="/branch/${ currentBranch.branchName }/message/${  history.branchMessage.id }"/>"><i class="fa fa-link" aria-hidden="true"></i>${ history.branchMessage.title }</a>
+										</p>
+										</c:if>
+									</c:forEach>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -14,13 +14,13 @@
 			<%@ include file="../header.jsp" %>
 			<div class="row">
 				<%@ include file="branchleft.jsp" %>
-				<div class="col-xs-8 col-xs-offset-2">
+				<div class="col-xs-7 col-xs-offset-2">
 					<div class="center-myBranches center-myTasks">
 						<%@ include file="../message.jsp" %>
 						<label>项目首页</label>
 						<hr />
 						<div class="row">
-							<div class="col-xs-5">
+							<div class="col-xs-6">
 								<div class="panel panel-default" style="padding-top: 10px;background-color: #F2F2F2;">
 									<div class="row">
 										<div class="col-xs-12" style="margin-bottom: 10px;">
@@ -33,7 +33,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-xs-4">
+							<div class="col-xs-5">
 								<div class="panel panel-default" style="padding-top: 20px; height: 158px;background-color: #E1EDF7;">
 									<div class="row">
 										<div class="col-xs-3" style="font-size: 16px;color: #D58512;padding-left: 30px;padding-right: 0px;padding-top: 18px;">管理员:</div>
@@ -47,7 +47,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-xs-9">
+							<div class="col-xs-11">
 								<div class="panel panel-default">
 									<div class="panel-heading" style="border-bottom: 0px; background-color: #f9fafc;">
 										<h3 class="panel-title" style="font-weight: bold;color: black;">
@@ -97,6 +97,31 @@
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="col-xs-3">
+					<div class="center-branche-panel">
+					<label>历史记录</label>
+							<div class="panel-body left-panel-history">
+							<c:forEach items="${ histories }" var="history">
+								<c:if test="${ history.type == 'Task' }">
+								<p class="left-panel-history-li">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<a href="#" class="history-source">${ history.initiateMember.memberName }</a>
+									<font class="history-event">${ history.action }</font>
+									<a href="<c:url value="/branch/${ history.project.branch.branchName }/project/${ history.project.projectName }/task/${ history.task.id }"/>"><i class="fa fa-link" aria-hidden="true"></i>${ history.task.title }</a>
+								</p>
+								</c:if>
+								<c:if test="${ history.type == 'AddProjectMember' }">
+								<p class="left-panel-history-li">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<a href="#" class="history-source">${ history.initiateMember.memberName }</a>
+									<font class="history-event">${ history.action }</font>
+									<a href="#" class="history-source">${ history.acceptedMember.memberName }</a>
+								</p>
+								</c:if>
+							</c:forEach>
+							</div>
 					</div>
 				</div>
 			</div>

@@ -7,5 +7,7 @@ public enum BranchHisotryType {
 	Setting,
 	Problem,
 	SubTask,
-	TaskState
+	TaskState,
+	CreateProject,
+	AddProjectMember
 }

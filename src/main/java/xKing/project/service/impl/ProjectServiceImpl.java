@@ -57,7 +57,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project createProject(Branch currentBranch, BranchMember currentMember, String projectName) {
 		Project project = projectRepository.findByProjectNameAndBranch_id(projectName, currentBranch.getId());
-		if(projectName == null) {
+		if(projectName == null || projectName.trim().isEmpty()) {
 			throw new FaultyOperationException("项目名不能为空！");
 		}
 		if(project != null) {

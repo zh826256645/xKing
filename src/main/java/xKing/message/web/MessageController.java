@@ -26,6 +26,9 @@ import xKing.branch.service.BranchService;
 import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
+import xKing.history.domain.BranchHisotryType;
+import xKing.history.domain.BranchHistory;
+import xKing.history.service.HistoryService;
 import xKing.message.domain.BranchMessage;
 import xKing.message.domain.BranchMessageComment;
 import xKing.message.domain.MessageTag;
@@ -54,6 +57,9 @@ public class MessageController {
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private HistoryService historyService;
 	
 	// Branch Message 页面
 	@GetMapping(path="")
@@ -159,7 +165,11 @@ public class MessageController {
 			if(tagName != null && ! tagName.trim().isEmpty()) {
 				messageTag = messageService.getMessageTagByBranchAndTagName(currentBranch, tagName);
 			}
-			messageService.createMessage(currentBranch, branchMember, branchMessage, messageTag);
+			BranchMessage newBranchMessage = messageService.createMessage(currentBranch, branchMember, branchMessage, messageTag);
+			
+			BranchHistory history = new BranchHistory(currentBranch, branchMember, BranchHisotryType.Message, null, null,"发布了公告");
+			history.setBranchMessage(newBranchMessage);
+			historyService.createBranchHisotry(history);
 			
 			reModel.addFlashAttribute("message", "添加公告成功");
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/message";

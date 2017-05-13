@@ -32,6 +32,9 @@ import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchRoleSerivce;
 import xKing.branch.service.BranchService;
 import xKing.exception.FaultyOperationException;
+import xKing.history.domain.BranchHisotryType;
+import xKing.history.domain.BranchHistory;
+import xKing.history.service.HistoryService;
 import xKing.message.domain.BranchMessage;
 import xKing.message.service.MessageService;
 import xKing.project.domain.Project;
@@ -73,6 +76,9 @@ public class BranchController {
 	@Autowired
 	private ProjectService projectService;
 
+	@Autowired
+	private HistoryService historyService;
+	
 	// Branch 主页
 	@GetMapping(path="/{branchName}")
 	public String intoBranch(@PathVariable("branchName") String branchName,
@@ -90,10 +96,12 @@ public class BranchController {
 			Pageable pageable = new PageRequest(0, 5);
 			Page<BranchMessage> messages = messageService.getBranchMessages(currentBranch, pageable);
 			Page<Project> projects = projectService.getProjects(currentBranch, new PageRequest(0, 4)); 
+			Page<BranchHistory> histories = historyService.findbyBracnhAndTwoType(currentBranch, BranchHisotryType.CreateProject, BranchHisotryType.Message, new PageRequest(0, 10));
 			model.addAttribute("branchMessages", messages);
 			model.addAttribute("messageNum", messageService.getMessageNum(currentBranch));
 			model.addAttribute("projectNum", projectService.getProjectNum(currentBranch));
 			model.addAttribute("projects", projects);
+			model.addAttribute("histories", histories);
 			if(branchMember != null) {
 				model.addAttribute("currentBranchMember", branchMember);
 			} else {

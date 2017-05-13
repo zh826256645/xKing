@@ -223,4 +223,13 @@ public class BranchHistory {
 		this.type = type;
 	}
 	
+	public BranchHistory(Branch branch, BranchMember initiateMember,BranchMember acceptedMember, BranchHisotryType type,Project project,  String action) {
+		super();
+		this.branch = branch;
+		this.initiateMember = initiateMember;
+		this.project = project;
+		this.action = action;
+		this.acceptedMember = acceptedMember;
+		this.type = type;
+	}
 }

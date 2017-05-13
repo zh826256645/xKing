@@ -2,6 +2,7 @@ package xKing.project.web;
 
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -89,7 +90,10 @@ public class ProjectController {
 				// 判断用户是否有权限
 				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowCreateTask());
 				
-				projectService.createProject(currentBranch, branchMember, projectName);
+				Project newProject = projectService.createProject(currentBranch, branchMember, projectName);
+				BranchHistory history = new BranchHistory(currentBranch, branchMember, BranchHisotryType.CreateProject, newProject, null,"创建了新项目");
+				historyService.createBranchHisotry(history);
+				
 				reModel.addFlashAttribute("message", "项目 " + projectName + "创建成功！");
 				reModel.addFlashAttribute("tag", "project");
 				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project";		
@@ -119,10 +123,12 @@ public class ProjectController {
 			}
 			
 			Page<Task> tasks = projectService.getTasksByProject(currentProject, new PageRequest(0, 5));
+			List<BranchHistory> histories = historyService.findbyProjectAndTwoType(currentProject, BranchHisotryType.Task, BranchHisotryType.AddProjectMember);
 				
 			model.addAttribute("tab", "projectIndex");
 			model.addAttribute("currentProject", currentProject);
 			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("histories", histories);
 			model.addAttribute("tasks", tasks);
 			return "/branch/projectIndex";
 		}catch (Exception e) {
@@ -178,6 +184,10 @@ public class ProjectController {
 			
 			User user = userService.getUserByUsername(username);
 			projectService.addProjectMember(currentBranch, currentProject, user);
+			
+			BranchMember newProjectMember = branchMemberService.findByBranchidAndUserId(currentBranch, user);
+			BranchHistory history = new BranchHistory(currentBranch, branchMember, newProjectMember ,BranchHisotryType.AddProjectMember, currentProject,"添加了新成员");
+			historyService.createBranchHisotry(history);
 			
 			reModel.addFlashAttribute("message", "成员添加成功！");
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/member";
