@@ -107,7 +107,7 @@
 											<a href="<c:url value="/branch/${ currentBranch.branchName }/message/${  history.branchMessage.id }"/>"><i class="fa fa-link" aria-hidden="true"></i>${ history.branchMessage.title }</a>
 										</p>
 										</c:if>
-									</c:forEach>
+								</c:forEach>
 							</div>
 						</div>
 					</div>

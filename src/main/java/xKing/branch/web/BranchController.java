@@ -35,6 +35,8 @@ import xKing.exception.FaultyOperationException;
 import xKing.history.domain.BranchHisotryType;
 import xKing.history.domain.BranchHistory;
 import xKing.history.service.HistoryService;
+import xKing.mail.domain.Mail;
+import xKing.mail.service.MailService;
 import xKing.message.domain.BranchMessage;
 import xKing.message.service.MessageService;
 import xKing.project.domain.Project;
@@ -78,6 +80,7 @@ public class BranchController {
 
 	@Autowired
 	private HistoryService historyService;
+
 	
 	// Branch 主页
 	@GetMapping(path="/{branchName}")
@@ -209,6 +212,7 @@ public class BranchController {
 			} else {
 				reModel.addFlashAttribute("message", "该用户已经提交了申请，自动同意加入！");
 			}
+			
 			return "redirect:/branch/"+ UriUtils.encode(branchName, "utf-8") + "/member";
 		}catch (FaultyOperationException|UserNotExistException e) {
 			reModel.addFlashAttribute("error", e.getMessage());

@@ -16,6 +16,8 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import xKing.mail.domain.Mail;
 import xKing.mail.service.MailService;
+import xKing.user.domain.User;
+import xKing.utils.Utils;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -48,6 +50,7 @@ public class MailServiceImpl implements MailService {
 		mailSender.send(message);
 
 	}
+	
 	
 	// SimpleMailMessage 设置
 	protected SimpleMailMessage setting(String to, Mail mail) {
@@ -84,4 +87,31 @@ public class MailServiceImpl implements MailService {
 		mailVelocity.setText(text);
 		return mailVelocity;
 	}
+
+	// 发布通知给用户
+	@Override
+	public void sendMessageEmailToUserByVelocity(String to, Mail mail) {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper;
+		try {
+			helper = new MimeMessageHelper(message, true, "UTF-8");
+			Mail velocityMail = this.velocitySetting(mail, "messageEmailTemplate.vm");
+			helper = this.setting(helper, to, velocityMail);
+			mailSender.send(message);
+		} catch (Exception e) {
+			System.out.println("邮件发送错误，错误为：" + e.getMessage());
+		}
+	}
+
+	// 初始化通知邮件设置
+	@Override
+	public Mail initMessageMail(User user, String content) {
+		Mail mail = new Mail();
+		mail.setSubject("xKing 通知邮件");
+		mail.setUsername(user.getUsername());
+		mail.setText(content);
+		mail.setTime(Utils.getCurrentDate());
+		return mail;
+	}
+
 }

@@ -101,4 +101,10 @@ public class BranchMemberServiceImpl implements BranchMemberSerivce{
 	public BranchMember findByBranchAndMember(Branch branch, long member_id) {
 		return branchMemberRepository.findByBranch_idAndId(branch.getId(), member_id);
 	}
+
+	// 获取所有用户成员
+	@Override
+	public List<BranchMember> getBranchMembers(Branch branch) {
+		return branchMemberRepository.findByBranch_id(branch.getId());
+	}
 }

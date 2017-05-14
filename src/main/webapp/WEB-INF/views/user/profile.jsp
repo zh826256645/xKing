@@ -215,27 +215,29 @@
 								</h3>
 							</div>
 							<div class="panel-body left-panel-history">
+								<c:forEach items="${ branches }" var="branch">
 								<p class="left-panel-history-li">
-									<i class="fa fa-star" aria-hidden="true"></i>
-									<a href="#" class="history-source">LongMaoShe</a>
-									<font class="history-event">publish</font>
-									<font class="history-object">Task</font>
-									<a href="#"><i class="fa fa-link" aria-hidden="true"></i>Go to buy something use to decorate party!</a>
+									<a href="#" class="history-source" style="font-weight: 600">${ branch.branchName }</a>
 								</p>
-								<p class="left-panel-history-li">
-									<i class="fa fa-star" aria-hidden="true"></i>
-									<a href="#" class="history-source">LongMaoShe</a>
-									<font class="history-event">publish</font>
-									<font class="history-object">Task</font>
-									<a href="#"><i class="fa fa-link" aria-hidden="true"></i>Go to buy something use to decorate party!</a>
-								</p>
-								<p class="left-panel-history-li">
-									<i class="fa fa-star" aria-hidden="true"></i>
-									<a href="#" class="history-source">LongMaoShe</a>
-									<font class="history-event">publish</font>
-									<font class="history-object">Task</font>
-									<a href="#"><i class="fa fa-link" aria-hidden="true"></i>Go to buy something use to decorate party!</a>
-								</p>
+								<c:forEach items="${ branch.histories }" var="history">
+										<c:if test="${ history.type == 'CreateProject' }">
+										<p class="left-panel-history-li">
+											<i class="fa fa-star" aria-hidden="true"></i>
+											<a href="#" class="history-source">${ history.initiateMember.memberName }</a>
+											<font class="history-event">${ history.action }</font>
+											<a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ history.project.projectName }"/>"><i class="fa fa-link" aria-hidden="true"></i>${ history.project.projectName }</a>
+										</p>
+										</c:if>
+										<c:if test="${ history.type == 'Message' }">
+										<p class="left-panel-history-li">
+											<i class="fa fa-star" aria-hidden="true"></i>
+											<a href="#" class="history-source">${ history.initiateMember.memberName }</a>
+											<font class="history-event">${ history.action }</font>
+											<a href="<c:url value="/branch/${ currentBranch.branchName }/message/${  history.branchMessage.id }"/>"><i class="fa fa-link" aria-hidden="true"></i>${ history.branchMessage.title }</a>
+										</p>
+										</c:if>
+								</c:forEach>
+								</c:forEach>
 							</div>
 						</div>
 					</div>

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,11 @@ import xKing.exception.AbsentException;
 import xKing.exception.FaultyOperationException;
 import xKing.exception.PermissionDeniedException;
 import xKing.exception.SameNameException;
+import xKing.history.domain.BranchHisotryType;
+import xKing.history.domain.BranchHistory;
+import xKing.history.service.HistoryService;
+import xKing.mail.domain.Mail;
+import xKing.mail.service.MailService;
 import xKing.picture.service.PictureService;
 import xKing.user.domain.User;
 import xKing.user.service.UserService;
@@ -69,6 +75,12 @@ public class BranchSerivceImpl implements BranchService {
 	
 	@Autowired
 	private BranchMemberRequestService branchMemberRequestService;
+	
+	@Autowired
+	private MailService mailService;
+	
+	@Autowired
+	private HistoryService historyService;
 	
 	// 通过 BranId 查找 Branch
 	@Override
@@ -147,6 +159,8 @@ public class BranchSerivceImpl implements BranchService {
 		for (BranchMember branchMember : BranchMembers) {
 			Branch branch = branchMember.getBranch();
 			branchMemberService.getMemberNum(branch);
+			Page<BranchHistory> histories = historyService.findbyBracnhAndTwoType(branch, BranchHisotryType.CreateProject, BranchHisotryType.Member, new PageRequest(0, 3));
+			branch.setHistories(histories.getContent());
 			branches.add(branch);
 		} 
 		return branches;
@@ -413,6 +427,8 @@ public class BranchSerivceImpl implements BranchService {
 		if(joinRequest != null) {
 			branchMemberService.addBranchMember(inviteUser.getUsername(), inviteUser.getEmail(), currentBranch, currentBranch.getNewMemberRole(), inviteUser);
 			branchMemberRequestService.removeBranchMemberRequest(joinRequest);
+			Mail mail = mailService.initMessageMail(inviteUser, "你已经成功加入了" + currentBranch.getBranchName() + "组织！");
+			mailService.sendMessageEmailToUserByVelocity(inviteUser.getEmail(), mail);
 			return false;
 		}
 		BranchMemberRequest memberRequest = branchMemberRequestService.getByUserAndBranchAndState(inviteUser, currentBranch, 1);
@@ -421,6 +437,8 @@ public class BranchSerivceImpl implements BranchService {
 			throw new FaultyOperationException("请求已发出，请不要重复发出邀请！");
 		}
 		
+		Mail mail = mailService.initMessageMail(inviteUser, currentBranch.getBranchName() + "向你发出加入邀请！");
+		mailService.sendMessageEmailToUserByVelocity(inviteUser.getEmail(), mail);
 		branchMemberRequestService.addNewBranchMemberRequest(currentBranch, inviteUser, message, 1);
 		return true;
 	}
@@ -441,9 +459,17 @@ public class BranchSerivceImpl implements BranchService {
 		if(state == 1){
 			branchMemberService.addBranchMember(user.getUsername(), user.getEmail(), currentBranch, currentBranch.getNewMemberRole(), user);
 			branchMemberRequestService.removeBranchMemberRequest(memberRequest);
+			
+			Mail mail = mailService.initMessageMail(user, "你已经成功加入了" + currentBranch.getBranchName() + "组织！");
+			mailService.sendMessageEmailToUserByVelocity(user.getEmail(), mail);
+			
 			return true;
 		} else {
 			branchMemberRequestService.removeBranchMemberRequest(memberRequest);
+			
+			Mail mail = mailService.initMessageMail(user, currentBranch.getBranchName() + "组织拒绝了你的加入请求！");
+			mailService.sendMessageEmailToUserByVelocity(user.getEmail(), mail);
+			
 			return false;
 		}
 	}
@@ -469,8 +495,13 @@ public class BranchSerivceImpl implements BranchService {
 		if(currentUserMember.getBranchRole().getRoleLevel() >  branchRole.getRoleLevel()) {
 			throw new FaultyOperationException("你没有权限设置成员为比自己大的权限");
 		}
+		
 		member.setBranchRole(branchRole);
 		branchMemberService.update(member);
+		
+		Mail mail = mailService.initMessageMail(user, currentBranch.getBranchName() + "的成员" + currentUserMember.getMemberName() + "将你角色修改为" + branchRole.getRoleName());
+		mailService.sendMessageEmailToUserByVelocity(user.getEmail(), mail);
+		
 		return true;
 	}
 	

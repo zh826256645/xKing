@@ -23,8 +23,12 @@
 						<hr />
 						<div class="row center-myBranches-up">
 							<sf:form method="post" action="">
-								<div class="col-xs-4">
-									<input type="text"  class="form-control" placeholder="用户名" name="username"/>
+								<div class="col-xs-2">
+									<select class="form-control" name="username">
+										<c:forEach items="${ branchMembers }" var="member">
+										<option value="${ member.user.username }">${ member.memberName }</option>
+										</c:forEach>
+									</select>
 								</div>
 								<div class="col-xs-2">
 									<input type="submit" class="btn btn-default" value="邀请"/>

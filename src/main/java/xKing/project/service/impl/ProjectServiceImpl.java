@@ -14,6 +14,8 @@ import xKing.branch.service.BranchMemberSerivce;
 import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
+import xKing.mail.domain.Mail;
+import xKing.mail.service.MailService;
 import xKing.project.dao.ProblemRepository;
 import xKing.project.dao.ProjectRepository;
 import xKing.project.dao.TaskRepository;
@@ -41,6 +43,9 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired
 	private ProblemRepository problemRepository;
+	
+	@Autowired
+	private MailService mailService;
 
 	
 	// 获取组织的项目
@@ -86,7 +91,11 @@ public class ProjectServiceImpl implements ProjectService {
 			throw new FaultyOperationException("该成员已经是项目组成员了，请不要重复添加");
 		}
 		project.getProjectMember().add(branchMember);
-		return projectRepository.save(project);
+		Project thisProject = projectRepository.save(project);
+		
+		Mail mail = mailService.initMessageMail(user, "你已经加入了" + currentBranch.getBranchName() + "的" + project.getProjectName() + "项目！");
+		mailService.sendMessageEmailToUserByVelocity(user.getEmail(), mail);
+		return thisProject;
 	}
 
 	// 获取项目数
@@ -119,7 +128,12 @@ public class ProjectServiceImpl implements ProjectService {
 		task.getTakeMembers().add(member);
 		task.getUsers().add(member.getUser());
 		
-		return taskRepository.save(task);
+		Task this_task = taskRepository.save(task);
+		
+		Mail mail = mailService.initMessageMail(member.getUser(), currentBranchMember.getMemberName() + "给你在" + currentProject.getProjectName() + "发布了新任务！" );
+		mailService.sendMessageEmailToUserByVelocity(member.getUser().getEmail(), mail);
+		
+		return this_task;
 	}
 
 	// 获取项目的任务
@@ -151,7 +165,13 @@ public class ProjectServiceImpl implements ProjectService {
 		task.setTaskLevel(currentTask.getTaskLevel());
 		task.getTakeMembers().addAll(currentTask.getTakeMembers());
 		task.getUsers().addAll(currentTask.getUsers());
-		return taskRepository.save(task);
+		Task this_task = taskRepository.save(task);
+		
+		for(User user: currentTask.getUsers()){
+			Mail mail = mailService.initMessageMail(user, currentProject.getProjectName() + "项目的" + currentTask.getTitle() + "任务有了新的子任务！" );
+			mailService.sendMessageEmailToUserByVelocity(user.getEmail(), mail);
+		}
+		return this_task;
 	}
 
 	// 查看组织成员是否是任务指定成员
@@ -205,7 +225,11 @@ public class ProjectServiceImpl implements ProjectService {
 			throw new FaultyOperationException("不能将任务修改为新建状态！");
 		}
 		needChangeTask.setState(state);
-		return taskRepository.save(needChangeTask);
+		Task this_task = taskRepository.save(needChangeTask);
+		
+		Mail mail = mailService.initMessageMail(currentTask.getPublishMember().getUser(), currentTask.getTitle() + "任务的状态已被修改！" );
+		mailService.sendMessageEmailToUserByVelocity(currentTask.getPublishMember().getUser().getEmail(), mail);
+		return this_task;
 	}
 
 	// 发表问题
@@ -220,7 +244,11 @@ public class ProjectServiceImpl implements ProjectService {
 		problem.setProblemState(ProblemState.New);
 		problem.setTask(currentTask);
 		problem.setPublishTIme(System.currentTimeMillis());
-		return problemRepository.save(problem);
+		Problem this_problem = problemRepository.save(problem);
+		
+		Mail mail = mailService.initMessageMail(currentTask.getPublishMember().getUser(), currentMember.getMemberName() + "在任务" + currentTask.getTitle() + "中提出了新问题！");
+		mailService.sendMessageEmailToUserByVelocity(currentTask.getPublishMember().getUser().getEmail(), mail); 
+		return this_problem;
 	}
 
 	// 获取任务问题数量

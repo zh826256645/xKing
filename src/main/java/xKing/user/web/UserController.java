@@ -2,11 +2,13 @@ package xKing.user.web;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -20,12 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import xKing.branch.domain.Branch;
 import xKing.branch.service.BranchMemberRequestService;
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchService;
 import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
+import xKing.history.service.HistoryService;
 import xKing.project.service.ProjectService;
 import xKing.user.domain.User;
 import xKing.user.exception.SameUsernameException;
@@ -54,6 +58,9 @@ public class UserController {
 	
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private HistoryService historyService;
 	
 	// 登录页面
 	@RequestMapping(method=RequestMethod.GET)

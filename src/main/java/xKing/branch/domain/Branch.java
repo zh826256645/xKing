@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import xKing.history.domain.BranchHistory;
 import xKing.project.domain.Project;
 import xKing.user.domain.User;
 import xKing.utils.Utils;
@@ -67,6 +68,9 @@ public class Branch {
 	
 	@OneToMany(targetEntity=Project.class, mappedBy="branch")
 	private List<Project> projects = new ArrayList<Project>();
+	
+	@Transient
+	private List<BranchHistory> histories = new ArrayList<BranchHistory>();
 	
 	public long getId() {
 		return id;
@@ -213,4 +217,13 @@ public class Branch {
 	public String getFormatTime() {
 		return Utils.getFormatData(this.createTime);
 	}
+
+	public List<BranchHistory> getHistories() {
+		return histories;
+	}
+
+	public void setHistories(List<BranchHistory> histories) {
+		this.histories = histories;
+	}
+	
 }

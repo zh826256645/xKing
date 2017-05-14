@@ -153,6 +153,7 @@ public class ProjectController {
 				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
 			}
 			
+			model.addAttribute("branchMembers", branchMemberService.getBranchMembers(currentBranch));
 			model.addAttribute("currentProject", currentProject);
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("currentUser", currentUser);
@@ -170,7 +171,7 @@ public class ProjectController {
 	public String addProjectMember(@PathVariable(name="branchName") String branchName,
 			@PathVariable(name="projectName") String projectName,
 			@RequestParam(name="username") String username,
-			Principal principal, RedirectAttributes reModel){
+			Principal principal, RedirectAttributes reModel) throws UnsupportedEncodingException{
 		try{
 			Branch currentBranch = branchService.findBranchByBranchName(branchName);
 			User currentUser = userService.getUserByUsername(principal.getName());
@@ -190,6 +191,9 @@ public class ProjectController {
 			historyService.createBranchHisotry(history);
 			
 			reModel.addFlashAttribute("message", "成员添加成功！");
+			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/member";
+		}catch (FaultyOperationException e) {
+			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project/" + UriUtils.encode(projectName, "utf-8") + "/member";
 		}catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());

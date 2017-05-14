@@ -1,0 +1,28 @@
+<html>
+	<head>
+	<meta charset="utf-8" />
+	</head>
+	<body style="font-family: '宋体'; color: #666666; font-weight: bold;">
+		<div>
+			<div style=" border: 1px solid cornflowerblue; width: 50%;">	
+				<div style="background-color: cornflowerblue; padding: 10px; font-size: 18px">
+					<font style="color: #FFFFFF;font-weight: bold;">${username} </font>用户:
+				</div>
+				<div style="padding: 10px; background-color: #F9F9F9">
+						<p>你好！</p>
+						<br/>
+						<p>现有如下通知：</p>
+						<br/>
+						<p style="font-size:20px">&nbsp;&nbsp;&nbsp;&nbsp;${text}</p>
+						<hr /><br />
+						<p style="text-align: right; color: #000000;">
+							xKing 官方邮件
+						</p>
+						<p style="text-align: right; color: #000000;">
+							${date}
+						</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

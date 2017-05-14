@@ -29,4 +29,6 @@ public interface BranchMemberSerivce {
 	BranchMember update(BranchMember branchMember);
 	
 	void getMemberNum(Branch currentBranch);
+	
+	List<BranchMember> getBranchMembers(Branch branch);
 }

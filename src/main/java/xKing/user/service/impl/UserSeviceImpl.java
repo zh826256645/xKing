@@ -223,6 +223,7 @@ public class UserSeviceImpl implements UserService {
 		return mail;
 	}
 	
+	
 	// 截取文件名后缀
 	protected String getExtensionName(String fileName) {
 		int i = fileName.lastIndexOf(".");
