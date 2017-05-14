@@ -18,6 +18,9 @@ import xKing.branch.service.BranchService;
 import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
+import xKing.history.domain.UserHistory;
+import xKing.history.domain.UserHistoryType;
+import xKing.history.service.HistoryService;
 import xKing.mail.domain.Mail;
 import xKing.mail.service.MailService;
 import xKing.user.dao.UserFriendRepository;
@@ -55,6 +58,9 @@ public class UserSeviceImpl implements UserService {
 	
 	@Autowired
 	private BranchMemberSerivce branchMemberService;
+	
+	@Autowired
+	private HistoryService historyService;
 
 	
 	// 用户认证
@@ -261,8 +267,16 @@ public class UserSeviceImpl implements UserService {
 			throw new ExistedException(msg);
 		}
 		
+		
 		UserFriend newUserFriend = new UserFriend(currentUser, user);
 		userFriendRepository.save(newUserFriend);
+		
+		// 记录操作
+		UserHistory history = new UserHistory(null, currentUser, user, UserHistoryType.AddFriend, "发出了好友请求", null);
+		historyService.createUserHistory(history);
+		
+		Mail mail = mailSerivce.initMessageMail(user, currentUser.getUsername() + " 向你发送了好友请求！");
+		mailSerivce.sendMessageEmailToUserByVelocity(user.getEmail(), mail);
 		return true;
 	}
 
@@ -280,6 +294,10 @@ public class UserSeviceImpl implements UserService {
 		
 		newUserFriend.setState(state);
 		userFriendRepository.save(newUserFriend);
+		
+		// 记录操作
+		UserHistory history = new UserHistory(null, currentUser, user, UserHistoryType.AgreeFriend, "同意了", null);
+		historyService.createUserHistory(history);
 		return true;
 	}
 
@@ -314,9 +332,15 @@ public class UserSeviceImpl implements UserService {
 			BranchRole newBranchRole = branch.getNewMemberRole();
 			branchMemberService.addBranchMember(currentUser.getUsername(), currentUser.getEmail(), branch, newBranchRole, currentUser);
 			branchMemberRequestService.removeBranchMemberRequest(memberRequest);
+			
+			// 记录操作
+			UserHistory history = new UserHistory(branch, currentUser, null, UserHistoryType.Branch, "同意了", null);
+			historyService.createUserHistory(history);
 			return true;
 		} else {
 			branchMemberRequestService.removeBranchMemberRequest(memberRequest);
+			UserHistory history = new UserHistory(branch, currentUser, null, UserHistoryType.Branch, "拒绝了", null);
+			historyService.createUserHistory(history);
 			return false;
 		}
 	}
@@ -340,6 +364,8 @@ public class UserSeviceImpl implements UserService {
 			return false;
 		}
 		branchMemberRequestService.addNewBranchMemberRequest(branch, currentUser, message, 2);
+		UserHistory history = new UserHistory(branch, currentUser, null, UserHistoryType.RequestBranch, "你申请加入了", null);
+		historyService.createUserHistory(history);
 		return true;
 	}
 

@@ -268,4 +268,10 @@ public class ProjectServiceImpl implements ProjectService {
 	public Page<Task> getUserTasks(User currentUser, Task ftask, Pageable pageable) {
 		return taskRepository.findByUsersAndFtaskOrderByPublishTimeDesc(currentUser, null, pageable);
 	}
+
+	// 获取用户未完成的任务
+	@Override
+	public Long getUserNotFinishTask(User currentUser) {
+		return taskRepository.countByUsersAndFtaskAndStateNot(currentUser, null, State.Finish);
+	}
 }

@@ -46,4 +46,6 @@ public interface ProjectService {
 	List<Problem> getTaskProblems(Task currentTask);
 	
 	Page<Task> getUserTasks(User currentUser, Task ftask, Pageable pageable);
+	
+	Long getUserNotFinishTask(User currentUser);
 }

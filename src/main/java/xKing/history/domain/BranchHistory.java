@@ -19,6 +19,12 @@ import xKing.project.domain.Problem;
 import xKing.project.domain.Project;
 import xKing.project.domain.Task;
 
+/**
+ * 组织历史记录实体
+ * 
+ * @author zhonghao
+ *
+ */
 @Entity
 @Table(name="branch_history")
 public class BranchHistory {

@@ -144,6 +144,8 @@ public class UserController {
 					currentUser, new PageRequest(0, 2)));
 			model.addAttribute("firendNum", userService.getFriendNum(currentUser));
 			model.addAttribute("tasks", projectService.getUserTasks(currentUser, null, new PageRequest(0, 3)));
+			model.addAttribute("histories", historyService.findUserHistories(currentUser, new PageRequest(0, 5)));
+			model.addAttribute("toDoTaskNum", projectService.getUserNotFinishTask(currentUser));
 			model.addAttribute("tab", "profile");
 			return "/user/profile";
 			

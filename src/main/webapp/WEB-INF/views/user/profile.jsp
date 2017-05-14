@@ -37,7 +37,7 @@
 									</div>
 									<div class="col-xs-4 center-person-message-right">
 										<p class="center-person-message-label"><s:message code="profile.tasks"/>:<font><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp<font id="dateNow"></font></font></p>
-										<p class="center-person-message-right-task"><a href="#">5</a><font>(TO DO)</font></p>
+										<p class="center-person-message-right-task"><a href="<c:url value="/user/me?tab=tasks&page=0&size=10"/>">${ toDoTaskNum }</a><font>(TO DO)</font></p>
 									</div>
 								</div>
 							</div>
@@ -136,56 +136,84 @@
 											</h3>
 										</div>
 										<div class="panel-body">
+											<c:forEach items="${ histories.content }" var="history">
+											<c:if test="${ history.type == 'Branch' }">
 											<div class="row">
 												<div class="col-xs-12">
 													<div class="center-activity">
-														<i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;&nbsp;<font class="center-activity-date">October 2016</font>
+														<i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;&nbsp;<font class="center-activity-date">${ history.getFormatTime() }</font>
 														<div class="center-activity-information">
 															 <div class="center-activity-information-li">
 															 		<!-- activity -->
-																	<font>Join in a Branch</font>
+																	<font>你${ history.action }</font>
 																	<!-- object -->
-																	<font><i class="fa fa-university" aria-hidden="true"></i>&nbsp;<a href="#">LongMaoShe</a></font>
+																	<font><i class="fa fa-university" aria-hidden="true"></i>&nbsp;<a href="<c:url value="/branch/${ history.branch.branchName }"/>">${ history.branch.branchName }</a></font>
 																	<!-- date -->
-																	<font>in <mark>2016-10-31</mark></font>
-															 </div>
-															 <div class="center-activity-information-li">
-															 		<!-- activity -->
-																	<font>finsh a Task</font>				
-																	<!-- object -->
-																	<font><a href="#"><i class="fa fa-link" aria-hidden="true"></i></a>&nbsp;<a href="#">Go to buy something use to decorate party!</a></font>
-																	<!-- date -->
-																	<font>in <mark>2016-10-31</mark></font>
+																	<font>加入邀请</font>
 															 </div>
 														</div>
 													</div>
 												</div>
 											</div>
+											</c:if>
+											<c:if test="${ history.type == 'RequestBranch' }">
 											<div class="row">
 												<div class="col-xs-12">
 													<div class="center-activity">
-														<i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;&nbsp;<font class="center-activity-date">September 2016</font>
+														<i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;&nbsp;<font class="center-activity-date">${ history.getFormatTime() }</font>
 														<div class="center-activity-information">
 															 <div class="center-activity-information-li">
 															 		<!-- activity -->
-																	<font>Join in a Branch</font>
+																	<font>你向</font>
 																	<!-- object -->
-																	<font><i class="fa fa-university" aria-hidden="true"></i>&nbsp;<a href="#">LongMaoShe</a></font>
+																	<font><i class="fa fa-university" aria-hidden="true"></i>&nbsp;<a href="<c:url value="/branch/${ history.branch.branchName }"/>">${ history.branch.branchName }</a></font>
 																	<!-- date -->
-																	<font>in <mark>2016-10-31</mark></font>
-															 </div>
-															 <div class="center-activity-information-li">
-															 		<!-- activity -->
-																	<font>finsh a Task</font>				
-																	<!-- object -->
-																	<font><a href="#"><i class="fa fa-link" aria-hidden="true"></i></a>&nbsp;<a href="#">Go to buy something use to decorate party!</a></font>
-																	<!-- date -->
-																	<font>in <mark>2016-10-31</mark></font>
+																	<font>递交了加入申请</font>
 															 </div>
 														</div>
 													</div>
 												</div>
 											</div>
+											</c:if>
+											<c:if test="${ history.type == 'AddFriend' }">
+											<div class="row">
+												<div class="col-xs-12">
+													<div class="center-activity">
+														<i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;&nbsp;<font class="center-activity-date">${ history.getFormatTime() }</font>
+														<div class="center-activity-information">
+															 <div class="center-activity-information-li">
+															 		<!-- activity -->
+																	<font>你向</font>
+																	<!-- object -->
+																	<font><i class="fa fa-user" aria-hidden="true"></i>&nbsp;<a href="#">${ history.acceptedUser.username }</a></font>
+																	<!-- date -->
+																	<font>发送了好友请求！</font>
+															 </div>
+														</div>
+													</div>
+												</div>
+											</div>
+											</c:if>
+											<c:if test="${ history.type == 'AgreeFriend' }">
+											<div class="row">
+												<div class="col-xs-12">
+													<div class="center-activity">
+														<i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;&nbsp;<font class="center-activity-date">${ history.getFormatTime() }</font>
+														<div class="center-activity-information">
+															 <div class="center-activity-information-li">
+															 		<!-- activity -->
+																	<font>你${ history.action }</font>
+																	<!-- object -->
+																	<font><i class="fa fa-user" aria-hidden="true"></i>&nbsp;<a href="#">${ history.acceptedUser.username }</a></font>
+																	<!-- date -->
+																	<font>的好友请求！</font>
+															 </div>
+														</div>
+													</div>
+												</div>
+											</div>
+											</c:if>
+											</c:forEach>
 										</div>
 									</div>
 								</div>
@@ -217,7 +245,7 @@
 							<div class="panel-body left-panel-history">
 								<c:forEach items="${ branches }" var="branch">
 								<p class="left-panel-history-li">
-									<a href="#" class="history-source" style="font-weight: 600">${ branch.branchName }</a>
+									<a href="<c:url value="/branch/${ branch.branchName }"/>" class="history-source" style="font-weight: 600">${ branch.branchName }</a>
 								</p>
 								<c:forEach items="${ branch.histories }" var="history">
 										<c:if test="${ history.type == 'CreateProject' }">
@@ -225,7 +253,7 @@
 											<i class="fa fa-star" aria-hidden="true"></i>
 											<a href="#" class="history-source">${ history.initiateMember.memberName }</a>
 											<font class="history-event">${ history.action }</font>
-											<a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ history.project.projectName }"/>"><i class="fa fa-link" aria-hidden="true"></i>${ history.project.projectName }</a>
+											<a href="<c:url value="/branch/${ branch.branchName }/project/${ history.project.projectName }"/>"><i class="fa fa-link" aria-hidden="true"></i>${ history.project.projectName }</a>
 										</p>
 										</c:if>
 										<c:if test="${ history.type == 'Message' }">
@@ -233,10 +261,15 @@
 											<i class="fa fa-star" aria-hidden="true"></i>
 											<a href="#" class="history-source">${ history.initiateMember.memberName }</a>
 											<font class="history-event">${ history.action }</font>
-											<a href="<c:url value="/branch/${ currentBranch.branchName }/message/${  history.branchMessage.id }"/>"><i class="fa fa-link" aria-hidden="true"></i>${ history.branchMessage.title }</a>
+											<a href="<c:url value="/branch/${ branch.branchName }/message/${  history.branchMessage.id }"/>"><i class="fa fa-link" aria-hidden="true"></i>${ history.branchMessage.title }</a>
 										</p>
 										</c:if>
 								</c:forEach>
+								<c:if test="${ branch.histories.size() == 0 }">
+										<p class="left-panel-history-li">
+											<font class="history-event" style="color: #888888">暂无历史记录</font>
+										</p>
+								</c:if>
 								</c:forEach>
 							</div>
 						</div>

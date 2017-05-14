@@ -10,11 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import xKing.branch.domain.Branch;
 import xKing.history.dao.BranchHistoryRepository;
+import xKing.history.dao.UserHistoryRepository;
 import xKing.history.domain.BranchHisotryType;
 import xKing.history.domain.BranchHistory;
+import xKing.history.domain.UserHistory;
 import xKing.history.service.HistoryService;
 import xKing.project.domain.Project;
 import xKing.project.domain.Task;
+import xKing.user.domain.User;
 
 @Service
 @Transactional
@@ -22,7 +25,11 @@ public class HistoryServiceImpl implements HistoryService {
 	
 	@Autowired
 	private BranchHistoryRepository branchHistoryRepository;
+	
+	@Autowired
+	private UserHistoryRepository userHistoryRepository;
 
+	// 记录组织的历史记录
 	@Override
 	public BranchHistory createBranchHisotry(BranchHistory history) {
 		history.setExecutionTime(System.currentTimeMillis());
@@ -60,6 +67,18 @@ public class HistoryServiceImpl implements HistoryService {
 	public Page<BranchHistory> findbyBracnhAndTwoType(Branch currentBranch, BranchHisotryType oneType,
 			BranchHisotryType twoType, Pageable pageable) {
 		return branchHistoryRepository.findByBrancht_idAndTaskTypeOrMemberType(oneType, twoType, currentBranch.getId(), pageable);
+	}
+
+	// 记录用户的历史记录
+	@Override
+	public UserHistory createUserHistory(UserHistory history) {
+		return userHistoryRepository.save(history);
+	}
+
+	// 获取用户的历史记录
+	@Override
+	public Page<UserHistory> findUserHistories(User currentUser, Pageable pageable) {
+		return userHistoryRepository.findByUser_idOrderByExecutionTimeDesc(currentUser.getId(), pageable);
 	}
 
 

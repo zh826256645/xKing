@@ -8,8 +8,10 @@ import org.springframework.data.domain.Pageable;
 import xKing.branch.domain.Branch;
 import xKing.history.domain.BranchHisotryType;
 import xKing.history.domain.BranchHistory;
+import xKing.history.domain.UserHistory;
 import xKing.project.domain.Project;
 import xKing.project.domain.Task;
+import xKing.user.domain.User;
 
 public interface HistoryService {
 
@@ -24,4 +26,8 @@ public interface HistoryService {
 	List<BranchHistory> findbyProjectAndTwoType(Project currentProject, BranchHisotryType oneType,BranchHisotryType twoType );
 	
 	Page<BranchHistory> findbyBracnhAndTwoType(Branch currentBranch, BranchHisotryType oneType,BranchHisotryType twoType, Pageable pageable);
+	
+	UserHistory createUserHistory(UserHistory history);
+	
+	Page<UserHistory> findUserHistories(User currentUser, Pageable pageable);
 }

@@ -16,4 +16,5 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
 	Project findByProjectMemberAndId(BranchMember branchMember, long id);
 	
 	Long countByBranch_id(long branch_id);
+	
 }
