@@ -63,3 +63,10 @@ function friendRequest(env, state, username) {
 	}
 });
 }
+
+function friendMessage(env) {
+	var username = $(env).prev().html();
+	$("#gridSystemModalLabel").html(username);
+	$("#messageUsername").attr("value", username);
+	$("#friendMessage").modal('show');
+};

@@ -132,7 +132,7 @@
 									<div class="panel panel-default">
 										<div class="panel-heading" style="border-bottom: 0px; background-color: #f9fafc;">
 											<h3 class="panel-title" style="font-weight: bold;color: black;">
-											<a href="#"><s:message code="profile.yourActivity"/></a> <a href="#" class="more">更多的活动</a>
+											<a href="#"><s:message code="profile.yourActivity"/></a>
 											</h3>
 										</div>
 										<div class="panel-body">

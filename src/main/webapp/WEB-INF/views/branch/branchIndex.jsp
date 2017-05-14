@@ -108,6 +108,13 @@
 										</p>
 										</c:if>
 								</c:forEach>
+						    	<c:if test="${ histories.content == null || histories.content.size() == 0 }">
+						    		<br/>
+						    		<div style="font-size: 28px;padding-left: 416px;padding-top: 50px;color: #888888">暂无组织操作记录</div>
+						    		<br/>
+						    		<br/>
+						    		<br/>
+						    	</c:if>
 							</div>
 						</div>
 					</div>
@@ -119,7 +126,7 @@
 							<div class="panel-body panel-nopadding">
 								<div class="panel panel-default">
 								    <div class="panel-body panel-nopadding" style="padding-left: 0px;padding-right: 0px;">
-										<div class="col-xs-12 branch-user-id" style="padding-bottom: 5px;">
+										<div class="col-xs-12 branch-user-id" style="padding-bottom: 5px;height: 285px;">
 							        		<c:if test="${currentBranchMember != null}">
 							        		<label class="label label-color">你的信息</label>
 							        		<img class="img-circle center-person-picture center-block" src="<c:url value='/picture/user/${username}'/>?pid=${userPicture}" style="margin-bottom: 5px"/>
@@ -131,6 +138,9 @@
 						        					<p class="hide-p"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<font>${currentUser.introduction}</font></p></p>
 						        				</div>
 						        			</div>
+						        			</c:if>
+						        			<c:if test="${currentBranchMember == null}">
+						        				<div style="font-size: 24px;margin-top: 123px;margin-left: 30px;font-weight: 600;color: #888888;">你不是该组织成员</div>
 						        			</c:if>
 										</div>
 									</div>

@@ -83,7 +83,7 @@
 												<img src="<c:url value="/picture/branch/${memberRequest.branch.branchName}?pid=${memberRequest.branch.picture}"/>"  class="branch-img-small-small"/>
 											</div>
 											<div class="col-xs-7">
-												<a style="font-size: 22px !important; ">${memberRequest.branch.branchName}</a>
+												<a style="font-size: 22px !important;" href="<c:url value="/branch/${ memberRequest.branch.branchName }"/>">${memberRequest.branch.branchName}</a>
 												<p class="hide-p">${ memberRequest.message }</p>
 												<div class="btn-line">
 													<div class="row">
@@ -91,14 +91,14 @@
 															<sf:form method="post" action="/user/member/request">
 																<input type="hidden" value="1" name="state">
 																<input type="hidden" value="${memberRequest.branch.branchName}" name="branchName">
-																<button class="btn btn-info">Join</button>
+																<button class="btn btn-info">加入</button>
 															</sf:form>
 														</div>
 														<div class="col-xs-5">
 															<sf:form method="post" action="/user/member/request">
 																<input type="hidden" value="2" name="state">
 																<input type="hidden" value="${memberRequest.branch.branchName}" name="branchName">
-																<button class="btn btn-warning">No</button>
+																<button class="btn btn-warning">拒绝</button>
 															</sf:form>
 														</div>
 													</div>
@@ -119,7 +119,7 @@
 												<img src="<c:url value="/picture/branch/${memberRequest.branch.branchName}?pid=${memberRequest.branch.picture}"/>"  class="branch-img-small-small"/>
 											</div>
 											<div class="col-xs-7">
-												<a style="font-size: 22px !important; ">${memberRequest.branch.branchName}</a>
+												<a style="font-size: 22px !important;" href="<c:url value="/branch/${ memberRequest.branch.branchName }"/>">${memberRequest.branch.branchName}</a>
 												<p class="hide-p">${ memberRequest.message }</p>
 												<div class="btn-line">
 												</div>

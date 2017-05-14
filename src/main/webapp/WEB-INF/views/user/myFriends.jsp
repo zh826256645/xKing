@@ -20,11 +20,8 @@
 								<hr />
 								<div class="row center-myBranches-up">
 									<form action="#">
-										<div class="col-xs-4">
+										<div class="col-xs-2">
 											<input type="text"  class="form-control" id="friendUsername" placeholder="用户名"/>
-										</div>
-										<div class="col-xs-1" style="padding-left: 20px">
-											<input type="submit" class="btn btn-default" value="搜索"/>
 										</div>
 									</form>
 										<div class="col-xs-1" style="padding-left: 0px">
@@ -50,8 +47,9 @@
 												<p class="p-hide"><i class="fa fa-comment" aria-hidden="true"></i>${ friend.introduction }</p>
 											</div>
 											<div class="col-xs-3 col-xs-offset-2">
-												<button class="btn btn-success">Message</button>
-												<button class="btn btn-danger">Delete</button>
+												<span style="display: none;">${ friend.username }</span>
+												<button class="btn btn-success" onclick="friendMessage(this)">信息</button>
+												<button class="btn btn-danger">删除</button>
 											</div>
 										</div>
 										</c:forEach>
@@ -126,6 +124,64 @@
 						</div>
 					</div>
 					</c:if>
+				<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="friendMessage">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="gridSystemModalLabel"></h4>
+				      </div>
+				      <div class="modal-body">
+						<div class="row">
+							<div class="col-xs-12">
+								
+								<div class="panel panel-default">
+								    <div class="panel-body panel-nopadding">
+								    	<br />
+								    	<form>
+								    	<div class="row">
+								    		<div class="col-sm-9 col-md-9">
+								    			<input class="hidden" id="messageUsername" name="username"/>
+								    			<input class="form-control"/>
+								    		</div>
+								    		<div class="col-sm-2 col-md-2">
+								    			<input type="submit" class="submit" style="height: 34px;" value="发送"/>
+								    		</div>
+								    	</div>
+								    	</form>
+								    	<br/>
+								    	<div style="position:relative; height:200px; overflow-x:auto">
+									    	<div class="row forum-li" >
+									    		<div class="col-xs-1 text-center" style="padding-left: 0px">
+									    			<img class="img-circle heard-profile-picture" src="img/profile.jpg" /><br />
+									    		</div>
+									    		<div class="col-xs-11">
+									    			<span><a href="#">ZhongHao</a> &nbsp;<small>2016-11-26</small></span>
+									    			<p class="h4">I'm very happy today!!!Plase give some power!!</p>
+									    		</div>
+									    	</div>
+									    	<div class="row forum-li" >
+									    		<div class="col-xs-11">
+									    			<span style="float: right;"><small>2016-11-26</small> &nbsp;<a href="#">ZhongHao</a></span>
+									    			<p class="h4" style="float: right;text-align:right;">I'm very happy today!!!Plase give some power!!</p>
+									    		</div>
+									    		<div class="col-xs-1 text-center" style="padding-left: 0px">
+									    			<img class="img-circle heard-profile-picture" src="img/profile.jpg" /><br />
+									    		</div>
+									    	</div>
+								    	</div>
+							        </div>
+						   		 </div>
+
+							</div>
+						</div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 				</div>
 		 	</div>
 		</div>
