@@ -36,6 +36,37 @@ $(document).ready(function() {
 			}
 		});
 	});
+	$("#sendMessage").click(function(){
+		var username = $("#messageUsername").val();
+		var messageContent = $("#messageContent").val();
+		if(!messageContent || typeof(messageContent) == "undefined"){
+			bootbox.alert({
+				message: "请输入你要说的话！",
+				size: 'small'
+			});
+			return;
+		}
+		var host = window.location.host;
+		var header = $("meta[name='_csrf_header']").attr("content");  
+		var token = $("meta[name='_csrf']").attr("content");  
+		$.ajax({
+			type:"post",
+			url: "http://" + host + "/user/friend/message",
+			data:{"username": username,"content": messageContent},
+			async:true,		    
+			beforeSend: function(xhr){  
+		        xhr.setRequestHeader(header, token);  
+		    },
+			success:function(data) {
+				if(data != null) {
+					bootbox.alert({
+	    				message: data["msg"],
+	    				size: 'small'
+					});
+				}
+			}
+		});
+	});
 });
 
 function friendRequest(env, state, username) {

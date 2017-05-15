@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import xKing.user.domain.ChangePassword;
+import xKing.user.domain.FriendMessage;
 import xKing.user.domain.User;
 import xKing.user.domain.UserFriend;
 
@@ -38,4 +39,6 @@ public interface UserService {
 	boolean requestJoin(User currentUser, String branchName, String message);
 	
 	long getFriendNum(User currentUser);
+	
+	FriendMessage sendFriendMessage(User currentUser, String username, String content);
 }

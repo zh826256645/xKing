@@ -138,17 +138,15 @@
 								<div class="panel panel-default">
 								    <div class="panel-body panel-nopadding">
 								    	<br />
-								    	<form>
 								    	<div class="row">
 								    		<div class="col-sm-9 col-md-9">
 								    			<input class="hidden" id="messageUsername" name="username"/>
-								    			<input class="form-control"/>
+								    			<input class="form-control" id="messageContent" name="content"/>
 								    		</div>
 								    		<div class="col-sm-2 col-md-2">
-								    			<input type="submit" class="submit" style="height: 34px;" value="发送"/>
+								    			<input type="submit" class="submit" style="height: 34px;" value="发送" id="sendMessage"/>
 								    		</div>
 								    	</div>
-								    	</form>
 								    	<br/>
 								    	<div style="position:relative; height:200px; overflow-x:auto">
 									    	<div class="row forum-li" >

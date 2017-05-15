@@ -280,4 +280,16 @@ public class UserController {
 			return "redirect:/user/me";
 		}
 	}
+	
+	@RequestMapping(value="/friend/message", method=RequestMethod.POST)
+	@ResponseBody
+	public  Map<String, String> sendFriendMessage(@RequestParam(name="username", required=false) String username,
+			@RequestParam(name="content", required=false) String content,
+			Principal principal) {
+		Map<String, String> map = new HashMap<String, String>();
+		
+		
+		map.put("msg", "发送成功");
+		return map;
+	}
 }

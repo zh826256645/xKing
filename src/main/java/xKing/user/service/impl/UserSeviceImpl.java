@@ -23,9 +23,11 @@ import xKing.history.domain.UserHistoryType;
 import xKing.history.service.HistoryService;
 import xKing.mail.domain.Mail;
 import xKing.mail.service.MailService;
+import xKing.user.dao.FriendMessageRepository;
 import xKing.user.dao.UserFriendRepository;
 import xKing.user.dao.UserRepository;
 import xKing.user.domain.ChangePassword;
+import xKing.user.domain.FriendMessage;
 import xKing.user.domain.User;
 import xKing.user.domain.UserFriend;
 import xKing.user.exception.SameUsernameException;
@@ -62,6 +64,9 @@ public class UserSeviceImpl implements UserService {
 	@Autowired
 	private HistoryService historyService;
 
+	
+	@Autowired
+	private FriendMessageRepository friendMessageRepository;
 	
 	// 用户认证
 	@Override
@@ -373,5 +378,14 @@ public class UserSeviceImpl implements UserService {
 	@Override
 	public long getFriendNum(User currentUser) {
 		return userFriendRepository.countByUser_idOrFriend_idAndState(currentUser.getId(), currentUser.getId(), 1);
+	}
+
+	// 发送私信
+	@Override
+	public FriendMessage sendFriendMessage(User currentUser, String username, String content) {
+		User user = this.getUserByUsername(username);
+		FriendMessage message = new FriendMessage();
+		message.init(currentUser, user, content);
+		return friendMessageRepository.save(message);
 	}
 }
