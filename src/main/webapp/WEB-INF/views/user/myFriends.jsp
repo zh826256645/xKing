@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -16,6 +17,7 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="center-myBranches center-myTasks">
+								<%@ include file="../message.jsp" %>
 								<label>我的好友</label>
 								<hr />
 								<div class="row center-myBranches-up">
@@ -47,9 +49,18 @@
 												<p class="p-hide"><i class="fa fa-comment" aria-hidden="true"></i>${ friend.introduction }</p>
 											</div>
 											<div class="col-xs-3 col-xs-offset-2">
-												<span style="display: none;">${ friend.username }</span>
-												<button class="btn btn-success" onclick="friendMessage(this)">信息</button>
-												<button class="btn btn-danger">删除</button>
+												<div class="row">
+													<div class="col-xs-3">
+														<span style="display: none;">${ friend.username }</span>
+														<button class="btn btn-success" onclick="friendMessage(this)">信息</button>
+													</div>
+													<div class="col-xs-6">
+														<sf:form action="/user/friend/remove" method="post">
+														<input type="hidden" name="username" value="${ friend.username }">
+														<button class="btn btn-danger">删除</button>
+														</sf:form>
+													</div>
+												</div>
 											</div>
 										</div>
 										</c:forEach>
@@ -69,8 +80,8 @@
 												<div style="display: none;" id="friend_username"><a>${friend.username}</a></div>
 											</div>
 											<div class="col-xs-9">
-												<button class="btn" onclick="friendRequest(this, 1, '${friend.username}')">Agree</button>
-												<button class="btn btn-danger" onclick="friendRequest(this, 2, '${friend.username}')">Deny</button>
+												<button class="btn" onclick="friendRequest(this, 1, '${friend.username}')">同意</button>
+												<button class="btn btn-danger" onclick="friendRequest(this, 2, '${friend.username}')">拒绝</button>
 											</div>
 										</div>
 										</c:forEach>
@@ -148,26 +159,8 @@
 								    		</div>
 								    	</div>
 								    	<br/>
-								    	<div style="position:relative; height:200px; overflow-x:auto">
-									    	<div class="row forum-li" >
-									    		<div class="col-xs-1 text-center" style="padding-left: 0px">
-									    			<img class="img-circle heard-profile-picture" src="img/profile.jpg" /><br />
-									    		</div>
-									    		<div class="col-xs-11">
-									    			<span><a href="#">ZhongHao</a> &nbsp;<small>2016-11-26</small></span>
-									    			<p class="h4">I'm very happy today!!!Plase give some power!!</p>
-									    		</div>
-									    	</div>
-									    	<div class="row forum-li" >
-									    		<div class="col-xs-11">
-									    			<span style="float: right;"><small>2016-11-26</small> &nbsp;<a href="#">ZhongHao</a></span>
-									    			<p class="h4" style="float: right;text-align:right;">I'm very happy today!!!Plase give some power!!</p>
-									    		</div>
-									    		<div class="col-xs-1 text-center" style="padding-left: 0px">
-									    			<img class="img-circle heard-profile-picture" src="img/profile.jpg" /><br />
-									    		</div>
-									    	</div>
-								    	</div>
+								    	<div style="position:relative; height:200px; overflow-x:auto"  id="messagWindow">
+								    	</div>`
 							        </div>
 						   		 </div>
 

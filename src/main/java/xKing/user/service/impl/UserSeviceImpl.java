@@ -1,6 +1,7 @@
 package xKing.user.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -262,6 +263,7 @@ public class UserSeviceImpl implements UserService {
 		
 		UserFriend userFriend = userFriendRepository.findOneByUser_idAndFriend_id(currentUser.getId(), user.getId());
 		UserFriend friendUser = userFriendRepository.findOneByUser_idAndFriend_id(user.getId(), currentUser.getId());
+		System.out.println("hah");
 		if(userFriend != null || friendUser != null){
 			String msg = "该用户已经是你的好友，不能重复添加";
 			if(userFriend != null && userFriend.getState() == 0){
@@ -387,5 +389,28 @@ public class UserSeviceImpl implements UserService {
 		FriendMessage message = new FriendMessage();
 		message.init(currentUser, user, content);
 		return friendMessageRepository.save(message);
+	}
+
+	// 获取用户的两条记录
+	@Override
+	public List<FriendMessage> getFriendMessage(User currentUser, String username) {
+		if(currentUser.getUsername().equalsIgnoreCase(username)) {
+			throw new FaultyOperationException("用户名不能是自己");
+		}
+		User user = userRepository.findByUsername(username);
+		List<FriendMessage> friendMesssages = friendMessageRepository.findByUser_idAndAcceptedUser_id(currentUser.getId(), user.getId());
+		return friendMesssages;
+	}
+
+	// 删除好友
+	@Override
+	public boolean removeFriend(User currentUser, String username) {
+		User user = this.getUserByUsername(username);
+		UserFriend friend = userFriendRepository.findOneByUser_idOrFriend_id(currentUser.getId(), user.getId(), 1);
+		if(friend == null) {
+			throw new FaultyOperationException("该用户不是你的好友！");
+		}
+		userFriendRepository.delete(friend);
+		return true;
 	}
 }

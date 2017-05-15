@@ -58,12 +58,15 @@ $(document).ready(function() {
 		        xhr.setRequestHeader(header, token);  
 		    },
 			success:function(data) {
+				$("#messageContent").val("");
 				if(data != null) {
 					bootbox.alert({
 	    				message: data["msg"],
 	    				size: 'small'
 					});
 				}
+				
+				getFriendMessages(username);
 			}
 		});
 	});
@@ -97,7 +100,51 @@ function friendRequest(env, state, username) {
 
 function friendMessage(env) {
 	var username = $(env).prev().html();
+
 	$("#gridSystemModalLabel").html(username);
 	$("#messageUsername").attr("value", username);
 	$("#friendMessage").modal('show');
+	getFriendMessages(username);
 };
+
+function getFriendMessages(username){
+	var host = window.location.host; 
+	$.ajax({
+	type:"get",
+	url: "http://" + host + "/user/friend/message?username=" + username ,
+	async:true,
+	success:function(data) {
+		if(data != null ) {
+			$("#messagWindow").empty();
+			for(var index in data) {
+				if(data[index].user.username == username){
+					$("#messagWindow").append('<div class="row forum-li" >' +
+									    		'<div class="col-xs-1 text-center" style="padding-left: 0px">' +
+									    			'<img class="img-circle heard-profile-picture" src="//'+ host +'/picture/user/'+ data[index].user.username + '?pid=' + data[index].user.picture + '" /><br />' +
+									    		'</div>' +
+									    		'<div class="col-xs-11">' +
+									    			'<span><a href="#">' + data[index].user.username + '</a> &nbsp;<small>' + getFormatTime(data[index].dateline) + '</small></span><br/>' +
+									    			'<p class="h4">'+ data[index].content + '</p>' +
+									    		'</div>' +
+									    	'</div>')
+				} else {
+					$("#messagWindow").append('<div class="row forum-li" >' +
+				    		'<div class="col-xs-11">' +
+			    			'<span style="float: right;"><small>' + getFormatTime(data[index].dateline) +  '</small> &nbsp;<a href="#">ZhongHao</a></span><br/>' +
+			    			'<p class="h4" style="float: right;text-align:right;">' + data[index].content + '</p>' +
+			    		'</div>' +
+			    		'<div class="col-xs-1 text-center" style="padding-left: 0px">' +
+			    			'<img class="img-circle heard-profile-picture" src="//'+ host +'/picture/user/'+ data[index].user.username + '?pid=' + data[index].user.picture + '" /><br />' +
+			    		'</div>' +
+			    	'</div>')
+				}
+			}
+		}
+	}
+});
+}
+
+function getFormatTime(time) {
+	var date = new Date(time);
+	return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' +date.getSeconds();
+}

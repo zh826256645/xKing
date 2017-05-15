@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import xKing.branch.domain.BranchMemberRequest;
 
 /**
@@ -34,33 +36,38 @@ public class User {
 	@Size(min=6, max=16, message="{username.size}")
 	private String username;
 	
+	@JsonIgnore(value=true)
 	@NotNull
 	@Size(min=6, max=32, message="{password.size}")
 	private String password;
 	
+	@JsonIgnore(value=true)
 	@NotNull
 	@Pattern(regexp="^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$", message="{email.pattern}")
 	private String email;
 	
-	@OneToMany(mappedBy="user")
-	private List<UserFriend> friends;
-   
-	@OneToMany(mappedBy = "friend")
-    protected List<UserFriend> befriended;
-	
+	@JsonIgnore(value=true)
 	@OneToMany(mappedBy = "user")
 	private List<BranchMemberRequest> branchMemberRequests;
     
+	
 	private String name;
 	private String blog;
 	private String picture;
 	private String sex;
+	@JsonIgnore(value=true)
 	private int state;
+	@JsonIgnore(value=true)
 	private String keyCode;
+	@JsonIgnore(value=true)
 	private Date keyDate;
+	
 	private String introduction;
+	@JsonIgnore(value=true)
 	private int showEmail;
+	@JsonIgnore(value=true)
 	private int enabled = 1;
+	@JsonIgnore(value=true)
 	private String role_user;
 	public long getId() {
 		return id;
@@ -158,18 +165,7 @@ public class User {
 	public User(String username, String password) {
 		this(username, password, null);
 	}
-	public List<UserFriend> getFriends() {
-		return friends;
-	}
-	public void setFriends(List<UserFriend> friends) {
-		this.friends = friends;
-	}
-	public List<UserFriend> getBefriended() {
-		return befriended;
-	}
-	public void setBefriended(List<UserFriend> befriended) {
-		this.befriended = befriended;
-	}
+
 	public User(String username, String password, String email) {
 		super();
 		this.username = username;

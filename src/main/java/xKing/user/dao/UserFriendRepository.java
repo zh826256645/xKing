@@ -18,6 +18,9 @@ public interface UserFriendRepository extends CrudRepository<UserFriend, Long> {
 	
 	UserFriend findOneByUser_idAndFriend_id(long user_id, long friend_id);
 	
+	@Query(value="select uf from UserFriend uf where (uf.user.id=?1 and uf.friend.id=?2 and uf.state=?3) or (uf.user.id=?2 and uf.friend.id=?1 and uf.state=?3)")
+	UserFriend findOneByUser_idOrFriend_id(long user_id, long friend_id, int state);
+	
 	UserFriend findOneByUser_idAndFriend_idAndState(long user_id, long friend_id, int state);
 	
 	@Query(value="select uf from UserFriend uf where (uf.user.id=?1 or uf.friend.id=?2) and uf.state=?3 order by uf.createTime asc",

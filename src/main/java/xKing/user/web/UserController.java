@@ -1,6 +1,7 @@
 package xKing.user.web;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import xKing.branch.domain.Branch;
 import xKing.branch.service.BranchMemberRequestService;
 import xKing.branch.service.BranchMemberSerivce;
 import xKing.branch.service.BranchService;
@@ -31,6 +30,7 @@ import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
 import xKing.history.service.HistoryService;
 import xKing.project.service.ProjectService;
+import xKing.user.domain.FriendMessage;
 import xKing.user.domain.User;
 import xKing.user.exception.SameUsernameException;
 import xKing.user.exception.UserNotExistException;
@@ -281,15 +281,51 @@ public class UserController {
 		}
 	}
 	
+	// 发送信息
 	@RequestMapping(value="/friend/message", method=RequestMethod.POST)
 	@ResponseBody
-	public  Map<String, String> sendFriendMessage(@RequestParam(name="username", required=false) String username,
+	public Map<String, String> sendFriendMessage(@RequestParam(name="username", required=false) String username,
 			@RequestParam(name="content", required=false) String content,
 			Principal principal) {
 		Map<String, String> map = new HashMap<String, String>();
-		
-		
-		map.put("msg", "发送成功");
-		return map;
+		try{
+			User currentUser = userService.getUserByUsername(principal.getName());
+			userService.sendFriendMessage(currentUser, username, content);
+			map.put("msg", "发送成功");
+			map.put("code", "200");
+			return map;
+		} catch (Exception e) {
+			map.put("code", "202");
+			map.put("msg", e.getMessage());
+			return map;
+		}
+	}
+	
+	// 获取用户
+	@RequestMapping(value="/friend/message", method=RequestMethod.GET)
+	public @ResponseBody List<FriendMessage> getFriendMessage(
+			@RequestParam(name="username", required=false) String username,
+			Principal principal) {
+		try{
+			User currentUser = userService.getUserByUsername(principal.getName());
+			List<FriendMessage> messages = userService.getFriendMessage(currentUser, username);
+			return messages;
+		} catch (Exception e) {
+			return new ArrayList<>();
+		}
+	}
+	
+	// 删除好友
+	@RequestMapping(value="/friend/remove", method=RequestMethod.POST)
+	public String deleteFriend(@RequestParam(name="username", required=false) String username,
+			Principal principal, RedirectAttributes reModel) {
+		try{
+			User currentUser = userService.getUserByUsername(principal.getName());
+			userService.removeFriend(currentUser, username);
+			reModel.addFlashAttribute("message", "已经将用户" + username + "已经出好友列表！");
+			return "redirect:/user/me?tab=friends";
+		} catch (Exception e) {
+			return "redirect:/user/me?tab=friends";
+		}
 	}
 }

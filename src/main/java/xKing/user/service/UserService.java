@@ -1,5 +1,7 @@
 package xKing.user.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -41,4 +43,8 @@ public interface UserService {
 	long getFriendNum(User currentUser);
 	
 	FriendMessage sendFriendMessage(User currentUser, String username, String content);
+	
+	List<FriendMessage> getFriendMessage(User currentUser, String username);
+	
+	boolean removeFriend(User currentUser, String username);
 }
