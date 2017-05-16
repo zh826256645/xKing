@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>发布信息</title>
+	<title>发布公告</title>
 	<%@ include file="../head.jsp" %>
 	<style>
 	    .markdown-body {
@@ -25,19 +25,19 @@
 				<div class="col-xs-7 col-xs-offset-2">
 					<div class="center-branche-panel">
 						<%@ include file="../message.jsp" %>
-						<label>Create Branch's Message</label>
+						<label>创建新的公告</label>
 						<hr />
-						<label>Title</label>
+						<label>标题</label>
 						<sf:form action="" method="post" commandName="branchMessage">
 						<div class="row center-myBranches-up" style="border-bottom: 0px !important;">
 							<div class="col-xs-6">
-								<input type="text"  class="form-control" placeholder="Message Title" name="title" value="${ branchMessage.title }"/>
+								<input type="text"  class="form-control" placeholder="公告标题" name="title" value="${ branchMessage.title }"/>
 							</div>
 							<div class="col-xs-3">
 								<div class="input-group">
-								<div class="input-group-addon">Type:</div>
+								<div class="input-group-addon">标签:</div>
 								<select class="form-control" name="tagName">
-									<option value="" selected="selected">All</option>
+									<option value="" selected="selected">所有</option>
 								<c:forEach items="${ messageTags }" var="tag">
 									<option value="${ tag.tagName }">${ tag.tagName }</option>
 								</c:forEach>
@@ -45,7 +45,7 @@
 								</div>
 							</div>		
 						</div>
-						<label>Message</label>
+						<label>公告</label>
 						<div class="row">
 							<div class="col-xs-11">
 								<div class="message-panel">
@@ -53,11 +53,11 @@
 									
 								   <li class="active">
 								      <a href="#home" data-toggle="tab">
-								         Write
+								         编辑
 								      </a>
 								   </li>
 								   <li>
-								   		<a href="#ios" data-toggle="tab" onclick="editor()">View</a>
+								   		<a href="#ios" data-toggle="tab" onclick="editor()">查看</a>
 								   </li>
 								</ul>
 								</div>
@@ -75,6 +75,7 @@
 								</div>
 							</div>
 						</div>
+						<br/>
 						<div class="row">
 							<div class="col-xs-1 col-xs-offset-10">
 								<input type="submit" value="sumbit" class="btn btn-info">
@@ -84,12 +85,12 @@
 					</div>
 				</div>
 				<div class="col-xs-2 center-branche-panel center-profile-setting-right" >
-					<label>Message Tag</label>
+					<label>公告标签</label>
 					<hr/>
 					<div class="row add-role">
 						<sf:form action="/branch/${ currentBranch.branchName }/message/tag/new" method="post">
 							<div class="col-xs-9" style="padding-left: 22px;">
-								<input type="text"  class="form-control" placeholder="Tag name" name="tagName" />
+								<input type="text"  class="form-control" placeholder="标签名" name="tagName" />
 							</div>
 							<div class="col-xs-2">
 								<input type="submit" class="btn btn-success" value="Add"/>

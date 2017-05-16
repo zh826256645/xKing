@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>修改信息</title>
+	<title>修改公告</title>
 	<%@ include file="../head.jsp" %>
 	<style>
 	    .markdown-body {

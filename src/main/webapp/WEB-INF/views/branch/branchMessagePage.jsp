@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="../head.jsp" %>
-<title>Message Page</title>
+<title>${ branchMessage.title }</title>
 </head>
 	<body>
 		<div class="container">
@@ -22,7 +22,7 @@
 				<div class="col-xs-7 col-xs-offset-2">
 					<div class="center-branche-panel">
 						<%@ include file="../message.jsp" %>
-						<label>Message</label>
+						<label>公告页面</label>
 						<hr />
 						<div class="row">
 							<div class="col-xs-10">
