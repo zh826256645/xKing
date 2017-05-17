@@ -23,13 +23,13 @@
 			<div class="col-lg-6 col-lg-offset-1">
 				<div class="welcome-message" >
 					<p class="welcomefont">
-						<span class="welcome-message-label">Welcome to xKing!</span>
-						<p class="welcome-message-normal">You can do everything you want！</p>
+						<span class="welcome-message-label">欢迎来到信息发布系统~</span>
+						<p class="welcome-message-normal">你可以做任何你想做的事</p>
 						<p class="welcome-message-normal">
-							<span class="welcome-message-normal">If you are the visitor,please </span>
-							<span style="color: #66CC99;font-size: 45px;" class="welcome-message-label">Login</span>
+							<span class="welcome-message-normal">如果你是系统用户,请进行</span>
+							<span style="color: #66CC99;font-size: 45px;" class="welcome-message-label">登录</span>
 						</p>
-						<p class="welcome-message-normal">else Strat your journey！</p>
+						<p class="welcome-message-normal">开始你的旅程吧~</p>
 					</p>
 					<hr/>
 			<a href="<c:url value="/user/me"/>"><button type="button" style="width: 165px; height: 50px; font-size: 25px;" class="btn btn-primary btn-lg">Start</button></a>	

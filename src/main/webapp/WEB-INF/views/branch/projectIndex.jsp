@@ -93,6 +93,10 @@
 											</div>
 										</div>
 										</c:forEach>
+										<c:if test="${ tasks.content == null || tasks.content.size() ==0 }">
+											<br/>
+											<div style="font-size: 28px;padding-left: 416px;padding-top: 50px;color: #888888">暂无任务信息</div>
+										</c:if>
 									</div>
 								</div>
 							</div>
@@ -121,6 +125,9 @@
 								</p>
 								</c:if>
 							</c:forEach>
+							<c:if test="${ histories == null || histories.size() ==0 }">
+							<div class="right-empty">没有历史记录</div>
+							</c:if>
 							</div>
 					</div>
 				</div>

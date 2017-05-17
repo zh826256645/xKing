@@ -26,28 +26,6 @@
 									<li><a href="#">Finished <span class="badge">3</span></a></li>
 								</ul>
 							</div>
-							<div class="col-xs-7">
-								<div class="row">
-									<form>
-										<div class="col-xs-4">
-											<input type="text"  class="form-control" placeholder="Task's keywords"/>
-										</div>
-										<div class="col-xs-5">
-											<div class="input-group">
-											<div class="input-group-addon">Branches</div>
-											<select class="form-control">
-												<option>All</option>
-												<option>LongMaoShe</option>
-												<option>Computer</option>
-											</select>
-											</div>
-										</div>
-										<div class="col-xs-2">
-											<input type="submit" class="btn btn-default" value="Search"/>
-										</div>
-									</form>
-								</div>
-							</div>
 						</div>
 						<label>所有任务</label>
 						<c:forEach items="${ page.content }" var="task">

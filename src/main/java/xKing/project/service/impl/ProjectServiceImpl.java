@@ -130,7 +130,8 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		Task this_task = taskRepository.save(task);
 		
-		Mail mail = mailService.initMessageMail(member.getUser(), currentBranchMember.getMemberName() + "给你在" + currentProject.getProjectName() + "发布了新任务！" );
+		Mail mail = mailService.initMessageMail(member.getUser(),
+				currentBranchMember.getMemberName() + "给你在" + currentProject.getProjectName() + "发布了新任务！" );
 		mailService.sendMessageEmailToUserByVelocity(member.getUser().getEmail(), mail);
 		
 		return this_task;

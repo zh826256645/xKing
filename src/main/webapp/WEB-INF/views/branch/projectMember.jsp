@@ -59,7 +59,7 @@
 											</div>
 											<div class="col-xs-3">
 												<br /><br />
-												<button class="btn btn-success">Delete</button>
+												<button class="btn btn-success">删除</button>
 											</div>
 											</sf:form>
 										</div>
