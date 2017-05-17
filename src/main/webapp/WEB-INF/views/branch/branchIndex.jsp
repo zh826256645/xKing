@@ -159,9 +159,9 @@
 						        				<div class="col-xs-offset-1 col-xs-10 user-id hide-p" style="font-size: 36px;">
 						        					<div class="row">
 						        					<div class="col-xs-10" style="padding-top: 10px">
-							        					<div class="container"><p ><i class="fa fa-users" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>${ currentBranch.memberNum }</a></p></div>
-							        					<div class="container" style="padding-left: 18px;"><p ><i class="fa fa-volume-up" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>${ messageNum }</a></p></div>
-							        					<div class="container"><p ><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>${ projectNum }</a></p></div>
+							        					<div class="container"><p ><i class="fa fa-users" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="<c:url value="/branch/${currentBranch.branchName}/member?page=0&size=12" />">${ currentBranch.memberNum }</a></p></div>
+							        					<div class="container" style="padding-left: 18px;"><p ><i class="fa fa-volume-up" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="<c:url value="/branch/${currentBranch.branchName}/message?page=0&size=16" />">${ messageNum }</a></p></div>
+							        					<div class="container"><p ><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="<c:url value="/branch/${currentBranch.branchName}/project?page=0&size=10" />">${ projectNum }</a></p></div>
 						        					</div>
 						        					 </div>
 						        				</div>

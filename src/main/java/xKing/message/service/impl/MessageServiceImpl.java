@@ -56,7 +56,7 @@ public class MessageServiceImpl implements MessageService {
 		return messageTagRepository.findByBranch_id(currentBranch.getId());
 	}
 
-	// 创建组织信息
+	// 创建组织公告
 	@Override
 	public BranchMessage createMessage(Branch currentBranch, BranchMember currentMember, BranchMessage message,
 			MessageTag messageTag) {
