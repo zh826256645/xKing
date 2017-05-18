@@ -87,7 +87,7 @@
 									<div class="panel panel-default">
 										<div class="panel-heading" style="border-bottom: 0px; background-color: #f9fafc;">
 											<h3 class="panel-title" style="font-weight: bold;color: black;">
-											<a href="#"><s:message code="profile.yourTasks"/></a> <a href="<c:url value="/user/me?tab=branches&page=0&size=10" />" class="more">更多的任务</a>
+											<a href="#"><s:message code="profile.yourTasks"/></a> <a href="<c:url value="/user/me?tab=tasks&page=0&size=10" />" class="more">更多的任务</a>
 											</h3>
 										</div>
 										<div class="panel-body">

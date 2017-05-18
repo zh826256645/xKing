@@ -63,9 +63,10 @@ public class MessageController {
 	
 	// Branch Message 页面
 	@GetMapping(path="")
-	public String getBranchMessage(@PathVariable("branchName") String branchName, Principal principal, 
-			Model model, RedirectAttributes reModel, Pageable pageable) {
-		
+	public String getBranchMessage(@PathVariable("branchName") String branchName,
+			@RequestParam(name="title", required=false) String title,
+			@RequestParam(name="tagId", required=false, defaultValue="0") long tagId,
+			Principal principal, Model model, RedirectAttributes reModel, Pageable pageable) {
 		try {
 			Branch currentBranch = branchService.findBranchByBranchName(branchName);
 			User currentUser = userService.getUserByUsername(principal.getName());
@@ -74,8 +75,9 @@ public class MessageController {
 			// 判断用户是否由权限
 			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowSeeMessage());
 			
-			Page<BranchMessage> branchMessages = messageService.getBranchMessages(currentBranch, pageable);
-		
+			
+			Page<BranchMessage> branchMessages = messageService.getBranchMessages(currentBranch, pageable, title, tagId);
+			
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("page", branchMessages);
 			model.addAttribute("tab", "message");

@@ -187,7 +187,7 @@
 										<div class="col-xs-1">
 											<img src="<c:url value='/picture/user/${ problem.member.user.username }'/>?pid=${ problem.member.user.picture }" class="img-circle heard-profile-picture" style="margin: 0px;">
 										</div>
-										<div class="col-xs-4">
+										<div class="col-xs-6">
 											${ problem.member.memberName } 
 											<br />
 											<small style="font-size: 14px;color: #888888;"> ${ idx.index + 1 } 楼 &nbsp;&nbsp;${ problem.getFormatTime() } &nbsp;&nbsp;&nbsp;&nbsp;状态: <c:choose>

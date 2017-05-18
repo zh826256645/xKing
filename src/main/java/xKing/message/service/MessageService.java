@@ -17,7 +17,7 @@ public interface MessageService {
 	List<MessageTag> getMessageTags(Branch currentBranch);
 	BranchMessage createMessage(Branch currentBranch, BranchMember currentMember, BranchMessage message, MessageTag messageTag);
 	MessageTag getMessageTagByBranchAndTagName(Branch currentBranch, String tagName);
-	Page<BranchMessage> getBranchMessages(Branch currentBranch, Pageable pageable);
+	Page<BranchMessage> getBranchMessages(Branch currentBranch, Pageable pageable, String title, long tagId);
 	BranchMessage getBranchMessage(Branch currentBranch, long messageId);
 	BranchMessageComment publishedComment(User currentUser, Branch currentBranch, BranchMessage currentBranchMessage, String comment);
 	List<BranchMessageComment> getMessageComments(Branch currentBranch, BranchMessage currentBranchMessage);

@@ -97,7 +97,7 @@ public class BranchController {
 			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowInto());
 			
 			Pageable pageable = new PageRequest(0, 5);
-			Page<BranchMessage> messages = messageService.getBranchMessages(currentBranch, pageable);
+			Page<BranchMessage> messages = messageService.getBranchMessages(currentBranch, pageable, null, 0);
 			Page<Project> projects = projectService.getProjects(currentBranch, new PageRequest(0, 4)); 
 			Page<BranchHistory> histories = historyService.findbyBracnhAndTwoType(currentBranch, BranchHisotryType.CreateProject, BranchHisotryType.Message, new PageRequest(0, 10));
 			model.addAttribute("branchMessages", messages);
