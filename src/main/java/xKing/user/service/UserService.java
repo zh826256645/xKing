@@ -47,4 +47,10 @@ public interface UserService {
 	List<FriendMessage> getFriendMessage(User currentUser, String username);
 	
 	boolean removeFriend(User currentUser, String username);
+	
+	Long getNotReadMessage(User currentUser);
+	
+	Long getUserSendNotReadMessage(User currentUser, User user);
+	
+	List<FriendMessage> getUserSendNotReadMessages(User currentUser, User user);
 }

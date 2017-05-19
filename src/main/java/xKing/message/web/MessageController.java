@@ -5,6 +5,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -77,12 +78,17 @@ public class MessageController {
 			
 			
 			Page<BranchMessage> branchMessages = messageService.getBranchMessages(currentBranch, pageable, title, tagId);
+			List<MessageTag> messageTags = messageService.getMessageTags(currentBranch);
 			
 			model.addAttribute("currentBranch", currentBranch);
+			model.addAttribute("currentUser", currentUser);
+			model.addAttribute("messageTags", messageTags);
+			model.addAttribute("tagId", tagId);
 			model.addAttribute("page", branchMessages);
+			model.addAttribute("title", title);
 			model.addAttribute("tab", "message");
 			return "/branch/branchMessage";
-		} catch (Exception e) {
+		} catch (AbsentException|PermissionDeniedDataAccessException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/user/me";
 		}
@@ -202,6 +208,7 @@ public class MessageController {
 			
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("branchMessage", branchMessage);
+			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("comments", comments);
 			model.addAttribute("commentNum", commentNum);
 			model.addAttribute("tab", "message");

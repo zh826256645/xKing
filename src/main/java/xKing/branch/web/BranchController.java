@@ -123,6 +123,7 @@ public class BranchController {
 	public String createBranchPage(Principal principal, Model model) {
 		User user = userService.getUserByUsername(principal.getName());
 		model.addAttribute("user", user);
+		model.addAttribute("currentUser", user);
 		model.addAttribute(new Branch());
 		return "/user/createBranch";
 	}

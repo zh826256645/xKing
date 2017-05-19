@@ -45,7 +45,7 @@
 												<img src="<c:url value='/picture/user/${friend.username}'/>?pid=${friend.picture}" class="img-circle heard-profile-picture">
 											</div>
 											<div class="col-xs-5 center-friends-li-name">
-												<a href="#"><c:if test="${friend.name != null || friend.name != '' }">${ friend.name }</c:if><c:if test="${ friend.name == null }">${ friend.username }</c:if></a> <span class="badge friend-message">0</span>
+												<a href="#"><c:if test="${friend.name != null || friend.name != '' }">${ friend.name }</c:if><c:if test="${ friend.name == null }">${ friend.username }</c:if></a> <c:if test="${ friend.notReadMessageCount != null && friend.notReadMessageCount != 0 }"><span class="badge friend-message" id="friend-message">${ friend.notReadMessageCount }</span></c:if>
 												<p class="p-hide"><i class="fa fa-comment" aria-hidden="true"></i>${ friend.introduction }</p>
 											</div>
 											<div class="col-xs-3 col-xs-offset-2">

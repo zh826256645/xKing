@@ -32,4 +32,6 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
 	Page<Task> findByUsersAndFtaskOrderByPublishTimeDesc(User user, Task ftask, Pageable pageable);
 	
 	Long countByUsersAndFtaskAndStateNot(User user, Task ftask, State state);
+	
+	Page<Task> findByProject_idAndStateAndFtaskOrderByPublishTimeDesc(long project_id, State state, Task ftask, Pageable pageable);
 }

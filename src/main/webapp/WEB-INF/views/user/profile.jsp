@@ -230,7 +230,7 @@
 									<p><i class="fa fa-users fa-3x" aria-hidden="true"></i><a href="<c:url value="/user/me?tab=friends&page=0&size=8"/>">${ firendNum }</a></p>
 								</div>
 								<div class="col-xs-6 right-messge-message">
-									<p><i class="fa fa-commenting fa-3x" aria-hidden="true" style="color: red"></i><a href="#" >2</a></p>
+									<p><i class="fa fa-commenting fa-3x" aria-hidden="true" style="color: red"></i><a href="#" >${ notReadMessage }</a></p>
 								</div>
 							</div>
 						</div>

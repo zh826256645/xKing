@@ -33,11 +33,11 @@
 	        				</li>
 	        				<li class="dropdown">
 	        					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-	        						${username} <span class="caret"></span>		
+	        						${username} <c:if test="${ currentUser != null && currentUser.notReadMessageCount != 0 }"><span class="badge friend-message" id="friend-message">${ currentUser.notReadMessageCount }</span></c:if><span class="caret"></span>		
 	        					</a>
 								<ul class="dropdown-menu" role="menu">
 					                <li><a href="<c:url value="/user/me"/>"><s:message code="header.menu.profile"/></a></li>
-					                <li><a href="#"><s:message code="header.menu.message"/></a></li>
+					                <li><a href="<c:url value="/user/me?tab=friends&page=0&size=8"/>"><s:message code="header.menu.message"/> <c:if test="${ currentUser != null && currentUser.notReadMessageCount != 0 }"><span class="badge friend-message" id="friend-message">${ currentUser.notReadMessageCount }</span></c:if></a></li>
 					                <li><a href="<c:url value="/setting"/>"><s:message code="header.menu.setting"/></a></li>
 					                <li class="divider"></li>
 					                <li class="dropdown-header"><s:message code="header.menu.system"/></li>

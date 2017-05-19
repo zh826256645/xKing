@@ -20,15 +20,19 @@
 						<label>项目任务</label>
 						<hr />
 						<div class="row center-myTasks-up">
-							<div class="col-xs-5">
+							<div class="col-xs-8">
 								<ul class="nav nav-pills">
-									<li class="active"><a>All <span class="badge">20</span></a></li>
-									<li ><a href="#">TO DO <span class="badge">3</span></a></li>
-									<li><a href="#">Urgent <span class="badge">10</span></a></li>
-									<li><a href="#">Finished <span class="badge">3</span></a></li>
+									<li <c:if test="${ state == null }">class="active"</c:if>><a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task?page=0&size=10"/>">所有</a></li>
+									<li <c:if test="${ state == 'New' }">class="active"</c:if>><a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task?page=0&size=10&state=New"/>">新建</a></li>
+									<li <c:if test="${ state == 'Take' }">class="active"</c:if>><a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task?page=0&size=10&state=Take"/>">已接受</a></li>
+									<li <c:if test="${ state == 'Doding' }">class="active"</c:if>><a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task?page=0&size=10&state=Doding"/>">进行中</a></li>
+									<li <c:if test="${ state == 'FrontendFinish' }">class="active"</c:if>><a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task?page=0&size=10&state=FrontendFinish"/>">前端完成</a></li>
+									<li <c:if test="${ state == 'RearendFinish' }">class="active"</c:if>><a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task?page=0&size=10&state=RearendFinish"/>">后端完成</a></li>
+									<li <c:if test="${ state == 'Finish' }">class="active"</c:if>><a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task?page=0&size=10&state=Finish"/>">已完成</a></li>
+									<li <c:if test="${ state == 'Refuse' }">class="active"</c:if>><a href="<c:url value="/branch/${ currentBranch.branchName }/project/${ currentProject.projectName }/task?page=0&size=10&state=Refuse"/>">已拒绝</a></li>
 								</ul>
 							</div>
-							<div class="col-xs-7" style="padding-top: 5px">
+							<div class="col-xs-4" style="padding-top: 5px">
 								<a href="<c:url value="/branch/${currentBranch.branchName }/project/${currentProject.projectName }/task/new"/>"><button class="btn btn-success">创建新任务</button></a>
 							</div>
 						</div>

@@ -29,6 +29,7 @@ import xKing.user.dao.UserFriendRepository;
 import xKing.user.dao.UserRepository;
 import xKing.user.domain.ChangePassword;
 import xKing.user.domain.FriendMessage;
+import xKing.user.domain.FriendMessageState;
 import xKing.user.domain.User;
 import xKing.user.domain.UserFriend;
 import xKing.user.exception.SameUsernameException;
@@ -107,6 +108,7 @@ public class UserSeviceImpl implements UserService {
 		}
 		User user = userRepository.findByUsername(username);
 		if(user != null) {
+			user.setNotReadMessageCount(this.getNotReadMessage(user));
 			return user;
 		} else {
 			throw new UserNotExistException("用户不存在！");
@@ -312,6 +314,13 @@ public class UserSeviceImpl implements UserService {
 	@Override
 	public Page<UserFriend> getFriends(User currentUser, Pageable pageable) {
 		Page<UserFriend> page = userFriendRepository.findByUser_idOrFriend_idAndStateOrderByCreateTime(currentUser.getId(), currentUser.getId(), 1, pageable);
+		for(UserFriend userFriend: page.getContent()) {
+			if(!userFriend.getUser().getUsername().equalsIgnoreCase(currentUser.getUsername())){
+				userFriend.getUser().setNotReadMessageCount(this.getUserSendNotReadMessage(currentUser, userFriend.getUser()));
+			} else {
+				userFriend.getFriend().setNotReadMessageCount(this.getUserSendNotReadMessage(currentUser, userFriend.getFriend()));
+			}
+		}
 		return page;
 	}
 	
@@ -391,7 +400,7 @@ public class UserSeviceImpl implements UserService {
 		return friendMessageRepository.save(message);
 	}
 
-	// 获取用户的两条记录
+	// 获取用户的聊天记录
 	@Override
 	public List<FriendMessage> getFriendMessage(User currentUser, String username) {
 		if(currentUser.getUsername().equalsIgnoreCase(username)) {
@@ -399,6 +408,11 @@ public class UserSeviceImpl implements UserService {
 		}
 		User user = userRepository.findByUsername(username);
 		List<FriendMessage> friendMesssages = friendMessageRepository.findByUser_idAndAcceptedUser_id(currentUser.getId(), user.getId());
+		List<FriendMessage> notReadMessages = this.getUserSendNotReadMessages(currentUser, user);
+		for(FriendMessage message: notReadMessages){
+			message.setState(FriendMessageState.READ);
+			friendMessageRepository.save(message);
+		}
 		return friendMesssages;
 	}
 
@@ -412,5 +426,23 @@ public class UserSeviceImpl implements UserService {
 		}
 		userFriendRepository.delete(friend);
 		return true;
+	}
+
+	// 获取用户的未读信息
+	@Override
+	public Long getNotReadMessage(User currentUser) {
+		return friendMessageRepository.countByAcceptedUser_idAndState(currentUser.getId(), FriendMessageState.UNREAD);
+	}
+
+	// 获取用户发送的未读信息
+	@Override
+	public Long getUserSendNotReadMessage(User currentUser, User user) {
+		return friendMessageRepository.countByAcceptedUser_idAndUser_idAndState(currentUser.getId(), user.getId(), FriendMessageState.UNREAD);
+	}
+
+	// 获取用户未读信息
+	@Override
+	public List<FriendMessage> getUserSendNotReadMessages(User currentUser, User user) {
+		return friendMessageRepository.findByAcceptedUser_idAndUser_idAndState(currentUser.getId(), user.getId(), FriendMessageState.UNREAD);
 	}
 }

@@ -19,14 +19,32 @@
 						<label>公告中心</label>
 						<hr />
 						<div class="row center-myBranches-up">
-							<form action="#">
+							<sf:form action="/branch/${currentBranch.branchName}/message?page=0&size=16" method="get">
 								<div class="col-xs-4">
-									<input type="text"  class="form-control" placeholder="请输入公告的标题"/>
+									<input type="text"  class="form-control" placeholder="请输入公告的标题" name="title" value="${ title }"/>
 								</div>
 								<div class="col-xs-1">
 									<input type="submit" class="btn btn-default" value="搜索"/>
 								</div>
-							</form>
+							</sf:form>
+							
+							<sf:form action="/branch/${currentBranch.branchName}/message?page=0&size=16" method="get">
+								<div class="col-xs-3">
+								<div class="input-group">
+								<div class="input-group-addon">标签:</div>
+								<select class="form-control" name="tagId">
+									<option value="" selected="selected">所有</option>
+								<c:forEach items="${ messageTags }" var="tag">
+									<option value="${ tag.id }" <c:if test="${ tag.id == tagId }">selected="selected"</c:if>>${ tag.tagName }</option>
+								</c:forEach>
+								</select>
+								</div>
+								</div>
+								<div class="col-xs-1">
+								<input type="submit" class="btn btn-default" value="过滤"/>
+								</div>
+							</sf:form>
+							
 							<div class="col-xs-1">
 								<a href="<c:url value="/branch/${currentBranch.branchName}/message/new"/>"><button class="btn btn-success">创建公告</button></a>
 							</div>
@@ -59,12 +77,12 @@
 							<div class="col-xs-12">
 								<div style="float: right;">
 									<ul class="pagination" >
-										<li><a href="<c:url value="/branch/${currentBranch.branchName}/message?page=0&size=16"/>">&laquo;</a></li>
+										<li><a href="<c:url value="/branch/${currentBranch.branchName}/message?page=0&size=16"/><c:if test="${ title != null && !title.trim().isEmpty() }">&title=${title }</c:if><c:if test="${ tagId != null && tagId != 0 }">&tagId=${ tagId }</c:if>">&laquo;</a></li>
 										<c:if test="${page.totalPages <= 5}">
 											<c:forEach begin="1" end="${page.totalPages}" var="p">
 												<li 
 												<c:if test="${page.number == p-1}">class="active"</c:if>
-												><a href="<c:url value="/branch/${currentBranch.branchName}/message?page=${p-1}&size=12"/>">${p}</a></li>
+												><a href="<c:url value="/branch/${currentBranch.branchName}/message?page=${p-1}&size=12"/><c:if test="${ title != null && !title.trim().isEmpty() }">&title=${title }</c:if><c:if test="${ tagId != null && tagId != 0 }">&tagId=${ tagId }</c:if>">${p}</a></li>
 											</c:forEach>
 										</c:if>
 										<c:if test="${page.totalPages > 5}">
@@ -72,25 +90,25 @@
 												<c:forEach begin="1" end="5" var="p">
 												<li 
 												<c:if test="${page.number == p-1}">class="active"</c:if>
-												><a href="<c:url value="/branch/${currentBranch.branchName}/message?page=${p-1}&size=12"/>">${p}</a></li>
+												><a href="<c:url value="/branch/${currentBranch.branchName}/message?page=${p-1}&size=12"/><c:if test="${ title != null && !title.trim().isEmpty() }">&title=${title }</c:if><c:if test="${ tagId != null && tagId != 0 }">&tagId=${ tagId }</c:if>">${p}</a></li>
 												</c:forEach>
 											</c:if>c:if test="${ page.content == null || page.content.size() == 0 }">
 											<c:if test="${page.number -2 > 0 && page.totalPages - page.number > 3}">
 												<c:forEach begin="${page.number - 1}" end="${page.number + 3}" var="p">
 												<li 
 												<c:if test="${page.number == p-1}">class="active"</c:if>
-												><a href="<c:url value="/branch/${currentBranch.branchName}/message?page=${p-1}&size=12"/>">${p}</a></li>
+												><a href="<c:url value="/branch/${currentBranch.branchName}/message?page=${p-1}&size=12"/><c:if test="${ title != null && !title.trim().isEmpty() }">&title=${title }</c:if><c:if test="${ tagId != null && tagId != 0 }">&tagId=${ tagId }</c:if>">${p}</a></li>
 												</c:forEach>
 											</c:if>
 											<c:if test="${page.totalPages - page.number <= 3}">
 												<c:forEach begin="${page.number - 3}" end="${page.totalPages}" var="p">
 												<li 
 												<c:if test="${page.number == p-1}">class="active"</c:if>
-												><a href="<c:url value="/branch/${currentBranch.branchName}/message?page=${p-1}&size=12"/>">${p}</a></li>
+												><a href="<c:url value="/branch/${currentBranch.branchName}/message?page=${p-1}&size=12"/><c:if test="${ title != null && !title.trim().isEmpty() }">&title=${title }</c:if><c:if test="${ tagId != null && tagId != 0 }">&tagId=${ tagId }</c:if>">${p}</a></li>
 												</c:forEach>
 											</c:if>
 										</c:if>
-										<li><a href="<c:url value="/branch/${currentBranch.branchName}/message?page=${page.totalPages-1}&size=12"/>">&raquo;</a></li>
+										<li><a href="<c:url value="/branch/${currentBranch.branchName}/message?page=${page.totalPages-1}&size=12"/><c:if test="${ title != null && !title.trim().isEmpty() }">&title=${title }</c:if><c:if test="${ tagId != null && tagId != 0 }">&tagId=${ tagId }</c:if>">&raquo;</a></li>
 									</ul>
 								</div>
 							</div>

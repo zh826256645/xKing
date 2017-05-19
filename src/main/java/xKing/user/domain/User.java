@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -50,7 +51,6 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<BranchMemberRequest> branchMemberRequests;
     
-	
 	private String name;
 	private String blog;
 	private String picture;
@@ -69,6 +69,9 @@ public class User {
 	private int enabled = 1;
 	@JsonIgnore(value=true)
 	private String role_user;
+	
+	@Transient
+	private Long notReadMessageCount;
 	public long getId() {
 		return id;
 	}
@@ -171,6 +174,19 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+	}
+	
+	public List<BranchMemberRequest> getBranchMemberRequests() {
+		return branchMemberRequests;
+	}
+	public void setBranchMemberRequests(List<BranchMemberRequest> branchMemberRequests) {
+		this.branchMemberRequests = branchMemberRequests;
+	}
+	public Long getNotReadMessageCount() {
+		return notReadMessageCount;
+	}
+	public void setNotReadMessageCount(Long notReadMessageCount) {
+		this.notReadMessageCount = notReadMessageCount;
 	}
 	@Override
 	public String toString() {

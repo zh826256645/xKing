@@ -122,11 +122,12 @@ public class ProjectController {
 				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
 			}
 			
-			Page<Task> tasks = projectService.getTasksByProject(currentProject, new PageRequest(0, 5));
+			Page<Task> tasks = projectService.getTasksByProject(currentProject,null, new PageRequest(0, 5));
 			List<BranchHistory> histories = historyService.findbyProjectAndTwoType(currentProject, BranchHisotryType.Task, BranchHisotryType.AddProjectMember);
 				
 			model.addAttribute("tab", "projectIndex");
 			model.addAttribute("currentProject", currentProject);
+			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("histories", histories);
 			model.addAttribute("tasks", tasks);
@@ -204,7 +205,7 @@ public class ProjectController {
 	// 项目任务页面
 	@RequestMapping(path="/{projectName}/task", method=RequestMethod.GET)
 	public String projectTasks(@PathVariable(name="branchName") String branchName,
-			@PathVariable(name="projectName") String projectName,
+			@PathVariable(name="projectName") String projectName, @RequestParam(name="state", required=false) State state,
 			Principal principal, Model model, RedirectAttributes reModel, Pageable pageable) {
 		try{
 			Branch currentBranch = branchService.findBranchByBranchName(branchName);
@@ -216,13 +217,14 @@ public class ProjectController {
 				branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowChangeTask());
 			}
 			
-			Page<Task> page = projectService.getTasksByProject(currentProject, pageable);
+			Page<Task> page = projectService.getTasksByProject(currentProject, state, pageable);
 			
 			model.addAttribute("currentBranch", currentBranch);
 			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("currentProject", currentProject);
 			model.addAttribute("tab", "projectTask");
 			model.addAttribute("page", page);
+			model.addAttribute("state", state);
 			return "/branch/projectTasks";
 		}catch (Exception e) {
 			reModel.addFlashAttribute("error", e.getMessage());

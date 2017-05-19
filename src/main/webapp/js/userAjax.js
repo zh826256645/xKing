@@ -105,6 +105,10 @@ function friendMessage(env) {
 	$("#messageUsername").attr("value", username);
 	$("#friendMessage").modal('show');
 	getFriendMessages(username);
+	var friend_message = $(env).parent().parent().parent().prev().children("#friend-message");
+	if(friend_message.length > 0) {
+		friend_message.remove();
+	}
 };
 
 function getFriendMessages(username){

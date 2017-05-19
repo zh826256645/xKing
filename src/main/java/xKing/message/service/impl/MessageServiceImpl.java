@@ -77,6 +77,9 @@ public class MessageServiceImpl implements MessageService {
 		if(title != null && !title.trim().isEmpty()){
 			return messageRepository.findByBranch_idAndTitleLikeOrderByCreateTimeDesc(currentBranch.getId(), title, pageable);
 		}
+		if(tagId != 0) {
+			return messageRepository.findByBranch_idAndMessageTag_idOrderByCreateTimeDesc(currentBranch.getId(), tagId, pageable);
+		}
 		return messageRepository.findByBranch_idOrderByCreateTimeDesc(currentBranch.getId(), pageable);
 	}
 

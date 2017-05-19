@@ -139,7 +139,10 @@ public class ProjectServiceImpl implements ProjectService {
 
 	// 获取项目的任务
 	@Override
-	public Page<Task> getTasksByProject(Project project, Pageable pageable) {
+	public Page<Task> getTasksByProject(Project project, State state, Pageable pageable) {
+		if(state != null) {
+			return taskRepository.findByProject_idAndStateAndFtaskOrderByPublishTimeDesc(project.getId(), state, null, pageable);
+		}
 		return taskRepository.findByProject_idAndFtaskOrderByPublishTimeDesc(project.getId(),null, pageable);
 	}
 
