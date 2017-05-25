@@ -48,7 +48,7 @@
 					<div class="row">
 						<div class="center-branche-panel" style="margin-top: 0px;">
 							<div class="panel panel-default">
-							    <div class="panel-body panel-nopadding" style="height: 250px">
+							    <div class="panel-body panel-nopadding" style="height: 280px">
 							    	<label class="label label-color">最新项目</label>
 							    	<c:forEach items="${ projects.content }" var="project">
 							    	<div class="row" style="padding-top: 5px">

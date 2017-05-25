@@ -105,7 +105,7 @@ public class MessageController {
 			BranchMember branchMember = branchMemberService.findByBranchidAndUserId(currentBranch, currentUser);
 			
 			// 判断用户是否由权限
-			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowSeeMessage());
+			branchService.checkUserAuthority(branchMember, currentBranch, currentBranch.getBranchAuthority().getAllowCreateMessage());
 			
 			List<MessageTag> messageTags = messageService.getMessageTags(currentBranch);
 			

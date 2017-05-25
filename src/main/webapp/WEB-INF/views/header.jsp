@@ -24,7 +24,7 @@
 	                	</ul>
 	                  	<form class="navbar-form navbar-left" role="search">
 	        		   		<div class="form-group">
-	                			<input type="text" class="form-control" placeholder="<s:message code="header.search"/>">
+
 	            			</div>
 	        			</form>
 	        			<ul class="nav navbar-nav navbar-right">

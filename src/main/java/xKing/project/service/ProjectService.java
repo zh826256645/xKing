@@ -11,6 +11,7 @@ import xKing.project.domain.Problem;
 import xKing.project.domain.Project;
 import xKing.project.domain.State;
 import xKing.project.domain.Task;
+import xKing.project.domain.TaskLevel;
 import xKing.user.domain.User;
 
 public interface ProjectService {
@@ -29,6 +30,8 @@ public interface ProjectService {
 	
 	Page<Task> getTasksByProject(Project project, State state, Pageable pageable);
 	
+	Page<Task> getTasksByUserAndLevel(User currentUser, TaskLevel taskLevel, Pageable pageable);
+	
 	Project getProjectByMember(BranchMember currentMember, Project currentProject);
 	
 	Task getTaskByProject(Project currentProject, long taskId);
@@ -45,7 +48,7 @@ public interface ProjectService {
 	
 	List<Problem> getTaskProblems(Task currentTask);
 	
-	Page<Task> getUserTasks(User currentUser, Task ftask, Pageable pageable);
+	Page<Task> getUserTasks(User currentUser, Task ftask, TaskLevel taskLevel, Pageable pageable);
 	
 	Long getUserNotFinishTask(User currentUser);
 }

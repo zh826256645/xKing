@@ -45,6 +45,7 @@
 											<option value="Debugging" <c:if test="${ task.type != null && task.type == 'Debugging'}">selected="selected"</c:if>>调试</option>
 											<option value="Features" <c:if test="${ task.type != null && task.type == 'Features'}">selected="selected"</c:if>>功能</option>
 											<option value="Bug" <c:if test="${ task.type != null && task.type == 'Bug'}">selected="selected"</c:if>>漏洞</option>
+											<option value="BiSai" <c:if test="${ task.type != null && task.type == 'BiSai'}">selected="selected"</c:if>>比赛</option>
 										</select>
 										</div>
 									</div>
@@ -175,44 +176,7 @@
 						</div>
 						</sf:form>
 					</div>
-				<div class="col-xs-2 center-branche-panel center-profile-setting-right" >
-					<label>Message Tag</label>
-					<hr/>
-					<div class="row add-role">
-						<sf:form action="/branch/${ currentBranch.branchName }/message/tag/new" method="post">
-							<div class="col-xs-9" style="padding-left: 22px;">
-								<input type="text"  class="form-control" placeholder="Tag name" name="tagName" />
-							</div>
-							<div class="col-xs-2">
-								<input type="submit" class="btn btn-success" value="Add"/>
-							</div>
-						</sf:form>
-					</div>
-					<br />
-					<c:forEach items="${ messageTags }" var="tag">
-					<div class="row role-li" >
-							<div class="col-xs-5" style="padding-left: 0px;"><p class="hide-p" style="font-size: 16px;"><i class="fa fa-tag" aria-hidden="true" style="font-size: 14px;margin-right: 5px;"></i>${ tag.tagName }</p></div>
-							<div class="col-xs-2"><i class="fa fa-edit role-font" style="color: #67B168;cursor: pointer;" aria-hidden="true" onclick="changeRole(this)"></i></div>
-							<div class="col-xs-2"><i class="fa fa-times role-font" style="color: #D9534F;" aria-hidden="true"></i></div>
-					</div>
-					<div class="row add-role" style="display: none;">
-						<form>
-							<div class="col-xs-4" style="padding-left: 22px;">
-								<input type="text"  class="form-control" placeholder="Role name"/>
-							</div>
-							<div class="col-xs-3">
-								<input type="text"  class="form-control" placeholder="level"/>
-							</div>
-							<div class="col-xs-2">
-								<input type="submit" class="btn btn-success" value="YES"/>
-							</div>
-						</form>
-							<div class="col-xs-2" style="margin-left: 4px;">
-								<button class="btn btn-warning" onclick="noChangeRole(this)">No</button>
-							</div>
-					</div>
-					</c:forEach>
-				</div>
+
 			</div>
 		</div>
 		<script>

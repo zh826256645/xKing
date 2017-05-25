@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import xKing.branch.domain.BranchMember;
 import xKing.project.domain.State;
 import xKing.project.domain.Task;
+import xKing.project.domain.TaskLevel;
 import xKing.user.domain.User;
 import xKing.utils.CrudRepository;
 /**
@@ -34,4 +35,6 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
 	Long countByUsersAndFtaskAndStateNot(User user, Task ftask, State state);
 	
 	Page<Task> findByProject_idAndStateAndFtaskOrderByPublishTimeDesc(long project_id, State state, Task ftask, Pageable pageable);
+	
+	Page<Task> findByUsersAndTaskLevelAndFtaskOrderByPublishTimeDesc(User user, TaskLevel taskLevel, Task ftask, Pageable pageable);
 }

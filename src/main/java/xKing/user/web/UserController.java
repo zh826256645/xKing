@@ -29,6 +29,7 @@ import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
 import xKing.history.service.HistoryService;
+import xKing.project.domain.TaskLevel;
 import xKing.project.service.ProjectService;
 import xKing.user.domain.FriendMessage;
 import xKing.user.domain.User;
@@ -130,6 +131,7 @@ public class UserController {
 	@RequestMapping(value="/me", method=RequestMethod.GET)
 	public String profile(
 			@RequestParam(name="tab", defaultValue="profile") final String tab,
+			@RequestParam(name="taskLevel", required=false) TaskLevel taskLevel,
 			Pageable pageable,
 			Model model,
 			Principal principal) {
@@ -143,7 +145,7 @@ public class UserController {
 			model.addAttribute("branches", branchService.getBranchByUserId(
 					currentUser, new PageRequest(0, 2)));
 			model.addAttribute("firendNum", userService.getFriendNum(currentUser));
-			model.addAttribute("tasks", projectService.getUserTasks(currentUser, null, new PageRequest(0, 3)));
+			model.addAttribute("tasks", projectService.getUserTasks(currentUser, null, null, new PageRequest(0, 3)));
 			model.addAttribute("histories", historyService.findUserHistories(currentUser, new PageRequest(0, 5)));
 			model.addAttribute("toDoTaskNum", projectService.getUserNotFinishTask(currentUser));
 			model.addAttribute("notReadMessage", userService.getNotReadMessage(currentUser));
@@ -158,8 +160,9 @@ public class UserController {
 			return "/user/myBranches";
 			
 		case "tasks" :
-			model.addAttribute("page", projectService.getUserTasks(currentUser, null, pageable));
+			model.addAttribute("page", projectService.getUserTasks(currentUser, null, taskLevel, pageable));
 			model.addAttribute("tab", "tasks");
+			model.addAttribute("taskLevel", taskLevel);
 			return "/user/myTasks";
 			
 		case "friends" :

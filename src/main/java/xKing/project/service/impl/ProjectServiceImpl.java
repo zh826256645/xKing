@@ -24,6 +24,7 @@ import xKing.project.domain.ProblemState;
 import xKing.project.domain.Project;
 import xKing.project.domain.State;
 import xKing.project.domain.Task;
+import xKing.project.domain.TaskLevel;
 import xKing.project.service.ProjectService;
 import xKing.user.domain.User;
 import xKing.utils.Utils;
@@ -269,7 +270,10 @@ public class ProjectServiceImpl implements ProjectService {
 
 	// 获取用户的任务
 	@Override
-	public Page<Task> getUserTasks(User currentUser, Task ftask, Pageable pageable) {
+	public Page<Task> getUserTasks(User currentUser, Task ftask, TaskLevel taskLevel,Pageable pageable) {
+		if(taskLevel != null) {
+			return this.getTasksByUserAndLevel(currentUser, taskLevel, pageable);
+		}
 		return taskRepository.findByUsersAndFtaskOrderByPublishTimeDesc(currentUser, null, pageable);
 	}
 
@@ -277,5 +281,11 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Long getUserNotFinishTask(User currentUser) {
 		return taskRepository.countByUsersAndFtaskAndStateNot(currentUser, null, State.Finish);
+	}
+
+	// 获取用户任务通过等级
+	@Override
+	public Page<Task> getTasksByUserAndLevel(User currentUser, TaskLevel taskLevel, Pageable pageable) {
+		return taskRepository.findByUsersAndTaskLevelAndFtaskOrderByPublishTimeDesc(currentUser, taskLevel, null, pageable);
 	}
 }

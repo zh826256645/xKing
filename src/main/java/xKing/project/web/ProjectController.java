@@ -28,6 +28,7 @@ import xKing.branch.service.BranchService;
 import xKing.exception.AbsentException;
 import xKing.exception.ExistedException;
 import xKing.exception.FaultyOperationException;
+import xKing.exception.PermissionDeniedException;
 import xKing.history.domain.BranchHisotryType;
 import xKing.history.domain.BranchHistory;
 import xKing.history.service.HistoryService;
@@ -98,7 +99,7 @@ public class ProjectController {
 				reModel.addFlashAttribute("tag", "project");
 				return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project";		
 			}
-		} catch (FaultyOperationException|ExistedException e) {
+		} catch (PermissionDeniedException|FaultyOperationException|ExistedException e) {
 			reModel.addFlashAttribute("error", e.getMessage());
 			return "redirect:/branch/" + UriUtils.encode(branchName, "utf-8") + "/project";
 		}catch (AbsentException e) {

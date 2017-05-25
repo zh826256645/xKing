@@ -32,7 +32,7 @@ import xKing.utils.Utils;
 @Entity
 @Table(name="branch_project_task")
 public class Task {
-	enum Type {Task, Test, Debugging, Features, Bug}
+	enum Type {Task, Test, Debugging, Features, Bug, BiSai}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

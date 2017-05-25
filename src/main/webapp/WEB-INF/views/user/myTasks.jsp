@@ -20,10 +20,10 @@
 						<div class="row center-myTasks-up">
 							<div class="col-xs-5">
 								<ul class="nav nav-pills">
-									<li class="active"><a>All <span class="badge">20</span></a></li>
-									<li ><a href="#">TO DO <span class="badge">3</span></a></li>
-									<li><a href="#">Urgent <span class="badge">10</span></a></li>
-									<li><a href="#">Finished <span class="badge">3</span></a></li>
+									<li <c:if test="${ taskLevel == null}">class="active"</c:if>><a href="<c:url value="/user/me?tab=tasks&page=0&size=10"/>">所有</a></li>
+									<li <c:if test="${ taskLevel != null && taskLevel == 'Common'}">class="active"</c:if>><a href="<c:url value="/user/me?tab=tasks&page=0&size=10&taskLevel=Common"/>">普通</a></li>
+									<li <c:if test="${ taskLevel != null && taskLevel == 'Preference'}">class="active"</c:if>><a href="<c:url value="/user/me?tab=tasks&page=0&size=10&taskLevel=Preference"/>">优先 </a></li>
+									<li <c:if test="${ taskLevel != null && taskLevel == 'Emergency'}">class="active"</c:if>><a href="<c:url value="/user/me?tab=tasks&page=0&size=10&taskLevel=Emergency"/>">紧急</a></li>
 								</ul>
 							</div>
 						</div>
